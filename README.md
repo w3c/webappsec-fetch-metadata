@@ -47,6 +47,6 @@ Based on discussion in [whatwg/fetch#700](https://github.com/whatwg/fetch/issues
 
 ### Do we need both `initiator` and `destination`?
 
-The table in Fetch (just under https://fetch.spec.whatwg.org/#request-destination-script-like) gives some examples of categories of request and their respective `initiator` and `destination` values. Some interesting kinds of requests are ambigious if we relied purely on their `destination` (consider `fetch()` vs `<a download>`, for instance). As things are specified today, but I think we'd want to cover both, since it's somewhat unclear what might come in the future, and where we'd record it.
+The table in Fetch (just under https://fetch.spec.whatwg.org/#request-destination-script-like) gives some examples of categories of request and their respective `initiator` and `destination` values. Some interesting kinds of requests are ambiguous if we relied purely on their `destination` (consider `fetch()` vs `<a download>`, for instance). As things are specified today, but I think we'd want to cover both, since it's somewhat unclear what might come in the future, and where we'd record it.
 
 It's possible that pursuing this proposal might result in rethinking those values, however, as only `destination` is currently exposed to script (in service workers). If we're going to expose them more broadly, perhaps we can also make them more granular in certain ways.
