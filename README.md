@@ -13,16 +13,23 @@ It would be helpful if servers could make more intelligent decisions about wheth
 Browsers could give servers the ability to make better decisions earlier if they added metadata to requests. We could, for example, add a [structured header](https://tools.ietf.org/html/draft-ietf-httpbis-header-structure) [dictionary](https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1) containing a set of interesting labels and values to all requests made to an HTTPS endpoint. For example:
 
 ```
-Sec-Metadata: initiator=imageset, destination=image, site=cross-site
+// <picture>
+Sec-Metadata: initiator=imageset, destination=image, site=cross-site, target=subresource
+
+// Top-level navigation
+Sec-Metadata: initiator="", destination=document, site=cross-site, target=top-level, cause=user-activation
+
+// <iframe> navigation
+Sec-Metadata: initiator="", destination=document, site=same-site, target=nested, cause=forced
 ```
 
 So, what labels and values are interesting and valuable enough that we'd want to include them? Unsurprisingly, I have some suggestions:
 
 * Enums representing requests' [`initiator`](https://fetch.spec.whatwg.org/#concept-request-initiator) and [`destination`](https://fetch.spec.whatwg.org/#concept-request-destination) values would be helpful, as they enable granular decision-making in a way that the Accept header does not. If a frontend server notices that a particular document is being requested from a `<script>` or `<img>`, for instance, it can respond with a 400 or 406 rather than forwarding the request on to the backend, generating a response, and delivering it back to the client. A number of potential attacks can be mitigated using this technique.
 
-* It might also be helpful to categorize the request broadly into an enum of {`top-level-navigation`, `framed-navigation`, `subresource`}. This high-level distinction enables interesting security decisions: API endpoints do not expect to be navigation targets, and listing pages do not expect to be subresources. (Note that we almost get this data from the enums above, though Fetch currently doesn't distinguish between top-level and nested navigations, giving both a destination of `document`. Perhaps we could extract the "reserved client is either null or an environment whose target browsing context is a nested browsing context" into a request property we could expose, or add granularity to initiator, split `document`?)
+* It might also be helpful to categorize the request broadly into an enum of {`top-level`, `nested`, `subresource`}. This high-level distinction enables interesting security decisions: API endpoints do not expect to be navigation targets, and listing pages do not expect to be subresources. (Note that we almost get this data from the enums above, though Fetch currently doesn't distinguish between top-level and nested navigations, giving both a destination of `document`. Perhaps we could extract the "reserved client is either null or an environment whose target browsing context is a nested browsing context" into a request property we could expose, or add granularity to initiator, split `document`?)
 
-* The relationship between the context initiating the request, and the request's target, perhaps an enum of {`same-origin`, `same-site`, `cross-site`}. This gives developers the ability to construct a low-cost CSRF defense for endpoints that don't expect cross-origin or cross-site callers, and has low-enough granularity that it seems reasonable to include on every request. If you squint a bit, you can consider it something of an imperative counterpart to the declarative `SameSite` attribute on cookies.
+* The relationship between the context initiating the request, and the request's target, perhaps an enum of {`same-origin`, `same-site`, `cross-site`} (where "site" boils down to eTLD+1). This gives developers the ability to construct a low-cost CSRF defense for endpoints that don't expect cross-origin or cross-site callers, and has low-enough granularity that it seems reasonable to include on every request. If you squint a bit, you can consider it something of an imperative counterpart to the declarative `SameSite` attribute on cookies.
 
 * For navigations, an indication of whether the navigation was [triggered by user activation](https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation), or forced via `window.location`/`<meta>`, etc. would give servers the ability to build models that heuristicly differentiate between an attacker poking at `window.opener.location` and a user's intent to navigate to a search result page.
 
@@ -36,7 +43,7 @@ This proposal is valuable above and beyond `From-Origin` insofar as it gives ser
 
 ### What about including the request's origin?
 
-Based on discussion in [whatwg/fetch#700](https://github.com/whatwg/fetch/issues/700), we seem to have reasonable agreement about the value of the above items. There are other bits and pieces which seem more controversial, in particular including the request's [origin](https://fetch.spec.whatwg.org/#concept-request-origin). This would enable more granular decision-making for applications with more complicated relationships than `same-site` can express (consider `docs.google.com` and `mail.google.com`, which both wish to talk to `accounts.google.com`, but aren't interested in talking to each other), but there's a reasonable worry that creates a new mechanism for referrer leakage. This proposal punts on that question for the moment. Maybe we can extend the applicability of the `Origin` header, maybe we can add origin information to this header at a later date, or maybe implementation experience will teach us that we don't really need the additional granularity.
+Based on discussion in [whatwg/fetch#700](https://github.com/whatwg/fetch/issues/700), we seem to have reasonable agreement about the value of the above items. There are other bits and pieces which seem more controversial, in particular including the request's [origin](https://fetch.spec.whatwg.org/#concept-request-origin). This would enable more granular decision-making for applications with more complicated relationships than `same-site` can express (consider `docs.google.com` and `mail.google.com`, which both wish to talk to `accounts.google.com`, but aren't interested in talking to each other), but there's a reasonable worry that creates a new mechanism for referrer leakage ([whatwg/fetch#700 (comment)](https://github.com/whatwg/fetch/issues/700#issuecomment-382762249) spells out some of the controversy). This proposal punts on that question for the moment. Maybe we can extend the applicability of the `Origin` header, maybe we can add origin information to this header at a later date, or maybe implementation experience will teach us that we don't really need the additional granularity.
 
 ### Do we need both `initiator` and `destination`?
 
