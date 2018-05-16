@@ -54,3 +54,7 @@ It's possible that pursuing this proposal might result in rethinking those value
 ### Why bundle these up into one header? Why not have one header for each distinct value, like [client hints](http://httpwg.org/http-extensions/client-hints.html#rfc.section.4)?
 
 I like the idea of having everything that developers need to make an authentication decision for a given request in one place. But I also don't have terribly strong feelings about the way we spell the feature. If splitting it into a zillion distinct headers is the right thing to do, I'm happy to run with that.
+
+### Doesn't CORS take care of this somehow?
+
+No. CORS allows a server to opt-out of the same-origin policy for a given response, sharing a resource's content with a cross-origin requestor. There is some conceptual similarity, insofar as `Origin` headers are sent along with CORS-enabled requests in order to allow the server to make a reasonable decision about them, but this proposal has very little to do with explicit sharing, aiming instead to address the unintentional leakage that happens as a side-effect of a server's activity. 
