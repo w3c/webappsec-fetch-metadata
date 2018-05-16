@@ -58,3 +58,7 @@ I like the idea of having everything that developers need to make an authenticat
 ### Doesn't CORS take care of this somehow?
 
 No. CORS allows a server to opt-out of the same-origin policy for a given response, sharing a resource's content with a cross-origin requestor. There is some conceptual similarity, insofar as `Origin` headers are sent along with CORS-enabled requests in order to allow the server to make a reasonable decision about them, but this proposal has very little to do with explicit sharing, aiming instead to address the unintentional leakage that happens as a side-effect of a server's activity. 
+
+### What happens to the `site` value during redirects?
+
+An excellent question that I don't yet have a good answer for. One approach would be to shift the `site` value as we progress through redirects, but only in an outward direction (e.g. `same-origin` -> `same-site` -> `cross-site`, but not in the other direction). That is, if `https://example.com/` requests `https://example.com/redirect`, the initial request's `site` value would be `same-origin`. If that response redirected to `https://subdomain.example.com/redirect`, that request's `site` value would be `same-site`. If that response redirected to `https://example.net/redirect`, that request's `site` value would be `cross-site`. If that response redirect all the way back to `https://example.com/`, the final request's `site` value would still be `cross-site`.
