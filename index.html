@@ -1212,7 +1212,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 1a927b7d2ff9a70dcdc5dc9f892fd154b7b64097" name="generator">
-  <meta content="a6c9ea0a958b62ddfdf24e2b71d46150cfacf1b2" name="document-revision">
+  <meta content="8f2401460781628f0e5751fb5d594a2cf98012c7" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1467,6 +1467,7 @@ a request based on the way it was made, and the context in which it will be used
      <ol class="toc">
       <li><a href="#redirects"><span class="secno">3.1</span> <span class="content">Redirects</span></a>
      </ol>
+    <li><a href="#iana"><span class="secno">4</span> <span class="content">IANA Considerations</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1649,6 +1650,26 @@ request’s <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-si
 same-site with <code>https://example.com/</code> and <code>https://subdomain.example.com/</code>). If that response
 redirects all the way back to <code>https://example.com/</code>, the final request’s <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-site" id="ref-for-dom-sec-metadata-site⑥">site</a></code> value would still be <code>cross-site</code> (as the redirect chain includes <code>https://example.net/</code>, which is
 still not same-site with the other URLs.</p>
+   <h2 class="heading settled" data-level="4" id="iana"><span class="secno">4. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
+   <p>The permanent message header field registry should be updated with the following registration for
+the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-for-http-headerdef-sec-metadata③"><code>Sec-Metadata</code></a> header: <a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a></p>
+   <dl>
+    <dt data-md="">Header field name
+    <dd data-md="">
+     <p>Sec-Metadata</p>
+    <dt data-md="">Applicable protocol
+    <dd data-md="">
+     <p>http</p>
+    <dt data-md="">Status
+    <dd data-md="">
+     <p>standard</p>
+    <dt data-md="">Author/Change controller
+    <dd data-md="">
+     <p>Me</p>
+    <dt data-md="">Specification document
+    <dd data-md="">
+     <p>This specification (See <a href="#sec-metadata-header">§2.1 The Sec-Metadata HTTP Request Header</a>)</p>
+   </dl>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -2037,6 +2058,8 @@ still not same-site with the other URLs.</p>
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dt id="biblio-rfc3864">[RFC3864]
+   <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://tools.ietf.org/html/rfc3864">Registration Procedures for Message Header Fields</a>. September 2004. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc3864">https://tools.ietf.org/html/rfc3864</a>
    <dt id="biblio-url">[URL]
    <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
   </dl>
@@ -2053,6 +2076,7 @@ Fetch so we can read it off the <a data-link-type="dfn" href="https://fetch.spec
     <li><a href="#ref-for-http-headerdef-sec-metadata">1. Introduction</a>
     <li><a href="#ref-for-http-headerdef-sec-metadata①">2.2. Integration With Fetch</a>
     <li><a href="#ref-for-http-headerdef-sec-metadata②">3.1. Redirects</a>
+    <li><a href="#ref-for-http-headerdef-sec-metadata③">4. IANA Considerations</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-sec-metadata-cause">
