@@ -192,8 +192,6 @@ Valid {{Sec-Metadata/site}} values are `same-origin`, `same-site`, and `cross-si
     3.  Return |site|.
 </div>
 
-ISSUE: We should probably walk the whole redirect chain to ensure that we're sending safe values.
-
 ### The `target` Member ### {#target-member}
 
 All requests will contain a dictionary member whose key is
@@ -244,7 +242,7 @@ To <dfn abstract-op>set the `Sec-Metadata` header for a request</dfn>, given a [
 
     6.  Let |value| be the result of serializing |header|.
 
-        ISSUE: I don't see an actual serialization algorithm in [[!I-D.ietf-httpbis-header-structure]].
+        ISSUE(httpwg/http-extensions#627): I don't see an actual serialization algorithm in [[!I-D.ietf-httpbis-header-structure]].
 
     7.  [=header list/Set=] &#96;<a http-header>`Sec-Metadata`</a>&#96;/|value| in |r|'s [=request/header list=].
 </ol>

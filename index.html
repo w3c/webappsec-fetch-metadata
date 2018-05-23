@@ -1212,7 +1212,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 1a927b7d2ff9a70dcdc5dc9f892fd154b7b64097" name="generator">
-  <meta content="b40c67612b1105a57e14ef644952656e2f8a94f2" name="document-revision">
+  <meta content="6d7201b4549256eb7fa207bea71045896df963ce" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1582,7 +1582,6 @@ Sec-Metadata: ..., destination=document, ...
       <p>Return <var>site</var>.</p>
     </ol>
    </div>
-   <p class="issue" id="issue-d3db520f"><a class="self-link" href="#issue-d3db520f"></a> We should probably walk the whole redirect chain to ensure that we’re sending safe values.</p>
    <h4 class="heading settled" data-level="2.1.4" id="target-member"><span class="secno">2.1.4. </span><span class="content">The <code>target</code> Member</span><a class="self-link" href="#target-member"></a></h4>
    <p>All requests will contain a dictionary member whose key is
 "<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-target"><code>target</code></dfn>", and whose value is an <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.8" id="ref-for-section-4.8③"><code>identifier</code></a> representing the context in which the request
@@ -1627,7 +1626,7 @@ of <a data-link-type="abstract-op" href="#abstract-opdef-obtain-the-site-value" 
 result of <a data-link-type="abstract-op" href="#abstract-opdef-obtain-the-target-value" id="ref-for-abstract-opdef-obtain-the-target-value">obtaining the target value</a> for <var>r</var>.</p>
      <li data-md="">
       <p>Let <var>value</var> be the result of serializing <var>header</var>.</p>
-      <p class="issue" id="issue-63c7d569"><a class="self-link" href="#issue-63c7d569"></a> I don’t see an actual serialization algorithm in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.</p>
+      <p class="issue" id="issue-63c7d569"><a class="self-link" href="#issue-63c7d569"></a> I don’t see an actual serialization algorithm in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. <a href="https://github.com/httpwg/http-extensions/issues/627">&lt;https://github.com/httpwg/http-extensions/issues/627></a></p>
      <li data-md="">
       <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set" id="ref-for-concept-header-list-set">Set</a> `<a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-for-http-headerdef-sec-metadata①"><code>Sec-Metadata</code></a>`/<var>value</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list">header list</a>.</p>
     </ol>
@@ -2044,8 +2043,7 @@ still not same-site with the other URLs.</p>
   <div style="counter-reset:issue">
    <div class="issue"> We probably need to pipe this value through from HTML’s navigation algorithm to
 Fetch so we can read it off the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> here.<a href="#issue-0e5ec91b"> ↵ </a></div>
-   <div class="issue"> We should probably walk the whole redirect chain to ensure that we’re sending safe values.<a href="#issue-d3db520f"> ↵ </a></div>
-   <div class="issue"> I don’t see an actual serialization algorithm in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>.<a href="#issue-63c7d569"> ↵ </a></div>
+   <div class="issue"> I don’t see an actual serialization algorithm in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. <a href="https://github.com/httpwg/http-extensions/issues/627">&lt;https://github.com/httpwg/http-extensions/issues/627></a><a href="#issue-63c7d569"> ↵ </a></div>
    <div class="issue"> Monkey patching! I should file a bug.<a href="#issue-dd2b978c"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="http-headerdef-sec-metadata">
