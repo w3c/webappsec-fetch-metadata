@@ -12,6 +12,8 @@ Abstract:
 Markup Shorthands: markdown yes
 </pre>
 
+<pre class="copyright">&copy;2018, Google, Inc. All rights reserved.</pre>
+
 <pre class="biblio">
 {
   "I-D.ietf-httpbis-header-structure": {
