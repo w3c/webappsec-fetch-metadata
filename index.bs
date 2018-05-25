@@ -283,6 +283,17 @@ redirects all the way back to `https://example.com/`, the final request's {{Sec-
 value would still be `cross-site` (as the redirect chain includes `https://example.net/`, which is
 still not same-site with the other URLs.
 
+Deployment Considerations {#deployment-considerations}
+======================================================
+
+Vary {#vary}
+------------
+
+If a given endpoint's response depends upon the values the client delivers in a
+<a http-header>`Sec-Metadata`</a> header, developers should be careful to include an appropriate
+`Vary` header [[RFC7231]], in order to ensure that caches handle the response appropriately. For
+example, `Vary: Accept-Encoding, Sec-Metadata`.
+
 IANA Considerations {#iana}
 ===========================
 
