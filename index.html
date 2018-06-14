@@ -1212,7 +1212,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 6bebf68aed1298eb5349b6cdea3fab1e79551a6f" name="generator">
-  <meta content="98f7c1253e8dd8a0e1606c2f443772b0c9d562b4" name="document-revision">
+  <meta content="3fbdb781dc24f846f332f030149c4bf81182b470" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1518,12 +1518,12 @@ on an in-page link would result in a request containing the following HTTP reque
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export="" id="http-headerdef-sec-metadata"><code>Sec-Metadata</code></dfn> HTTP request header containing a set of
 interesting contextual information that allows a server to make more informed decisions about how
 exactly it ought to respond to a given request.</p>
-   <p><code>Sec-Metadata</code> is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-">Structured Header</a>. Its value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1">dictionary</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. The header is parsed according to the rules laid out in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3">Section 3</a> of that document.</p>
+   <p><code>Sec-Metadata</code> is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-">Structured Header</a>. Its value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.1" id="ref-for-section-3.1">dictionary</a> <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. The header is parsed according to the rules laid out in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3">Section 3</a> of that document.</p>
    <p>The dictionary MAY contain one or more of the members defined in detail below. Servers MUST ignore
 unknown members, and members whose value is invalid.</p>
    <h4 class="heading settled" data-level="2.1.1" id="cause-member"><span class="secno">2.1.1. </span><span class="content">The <code>cause</code> Member</span><a class="self-link" href="#cause-member"></a></h4>
    <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">Navigation requests</a> will contain a dictionary member whose key is
-"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-cause"><code>cause</code></dfn>", and whose value is an <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.7" id="ref-for-section-4.7"><code>string</code></a>. Other kinds of requests will not contain a <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-cause" id="ref-for-dom-sec-metadata-cause">cause</a></code> member.</p>
+"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-cause"><code>cause</code></dfn>", and whose value is an <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7"><code>string</code></a>. Other kinds of requests will not contain a <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-cause" id="ref-for-dom-sec-metadata-cause">cause</a></code> member.</p>
    <p>Valid <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-cause" id="ref-for-dom-sec-metadata-cause①">cause</a></code> values are <code>user-activated</code> and <code>forced</code>, representing whether or not
 a given request was <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation" id="ref-for-triggered-by-user-activation">triggered by user activation</a>.</p>
    <div class="algorithm" data-algorithm="get cause">
@@ -1545,7 +1545,7 @@ Fetch so we can read it off the <a data-link-type="dfn" href="https://fetch.spec
    </div>
    <h4 class="heading settled" data-level="2.1.2" id="destination-member"><span class="secno">2.1.2. </span><span class="content">The <code>destination</code> Member</span><a class="self-link" href="#destination-member"></a></h4>
    <p>All requests will contain a dictionary member whose key is
-"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-destination"><code>destination</code></dfn>", and whose value is a <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.7" id="ref-for-section-4.7①"><code>string</code></a> representing the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a>.</p>
+"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-destination"><code>destination</code></dfn>", and whose value is a <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7①"><code>string</code></a> representing the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a>.</p>
    <p>Valid <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-destination" id="ref-for-dom-sec-metadata-destination">destination</a></code> values include all valid <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request③">request</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> values (the empty string, "<code>audio</code>", "<code>audioworklet</code>", "<code>document</code>", "<code>embed</code>", "<code>font</code>",
 "<code>image</code>", "<code>manifest</code>", "<code>object</code>", "<code>paintworklet</code>", "<code>report</code>", "<code>script</code>", "<code>serviceworker</code>",
 "<code>sharedworker</code>", "<code>style</code>", "<code>track</code>", "<code>video</code>", "<code>worker</code>", or "<code>xslt</code>").</p>
@@ -1564,7 +1564,7 @@ Sec-Metadata: ..., destination="document", ...
 </pre>
    <h4 class="heading settled" data-level="2.1.3" id="site-member"><span class="secno">2.1.3. </span><span class="content">The <code>site</code> Member</span><a class="self-link" href="#site-member"></a></h4>
    <p>All requests will contain a dictionary member whose key is
-"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-site"><code>site</code></dfn>", and whose value is an <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.7" id="ref-for-section-4.7②"><code>string</code></a> representing the relationship between the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin">origin</a> and the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origins</a> for the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url">URLs</a> in the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list">url list</a>.</p>
+"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-site"><code>site</code></dfn>", and whose value is an <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7②"><code>string</code></a> representing the relationship between the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin">origin</a> and the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origins</a> for the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url">URLs</a> in the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list">url list</a>.</p>
    <p>Valid <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-site" id="ref-for-dom-sec-metadata-site">site</a></code> values are <code>same-origin</code>, <code>same-site</code>, and <code>cross-site</code>.</p>
    <div class="algorithm" data-algorithm="get site">
      To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="get site" id="abstract-opdef-obtain-the-site-value">obtain the <code>site</code> value</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑦">request</a> (<var>r</var>): 
@@ -1587,7 +1587,7 @@ Sec-Metadata: ..., destination="document", ...
    </div>
    <h4 class="heading settled" data-level="2.1.4" id="target-member"><span class="secno">2.1.4. </span><span class="content">The <code>target</code> Member</span><a class="self-link" href="#target-member"></a></h4>
    <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request②">Navigation requests</a> will contain a dictionary member whose key is
-"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-target"><code>target</code></dfn>", and whose value is an <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.7" id="ref-for-section-4.7③"><code>string</code></a> representing the context in which the request
+"<dfn class="dfn-paneled idl-code" data-dfn-for="Sec-Metadata" data-dfn-type="dict-member" data-export="" id="dom-sec-metadata-target"><code>target</code></dfn>", and whose value is an <a data-link-type="grammar" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7③"><code>string</code></a> representing the context in which the request
 will be used. Other kinds of requests will not contain a <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-target" id="ref-for-dom-sec-metadata-target">target</a></code> member.</p>
    <p>Valid <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-target" id="ref-for-dom-sec-metadata-target①">target</a></code> values are <code>top-level</code>, <code>nested</code>, and <code>subresource</code>.</p>
    <div class="algorithm" data-algorithm="get target">
@@ -1614,7 +1614,7 @@ context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/mult
      To <dfn data-dfn-type="abstract-op" data-export="" id="abstract-opdef-set-the-sec-metadata-header-for-a-request">set the <code>Sec-Metadata</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-metadata-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> <var>r</var>: 
     <ol class="algorithm">
      <li data-md="">
-      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-①">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1①">dictionary</a>.</p>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-①">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.1" id="ref-for-section-3.1①">dictionary</a>.</p>
      <li data-md="">
       <p>If <var>r</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request④">navigation request</a>:</p>
       <ol>
@@ -1632,8 +1632,7 @@ result of <a data-link-type="abstract-op" href="#abstract-opdef-obtain-the-desti
       <p>Append an item to <var>header</var> whose key is <code class="idl"><a data-link-type="idl" href="#dom-sec-metadata-site" id="ref-for-dom-sec-metadata-site①">site</a></code>, and whose value is the result
 of <a data-link-type="abstract-op" href="#abstract-opdef-obtain-the-site-value" id="ref-for-abstract-opdef-obtain-the-site-value">obtaining the site value</a> for <var>r</var>.</p>
      <li data-md="">
-      <p>Let <var>value</var> be the result of serializing <var>header</var>.</p>
-      <p class="issue" id="issue-63c7d569"><a class="self-link" href="#issue-63c7d569"></a> I don’t see an actual serialization algorithm in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. <a href="https://github.com/httpwg/http-extensions/issues/627">&lt;https://github.com/httpwg/http-extensions/issues/627></a></p>
+      <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1">serializing</a> <var>header</var>.</p>
      <li data-md="">
       <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set" id="ref-for-concept-header-list-set">Set</a> `<a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-for-http-headerdef-sec-metadata①"><code>Sec-Metadata</code></a>`/<var>value</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list">header list</a>.</p>
     </ol>
@@ -1960,20 +1959,26 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
     <li><a href="#ref-for-triggered-by-user-activation">2.1.1. The cause Member</a> <a href="#ref-for-triggered-by-user-activation①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-section-3.1">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.1">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.1</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-section-3.1">2.1. The Sec-Metadata HTTP Request Header</a>
+    <li><a href="#ref-for-section-3.1①">2.2. Integration With Fetch</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-section-4.1">
    <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-section-4.1">2.1. The Sec-Metadata HTTP Request Header</a>
-    <li><a href="#ref-for-section-4.1①">2.2. Integration With Fetch</a>
+    <li><a href="#ref-for-section-4.1">2.2. Integration With Fetch</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-section-4.7">
-   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.7">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.7</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-section-3.7">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-section-4.7">2.1.1. The cause Member</a>
-    <li><a href="#ref-for-section-4.7①">2.1.2. The destination Member</a>
-    <li><a href="#ref-for-section-4.7②">2.1.3. The site Member</a>
-    <li><a href="#ref-for-section-4.7③">2.1.4. The target Member</a>
+    <li><a href="#ref-for-section-3.7">2.1.1. The cause Member</a>
+    <li><a href="#ref-for-section-3.7①">2.1.2. The destination Member</a>
+    <li><a href="#ref-for-section-3.7②">2.1.3. The site Member</a>
+    <li><a href="#ref-for-section-3.7③">2.1.4. The target Member</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-">
@@ -2032,8 +2037,9 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
    <li>
     <a data-link-type="biblio">[I-D.ietf-httpbis-header-structure]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-section-4.1" style="color:initial">dictionary</span>
-     <li><span class="dfn-paneled" id="term-for-section-4.7" style="color:initial">string</span>
+     <li><span class="dfn-paneled" id="term-for-section-3.1" style="color:initial">dictionary</span>
+     <li><span class="dfn-paneled" id="term-for-section-4.1" style="color:initial">serialize Structured Header</span>
+     <li><span class="dfn-paneled" id="term-for-section-3.7" style="color:initial">string</span>
      <li><span class="dfn-paneled" id="term-for-" style="color:initial">structured header</span>
     </ul>
    <li>
@@ -2069,7 +2075,6 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
   <div style="counter-reset:issue">
    <div class="issue"> We probably need to pipe this value through from HTML’s navigation algorithm to
 Fetch so we can read it off the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request">request</a> here.<a href="#issue-0e5ec91b"> ↵ </a></div>
-   <div class="issue"> I don’t see an actual serialization algorithm in <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a>. <a href="https://github.com/httpwg/http-extensions/issues/627">&lt;https://github.com/httpwg/http-extensions/issues/627></a><a href="#issue-63c7d569"> ↵ </a></div>
    <div class="issue"> Monkey patching! I should file a bug.<a href="#issue-dd2b978c"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="http-headerdef-sec-metadata">

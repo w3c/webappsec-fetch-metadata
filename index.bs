@@ -32,10 +32,12 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
         text: structured header; url: #
     for: structured header
         type: dfn
-            text: dictionary; url: #section-4.1
+            text: dictionary; url: #section-3.1
         type: grammar
-            text: identifier; url: #section-4.8
-            text: string; url: #section-4.7
+            text: identifier; url: #section-3.8
+            text: string; url: #section-3.7
+    type: abstract-op
+        text: serialize Structured Header; url: #section-4.1
 </pre>
 
 <pre class="link-defaults">
@@ -244,9 +246,7 @@ To <dfn abstract-op>set the `Sec-Metadata` header for a request</dfn>, given a [
     4.  Append an item to |header| whose key is {{Sec-Metadata/site}}, and whose value is the result
         of [$get site|obtaining the site value$] for |r|.
 
-    5.  Let |value| be the result of serializing |header|.
-
-        ISSUE(httpwg/http-extensions#627): I don't see an actual serialization algorithm in [[!I-D.ietf-httpbis-header-structure]].
+    5.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
     6.  [=header list/Set=] &#96;<a http-header>`Sec-Metadata`</a>&#96;/|value| in |r|'s [=request/header list=].
 </ol>
