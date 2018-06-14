@@ -1212,7 +1212,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 6bebf68aed1298eb5349b6cdea3fab1e79551a6f" name="generator">
-  <meta content="6d98667fa7ab994726e762f61c8d9fdb4622be97" name="document-revision">
+  <meta content="98f7c1253e8dd8a0e1606c2f443772b0c9d562b4" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1412,7 +1412,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">The Sec-Metadata HTTP Request Header</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-06-05">5 June 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-06-14">14 June 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1577,7 +1577,7 @@ Sec-Metadata: ..., destination="document", ...
        <li data-md="">
         <p>If <var>url</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin①">origin</a>, continue.</p>
        <li data-md="">
-        <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin②">origin</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="termref-for-①">registrable domain</a> is not the same as <var>url</var>’s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="termref-for-②">registrable domain</a>, return <code>cross-site</code>.</p>
+        <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin②">origin</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain">registrable domain</a> is not the same as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain①">registrable domain</a>, return <code>cross-site</code>.</p>
        <li data-md="">
         <p>Set <var>site</var> to <code>same-site</code>.</p>
       </ol>
@@ -1614,7 +1614,7 @@ context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/mult
      To <dfn data-dfn-type="abstract-op" data-export="" id="abstract-opdef-set-the-sec-metadata-header-for-a-request">set the <code>Sec-Metadata</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-metadata-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> <var>r</var>: 
     <ol class="algorithm">
      <li data-md="">
-      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-③">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1①">dictionary</a>.</p>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-①">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1①">dictionary</a>.</p>
      <li data-md="">
       <p>If <var>r</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request④">navigation request</a>:</p>
       <ol>
@@ -1983,16 +1983,16 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
     <li><a href="#termref-for-">2.2. Integration With Fetch</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-">
-   <a href="https://publicsuffix.org/list/#">https://publicsuffix.org/list/#</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#termref-for-">2.1.3. The site Member</a> <a href="#termref-for-">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-origin">
    <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-url-origin">2.1.3. The site Member</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-host-registrable-domain">
+   <a href="https://url.spec.whatwg.org/#host-registrable-domain">https://url.spec.whatwg.org/#host-registrable-domain</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-host-registrable-domain">2.1.3. The site Member</a> <a href="#ref-for-host-registrable-domain①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url">
@@ -2037,14 +2037,10 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
      <li><span class="dfn-paneled" id="term-for-" style="color:initial">structured header</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[PSL]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-①" style="color:initial">registrable domain</span>
-    </ul>
-   <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-url-origin" style="color:initial">origin</span>
+     <li><span class="dfn-paneled" id="term-for-host-registrable-domain" style="color:initial">registrable domain</span>
      <li><span class="dfn-paneled" id="term-for-concept-url" style="color:initial">url</span>
     </ul>
   </ul>
@@ -2057,8 +2053,6 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]
    <dd>Mark Nottingham; Poul-Henning Kamp. <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">Structured Headers for HTTP</a>. ID. URL: <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure</a>
-   <dt id="biblio-psl">[PSL]
-   <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc3864">[RFC3864]

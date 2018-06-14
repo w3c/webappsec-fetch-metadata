@@ -36,7 +36,6 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
         type: grammar
             text: identifier; url: #section-4.8
             text: string; url: #section-4.7
-url: https://publicsuffix.org/list/#; spec: PSL; type: dfn; text: registrable domain  
 </pre>
 
 <pre class="link-defaults">
