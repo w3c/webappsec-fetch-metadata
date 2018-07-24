@@ -1,4 +1,4 @@
-# `Sec-Metadata` (TODO: Bikeshed the name)
+# `Sec-Metadata` (TODO: [Bikeshed the name](https://github.com/mikewest/sec-metadata/issues/2))
 
 ## A Problem
 
@@ -35,11 +35,11 @@ So, what labels and values are interesting and valuable enough that we'd want to
 
 ## FAQ
 
-### Isn't [`From-Origin`](https://github.com/whatwg/fetch/issues/687) enough to handle the threats discussed above?
+### Isn't [`Cross-Origin-Resource-Policy`](https://fetch.spec.whatwg.org/#cross-origin-resource-policy-header) enough to handle the threats discussed above?
 
-No. The `From-Origin` proposal is an _a posteriori_ mitigation against a response's content falling directly into the hands of unsavory actors. That is, it takes effect client-side, once a response has been generated server-side and served across the network to the client. CSRF attacks will still reach the application and do damage. Timing attacks based both on the work the server does when responding to requests, and on the length of the delivered content itself, will still be possible client-side and through passive network observation.
+No. `Cross-Origin-Resource-Policy` is an _a posteriori_ mitigation against a response's content falling directly into the hands of unsavory actors. That is, it takes effect client-side, once a response has been generated server-side and served across the network to the client. CSRF attacks will still reach the application and do damage. Timing attacks based both on the work the server does when responding to requests, and on the length of the delivered content itself, will still be possible client-side and through passive network observation.
 
-This proposal is valuable above and beyond `From-Origin` insofar as it gives servers the opportunity to more actively filter incoming requests _a priori_, before doing any work. Applications can quickly reject requests based on testing a set of preconditions, and that work can even be lifted up above the application layer (to reverse proxies, CDNs, etc) if desired. Also, the fact that the server is capable of rejecting the request itself means that we don't need to come up with a reporting story: the server can do its own reporting to itself.
+This proposal is valuable above and beyond `Cross-Origin-Resource-Policy` insofar as it gives servers the opportunity to more actively filter incoming requests _a priori_, before doing any work. Applications can quickly reject requests based on testing a set of preconditions, and that work can even be lifted up above the application layer (to reverse proxies, CDNs, etc) if desired. Also, the fact that the server is capable of rejecting the request itself means that we don't need to come up with a reporting story: the server can do its own reporting to itself.
 
 ### What about including the request's origin?
 
