@@ -1058,9 +1058,10 @@ Possible extra rowspan handling
 			   comprising the first items of each top-level section. */
 			margin-top: 1.1rem;
 		}
-		#toc .secno {
+		#toc#toc .secno { /* Ugh, need more specificity to override base.css */
 			grid-column: 1;
 			width: auto;
+			margin-left: 0;
 		}
 		#toc .content {
 			grid-column: 2;
@@ -1211,8 +1212,8 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 6bebf68aed1298eb5349b6cdea3fab1e79551a6f" name="generator">
-  <meta content="3fbdb781dc24f846f332f030149c4bf81182b470" name="document-revision">
+  <meta content="Bikeshed version 45e8ecaee91d0279f1fcff49412103c12b49542f" name="generator">
+  <meta content="88e6d69c0fa0c1bb3947055493b9d78e70610e01" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1412,7 +1413,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">The Sec-Metadata HTTP Request Header</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-06-14">14 June 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-07-26">26 July 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1613,6 +1614,8 @@ context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/mult
    <div class="algorithm" data-algorithm="set the header">
      To <dfn data-dfn-type="abstract-op" data-export="" id="abstract-opdef-set-the-sec-metadata-header-for-a-request">set the <code>Sec-Metadata</code> header for a request<a class="self-link" href="#abstract-opdef-set-the-sec-metadata-header-for-a-request"></a></dfn>, given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> <var>r</var>: 
     <ol class="algorithm">
+     <li data-md="">
+      <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url">potentially trustworthy URL</a>, return.</p>
      <li data-md="">
       <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-①">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.1" id="ref-for-section-3.1①">dictionary</a>.</p>
      <li data-md="">
@@ -1904,6 +1907,12 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
     <li><a href="#ref-for-concept-header-list-set">2.2. Integration With Fetch</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-url">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-url">https://fetch.spec.whatwg.org/#concept-request-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-url">2.2. Integration With Fetch</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-url-list">
    <a href="https://fetch.spec.whatwg.org/#concept-request-url-list">https://fetch.spec.whatwg.org/#concept-request-url-list</a><b>Referenced in:</b>
    <ul>
@@ -1988,6 +1997,12 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
     <li><a href="#termref-for-">2.2. Integration With Fetch</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-potentially-trustworthy-url">
+   <a href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url">https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-potentially-trustworthy-url">2.2. Integration With Fetch</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-origin">
    <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
    <ul>
@@ -2020,6 +2035,7 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
      <li><span class="dfn-paneled" id="term-for-concept-request" style="color:initial">request</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-reserved-client" style="color:initial">reserved client</span>
      <li><span class="dfn-paneled" id="term-for-concept-header-list-set" style="color:initial">set</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-url" style="color:initial">url</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-url-list" style="color:initial">url list</span>
     </ul>
    <li>
@@ -2043,6 +2059,11 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
      <li><span class="dfn-paneled" id="term-for-" style="color:initial">structured header</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[secure-contexts]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-potentially-trustworthy-url" style="color:initial">potentially trustworthy url</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-url-origin" style="color:initial">origin</span>
@@ -2063,6 +2084,8 @@ the <a data-link-type="http-header" href="#http-headerdef-sec-metadata" id="ref-
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc3864">[RFC3864]
    <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://tools.ietf.org/html/rfc3864">Registration Procedures for Message Header Fields</a>. September 2004. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc3864">https://tools.ietf.org/html/rfc3864</a>
+   <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
+   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/">Secure Contexts</a>. 15 September 2016. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
    <dt id="biblio-url">[URL]
    <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
   </dl>

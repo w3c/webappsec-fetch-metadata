@@ -230,9 +230,11 @@ Integration With Fetch {#fetch-integration}
 To <dfn abstract-op>set the `Sec-Metadata` header for a request</dfn>, given a [=request=] |r|:
 
 <ol class="algorithm">
-    1.  Let |header| be a [=Structured Header=] whose value is a [=structured header/dictionary=]. 
+    1.  If |r|'s [=request/url=] is not an [=potentially trustworthy URL=], return.
 
-    2.  If |r| is a [=navigation request=]:
+    2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/dictionary=]. 
+
+    3.  If |r| is a [=navigation request=]:
 
         1.  Append an item to |header| whose key is {{Sec-Metadata/cause}}, and whose value is the
             result of [$get cause|obtaining the cause value$] for |r|.
@@ -240,15 +242,15 @@ To <dfn abstract-op>set the `Sec-Metadata` header for a request</dfn>, given a [
         2.  Append an item to |header| whose key is {{Sec-Metadata/target}}, and whose value is the
             result of [$get target|obtaining the target value$] for |r|.
 
-    3.  Append an item to |header| whose key is {{Sec-Metadata/destination}}, and whose value is the
+    4.  Append an item to |header| whose key is {{Sec-Metadata/destination}}, and whose value is the
         result of [$get destination|obtaining the destination value$] for |r|.
 
-    4.  Append an item to |header| whose key is {{Sec-Metadata/site}}, and whose value is the result
+    5.  Append an item to |header| whose key is {{Sec-Metadata/site}}, and whose value is the result
         of [$get site|obtaining the site value$] for |r|.
 
-    5.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
+    6.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
-    6.  [=header list/Set=] &#96;<a http-header>`Sec-Metadata`</a>&#96;/|value| in |r|'s [=request/header list=].
+    7.  [=header list/Set=] &#96;<a http-header>`Sec-Metadata`</a>&#96;/|value| in |r|'s [=request/header list=].
 </ol>
 </div>
 
