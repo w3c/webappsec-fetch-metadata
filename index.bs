@@ -87,7 +87,7 @@ A top-level navigation from `https://example.com` to `https://example.com/` caus
 on an in-page link would result in a request containing the following HTTP request header:
 
 ```
-Sec-Metadata: cause="user-activated", destination="document", site="same-origin", target="top-level"
+Sec-Metadata: cause="user-activated", destination="document", site="same-origin"
 ```
 
 Framework {#framework}
@@ -147,7 +147,10 @@ All requests will contain a dictionary member whose key is
 Valid {{Sec-Metadata/destination}} values include all valid [=request=] [=request/destination=]
 values (the empty string, "`audio`", "`audioworklet`", "`document`", "`embed`", "`font`",
 "`image`", "`manifest`", "`object`", "`paintworklet`", "`report`", "`script`", "`serviceworker`",
-"`sharedworker`", "`style`", "`track`", "`video`", "`worker`", or "`xslt`").
+"`sharedworker`", "`style`", "`track`", "`video`", "`worker`", "`xslt`", or "`nested-document`").
+
+ISSUE(whatwg/fetch#755): Fetch currently does not define `nested-document`. It would be ideal if
+we could add it, as the `target` member doesn't seem to be web-compatible.
 
 <div algorithm="get destination">
     To <dfn abstract-op local-lt="get destination">obtain the `destination` value</dfn> for a
@@ -195,34 +198,6 @@ Valid {{Sec-Metadata/site}} values are `same-origin`, `same-site`, and `cross-si
     3.  Return |site|.
 </div>
 
-### The `target` Member ### {#target-member}
-
-[=Navigation requests=] will contain a dictionary member whose key is
-"<dfn dict-member for="Sec-Metadata">`target`</dfn>", and whose value is an
-<a for="structured header" grammar>`string`</a> representing the context in which the request
-will be used. Other kinds of requests will not contain a {{Sec-Metadata/target}} member.
-
-Valid {{Sec-Metadata/target}} values are `top-level`, `nested`, and `subresource`.
-
-<div algorithm="get target">
-
-To <dfn abstract-op local-lt="get target">obtain the `target` value</dfn> for a [=request=] (|r|),
-run the steps below:
-
-1.  If |r| is a [=navigation request=]:
-
-    1.  If |r|'s [=request/reserved client=] is an [=environment=] whose [=target browsing context=]
-        is a [=top-level browsing context=], return `top-level`.
-
-    2.  Assert: |r|'s [=request/reserved client=] is an [=environment=] whose [=target browsing
-        context=] is a [=nested browsing context=].
-
-    3.  Return `nested`.
-
-2.  Return `null`.
-
-</div>
-
 Integration With Fetch {#fetch-integration}
 -------------------------------------------
 
@@ -238,9 +213,6 @@ To <dfn abstract-op>set the `Sec-Metadata` header for a request</dfn>, given a [
 
         1.  Append an item to |header| whose key is {{Sec-Metadata/cause}}, and whose value is the
             result of [$get cause|obtaining the cause value$] for |r|.
-
-        2.  Append an item to |header| whose key is {{Sec-Metadata/target}}, and whose value is the
-            result of [$get target|obtaining the target value$] for |r|.
 
     4.  Append an item to |header| whose key is {{Sec-Metadata/destination}}, and whose value is the
         result of [$get destination|obtaining the destination value$] for |r|.
