@@ -142,22 +142,33 @@ To <dfn abstract-op local-lt="get cause">obtain the `cause` value</dfn> for a [=
 All requests will contain a dictionary member whose key is
 "<dfn dict-member for="Sec-Metadata">`destination`</dfn>", and whose value is a
 <a for="structured header" grammar>`identifier`</a> representing the [=request=]'s
-[=request/destination=], or the empty <a for="structured header" grammar>`string`</a>.
+[=request/destination=].
 
-Valid {{Sec-Metadata/destination}} values include all valid [=request=] [=request/destination=]
-values (the empty string, "`audio`", "`audioworklet`", "`document`", "`embed`", "`font`",
-"`image`", "`manifest`", "`object`", "`paintworklet`", "`report`", "`script`", "`serviceworker`",
-"`sharedworker`", "`style`", "`track`", "`video`", "`worker`", "`xslt`", or "`nested-document`").
-
-ISSUE(whatwg/fetch#755): Fetch currently does not define `nested-document`. It would be ideal if
-we could add it, as the `target` member doesn't seem to be web-compatible.
-
-ISSUE: Perhaps we should define a specific identifier for the empty string, rather than switching
-types from `identifier` to `string` for the empty destination?
+Valid {{Sec-Metadata/destination}} values include "`audio`", "`audioworklet`", "`document`",
+"`embed`", "`empty`", "`font`", "`image`", "`manifest`", "`object`", "`paintworklet`", "`report`",
+"`script`", "`serviceworker`", "`sharedworker`", "`style`", "`track`", "`video`", "`worker`",
+"`xslt`", or "`nested-document`".
 
 <div algorithm="get destination">
     To <dfn abstract-op local-lt="get destination">obtain the `destination` value</dfn> for a
-    [=request=] (|r|), return |r|'s [=request/destination=]. 
+    [=request=] (|r|):
+
+    1.  Let |value| be |r|'s [=request/destination=].
+
+    2.  If |value| is the empty string, set |value| to "`empty`".
+
+        Note: We map the empty string onto the <a for="structured header" grammar>`identifier`</a>
+        "`empty`" to simplify processing by keeping the header's dictionary values types consistent.
+
+    3.  If |value| is "`document`", and |r|'s [=request/reserved client=] is either `null` or an
+        [=environment=] whose [=target browsing context=] is a [=nested browsing context=], set
+        |value| to "`nested-document`".
+
+        ISSUE(whatwg/fetch#755): Fetch currently does not define `nested-document`. It would be
+        ideal if we could add it. Until then, we check the request's properties in this algorithm
+        to distinguish "`document`" and "`nested-document`".
+
+    4.  Return |value|.
 </div>
 
 <pre class="example">
