@@ -1213,7 +1213,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version f9fa604b61e5fc96edf5cdebd2c04e0e69b33a7b" name="generator">
-  <meta content="279d75c9dc1117fb75581970e9fd1335e329b63c" name="document-revision">
+  <meta content="105103d775141912261dd164b16bd59b22f6d853" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1413,7 +1413,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-12-03">3 December 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-12-04">4 December 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1458,6 +1458,7 @@ pre .property::before, pre .property::after {
      <a href="#sec-priv-considerations"><span class="secno">4</span> <span class="content">Security and Privacy Considerations</span></a>
      <ol class="toc">
       <li><a href="#redirects"><span class="secno">4.1</span> <span class="content">Redirects</span></a>
+      <li><a href="#sec-prefix"><span class="secno">4.2</span> <span class="content">The <code>Sec-</code> Prefix</span></a>
      </ol>
     <li>
      <a href="#deployment-considerations"><span class="secno">5</span> <span class="content">Deployment Considerations</span></a>
@@ -1685,6 +1686,11 @@ request’s <code>Sec-Fetch-Site</code> value would be <code>cross-site</code> (
 same-site with <code>https://example.com/</code> and <code>https://subdomain.example.com/</code>). If that response
 redirects all the way back to <code>https://example.com/</code>, the final request’s <code>Sec-Fetch-Site</code> value would still be <code>cross-site</code> (as the redirect chain includes <code>https://example.net/</code>, which is
 still not same-site with the other URLs.</p>
+   <h3 class="heading settled" data-level="4.2" id="sec-prefix"><span class="secno">4.2. </span><span class="content">The <code>Sec-</code> Prefix</span><a class="self-link" href="#sec-prefix"></a></h3>
+   <p>Each of the headers defined in this document is prefixed with <code>Sec-</code>, which makes them all <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#forbidden-header-name" id="ref-for-forbidden-header-name">forbidden header names</a>, and therefore unmodifiable from JavaScript. This will prevent
+malicious websites from convincing user agents to send forged metadata along with requests,
+which should give sites a bit more confidence in their ability to respond reasonably to
+the advertised information.</p>
    <h2 class="heading settled" data-level="5" id="deployment-considerations"><span class="secno">5. </span><span class="content">Deployment Considerations</span><a class="self-link" href="#deployment-considerations"></a></h2>
    <h3 class="heading settled" data-level="5.1" id="vary"><span class="secno">5.1. </span><span class="content">Vary</span><a class="self-link" href="#vary"></a></h3>
    <p>If a given endpoint’s response depends upon the values the client delivers in a <a data-link-type="dfn" href="#fetch-metadata-headers" id="ref-for-fetch-metadata-headers①">Fetch metadata header</a>, developers should be careful to include an appropriate <code>Vary</code> header <a data-link-type="biblio" href="#biblio-rfc7231">[RFC7231]</a>, in order to ensure that caches handle the response appropriately. For example, <code>Vary: Accept-Encoding, Sec-Fetch-Site</code>.</p>
@@ -1941,6 +1947,12 @@ under HTTP’s current HPACK compression algorithms.</p>
     <li><a href="#ref-for-concept-request-destination">2.1. The Sec-Fetch-Dest HTTP Request Header</a> <a href="#ref-for-concept-request-destination①">(2)</a> <a href="#ref-for-concept-request-destination②">(3)</a> <a href="#ref-for-concept-request-destination③">(4)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-forbidden-header-name">
+   <a href="https://fetch.spec.whatwg.org/#forbidden-header-name">https://fetch.spec.whatwg.org/#forbidden-header-name</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-forbidden-header-name">4.2. The Sec- Prefix</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-header-list">
    <a href="https://fetch.spec.whatwg.org/#concept-request-header-list">https://fetch.spec.whatwg.org/#concept-request-header-list</a><b>Referenced in:</b>
    <ul>
@@ -2122,6 +2134,7 @@ under HTTP’s current HPACK compression algorithms.</p>
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-request-current-url" style="color:initial">current url</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-destination" style="color:initial">destination</span>
+     <li><span class="dfn-paneled" id="term-for-forbidden-header-name" style="color:initial">forbidden header name</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-header-list" style="color:initial">header list</span>
      <li><span class="dfn-paneled" id="term-for-concept-main-fetch" style="color:initial">main fetch</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-mode" style="color:initial">mode</span>

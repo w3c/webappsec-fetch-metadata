@@ -330,6 +330,15 @@ redirects all the way back to `https://example.com/`, the final request's `Sec-F
 value would still be `cross-site` (as the redirect chain includes `https://example.net/`, which is
 still not same-site with the other URLs.
 
+The `Sec-` Prefix {#sec-prefix}
+-------------------------------
+
+Each of the headers defined in this document is prefixed with `Sec-`, which makes them all
+[=forbidden header names=], and therefore unmodifiable from JavaScript. This will prevent
+malicious websites from convincing user agents to send forged metadata along with requests,
+which should give sites a bit more confidence in their ability to respond reasonably to
+the advertised information.
+
 Deployment Considerations {#deployment-considerations}
 ======================================================
 
