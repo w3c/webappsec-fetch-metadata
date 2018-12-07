@@ -85,7 +85,7 @@ HTTP request headers:
 ```
 Sec-Fetch-Dest: image
 Sec-Fetch-Mode: no-cors
-Sec-Fetch-Site: cross
+Sec-Fetch-Site: cross-site
 Sec-Fetch-User: ?F
 ```
 
