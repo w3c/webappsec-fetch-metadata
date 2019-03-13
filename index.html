@@ -1213,7 +1213,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version f9fa604b61e5fc96edf5cdebd2c04e0e69b33a7b" name="generator">
-  <meta content="105103d775141912261dd164b16bd59b22f6d853" name="document-revision">
+  <meta content="856dd6e3d646841904b3db156978300625c2fd06" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1413,7 +1413,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-12-04">4 December 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-03-13">13 March 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1515,7 +1515,7 @@ proxies, CDNs, etc) if desired.</p>
 HTTP request headers:</p>
 <pre>Sec-Fetch-Dest: image
 Sec-Fetch-Mode: no-cors
-Sec-Fetch-Site: cross
+Sec-Fetch-Site: cross-site
 Sec-Fetch-User: ?F
 </pre>
    <p>A top-level navigation from <code>https://example.com</code> to <code>https://example.com/</code> caused by a user’s click
@@ -1603,9 +1603,9 @@ servers SHOULD ignore this header if it contains an invalid value.</p>
 between a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">request</a> initiator’s origin and its target’s origin. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-④">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9⑤">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
 <pre>Sec-Fetch-Site = sh-token
 </pre>
-   <p>Valid <code>Sec-Fetch-Site</code> values include "<code>cross-site</code>", "<code>same-origin</code>", and "<code>same-site</code>". In order
-to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore this
-header if it contains an invalid value.</p>
+   <p>Valid <code>Sec-Fetch-Site</code> values include "<code>cross-site</code>", "<code>same-origin</code>", "<code>same-site</code>", and "<code>none</code>".
+In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
+this header if it contains an invalid value.</p>
    <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-Site`&apos;>Sec-Fetch-Site</code>">
      To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-site" id="abstract-opdef-set-site">set the <code>Sec-Fetch-Site</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a> <var>r</var>: 
     <ol class="algorithm">
@@ -1625,6 +1625,13 @@ header if it contains an invalid value.</p>
        <li data-md>
         <p>Set <var>header</var>’s value to <code>same-site</code>.</p>
       </ol>
+     <li data-md>
+      <p>If <var>r</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> that was explicitly caused by a user’s interaction with
+the user agent (by typing an address into the user agent directly, for example, or by
+clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</code>.</p>
+      <p class="issue" id="issue-db998fc3"><a class="self-link" href="#issue-db998fc3"></a> This is very hand-wavey. Surely there must be a better definition for this than <a href="https://html.spec.whatwg.org/#navigating-across-documents">HTML’s comment</a> that
+"A user agent may provide various ways for the user to explicitly cause a browsing
+context to navigate, in addition to those defined in this specification."?</p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1②">serializing</a> <var>header</var>.</p>
      <li data-md>
@@ -1974,6 +1981,12 @@ under HTTP’s current HPACK compression algorithms.</p>
     <li><a href="#ref-for-concept-request-mode">2.2. The Sec-Fetch-Mode HTTP Request Header</a> <a href="#ref-for-concept-request-mode①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-navigation-request">
+   <a href="https://fetch.spec.whatwg.org/#navigation-request">https://fetch.spec.whatwg.org/#navigation-request</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-navigation-request">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-origin">
    <a href="https://fetch.spec.whatwg.org/#concept-request-origin">https://fetch.spec.whatwg.org/#concept-request-origin</a><b>Referenced in:</b>
    <ul>
@@ -2138,6 +2151,7 @@ under HTTP’s current HPACK compression algorithms.</p>
      <li><span class="dfn-paneled" id="term-for-concept-request-header-list" style="color:initial">header list</span>
      <li><span class="dfn-paneled" id="term-for-concept-main-fetch" style="color:initial">main fetch</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-mode" style="color:initial">mode</span>
+     <li><span class="dfn-paneled" id="term-for-navigation-request" style="color:initial">navigation request</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-origin" style="color:initial">origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-request" style="color:initial">request</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-reserved-client" style="color:initial">reserved client</span>
@@ -2213,6 +2227,9 @@ under HTTP’s current HPACK compression algorithms.</p>
    <div class="issue"> Fetch currently does not define <code>nested-document</code>. It would be
 ideal if we could add it. Until then, we check the request’s properties in this algorithm
 to distinguish "<code>document</code>" and "<code>nested-document</code>". <a href="https://github.com/whatwg/fetch/issues/755">&lt;https://github.com/whatwg/fetch/issues/755></a><a href="#issue-65dc3893"> ↵ </a></div>
+   <div class="issue"> This is very hand-wavey. Surely there must be a better definition for this than <a href="https://html.spec.whatwg.org/#navigating-across-documents">HTML’s comment</a> that
+"A user agent may provide various ways for the user to explicitly cause a browsing
+context to navigate, in addition to those defined in this specification."?<a href="#issue-db998fc3"> ↵ </a></div>
    <div class="issue"> We need to pass this information into Fetch during HTML’s navigation algorithm.<a href="#issue-c2b2854b"> ↵ </a></div>
    <div class="issue"> Monkey patching! I should file a bug.<a href="#issue-dd2b978c"> ↵ </a></div>
   </div>

@@ -216,9 +216,9 @@ whose value is a [=structured header/token=]. [[!I-D.ietf-httpbis-header-structu
 Sec-Fetch-Site = sh-token
 ```
 
-Valid `Sec-Fetch-Site` values include "`cross-site`", "`same-origin`", and "`same-site`". In order
-to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore this
-header if it contains an invalid value.
+Valid `Sec-Fetch-Site` values include "`cross-site`", "`same-origin`", "`same-site`", and "`none`".
+In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
+this header if it contains an invalid value.
 
 <div algorithm="set `Sec-Fetch-Site`">
 To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=request=] |r|:
@@ -239,9 +239,18 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 
         3.  Set |header|'s value to `same-site`.
 
-    5.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
+    5.  If |r| is a [=navigation request=] that was explicitly caused by a user's interaction with
+        the user agent (by typing an address into the user agent directly, for example, or by
+        clicking a bookmark, etc.), then set |header|'s value to `none`.
 
-    6.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-Site`</a>&#96;/|value| in |r|'s
+        ISSUE: This is very hand-wavey. Surely there must be a better definition for this than
+        [HTML's comment](https://html.spec.whatwg.org/#navigating-across-documents) that
+        "A user agent may provide various ways for the user to explicitly cause a browsing
+        context to navigate, in addition to those defined in this specification."?
+
+    6.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
+
+    7.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-Site`</a>&#96;/|value| in |r|'s
         [=request/header list=].
 </ol>
 </div>
