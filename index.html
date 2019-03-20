@@ -1212,8 +1212,8 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version f9fa604b61e5fc96edf5cdebd2c04e0e69b33a7b" name="generator">
-  <meta content="856dd6e3d646841904b3db156978300625c2fd06" name="document-revision">
+  <meta content="Bikeshed version 9c9e00cfdaddb9b81439182b02ae23e5d5b65b2d" name="generator">
+  <meta content="b1c7b9eca9e2e395f9cac7254bc55c825334bea4" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1413,7 +1413,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-03-13">13 March 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-03-20">20 March 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1459,6 +1459,7 @@ pre .property::before, pre .property::after {
      <ol class="toc">
       <li><a href="#redirects"><span class="secno">4.1</span> <span class="content">Redirects</span></a>
       <li><a href="#sec-prefix"><span class="secno">4.2</span> <span class="content">The <code>Sec-</code> Prefix</span></a>
+      <li><a href="#directly-user-initiated"><span class="secno">4.3</span> <span class="content">Directly User-Initiated Requests</span></a>
      </ol>
     <li>
      <a href="#deployment-considerations"><span class="secno">5</span> <span class="content">Deployment Considerations</span></a>
@@ -1474,6 +1475,7 @@ pre .property::before, pre .property::after {
       <li><a href="#sec-fetch-site-reg"><span class="secno">6.3</span> <span class="content"><code>Sec-Fetch-Site</code> Registration</span></a>
       <li><a href="#sec-fetch-user-reg"><span class="secno">6.4</span> <span class="content"><code>Sec-Fetch-User</code> Registration</span></a>
      </ol>
+    <li><a href="#acks"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1538,7 +1540,7 @@ exposes an interesting <a data-link-type="dfn" href="https://fetch.spec.whatwg.o
 "<code>xslt</code>", and "<code>nested-document</code>".</p>
    <p>In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
 this header if it contains an invalid value.</p>
-<pre class="example" id="example-c9b5d2a2"><a class="self-link" href="#example-c9b5d2a2"></a>// <code>fetch()</code>'s destination is the empty string:
+<pre class="example" id="example-28c16331"><a class="self-link" href="#example-28c16331"></a>// <code>fetch()</code>'s destination is the empty string:
 Sec-Fetch-Dest: empty
 
 // <code>&lt;img></code>'s destination is "image"
@@ -1550,8 +1552,8 @@ Sec-Fetch-Dest: worker
 // Top-level navigations' destinations are "document"
 Sec-Fetch-Dest: document
 
-// <code>&amp;lt;iframe&amp;gt;</code> navigations' destinations are "nested-document"
-Sec-Fetch-Dest: nested-document
+// <code>&amp;lt;iframe&amp;gt;</code> navigations' destinations are "document"
+Sec-Fetch-Dest: document
 </pre>
    <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-Dest`&apos;>Sec-Fetch-Dest</code>">
      To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-dest" id="abstract-opdef-set-dest">set the <code>Sec-Fetch-Dest</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">request</a> <var>r</var>: 
@@ -1564,12 +1566,6 @@ Sec-Fetch-Dest: nested-document
       <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> is the empty string, set <var>header</var>’s value to the string
 "<code>empty</code>". Otherwise, set <var>header</var>’s value to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination②">destination</a>.</p>
       <p class="note" role="note"><span>Note:</span> We map Fetch’s empty string <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination③">destination</a> onto an explicit "<code>empty</code>" <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9②">token</a> in order to simplify processing.</p>
-     <li data-md>
-      <p>If <var>header</var>’s value is "<code>document</code>", and <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-reserved-client" id="ref-for-concept-request-reserved-client">reserved client</a> is either <code>null</code> or an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment" id="ref-for-environment">environment</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context">target browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing context</a>,
-set |header’s| to "<code>nested-document</code>".</p>
-      <p class="issue" id="issue-65dc3893"><a class="self-link" href="#issue-65dc3893"></a> Fetch currently does not define <code>nested-document</code>. It would be
-ideal if we could add it. Until then, we check the request’s properties in this algorithm
-to distinguish "<code>document</code>" and "<code>nested-document</code>". <a href="https://github.com/whatwg/fetch/issues/755">&lt;https://github.com/whatwg/fetch/issues/755></a></p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1">serializing</a> <var>header</var>.</p>
      <li data-md>
@@ -1592,6 +1588,12 @@ servers SHOULD ignore this header if it contains an invalid value.</p>
       <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-③">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9④">token</a>.</p>
      <li data-md>
       <p>Set <var>header</var>’s value to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode①">mode</a>.</p>
+     <li data-md>
+      <p>If <var>header</var>’s value is "<code>navigate</code>", and <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-reserved-client" id="ref-for-concept-request-reserved-client">reserved client</a> is either <code>null</code> or an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment" id="ref-for-environment">environment</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context">target browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing context</a>,
+set |header’s| to "<code>nested-navigate</code>".</p>
+      <p class="issue" id="issue-7995f439"><a class="self-link" href="#issue-7995f439"></a> Fetch currently does not define <code>nested-navigate</code>. It would be
+ideal if we could add it. Until then, we check the request’s properties in this algorithm
+to distinguish "<code>navigate</code>" and "<code>nested-navigate</code>". <a href="https://github.com/whatwg/fetch/issues/755">&lt;https://github.com/whatwg/fetch/issues/755></a></p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1①">serializing</a> <var>header</var>.</p>
      <li data-md>
@@ -1616,7 +1618,12 @@ this header if it contains an invalid value.</p>
      <li data-md>
       <p>Set <var>header</var>’s value to <code>same-origin</code>.</p>
      <li data-md>
-      <p>For each <var>url</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list">url list</a>:</p>
+      <p>If <var>r</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> that was explicitly caused by a user’s interaction with
+the user agent (by typing an address into the user agent directly, for example, or by
+clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</code>.</p>
+      <p class="note" role="note"><span>Note:</span> See <a href="#directly-user-initiated">§4.3 Directly User-Initiated Requests</a> for more detail on this somewhat poorly-defined step.</p>
+     <li data-md>
+      <p>If <var>header</var>’s value is not <code>none</code>, then for each <var>url</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list">url list</a>:</p>
       <ol>
        <li data-md>
         <p>If <var>url</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin">origin</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue">continue</a>.</p>
@@ -1625,13 +1632,6 @@ this header if it contains an invalid value.</p>
        <li data-md>
         <p>Set <var>header</var>’s value to <code>same-site</code>.</p>
       </ol>
-     <li data-md>
-      <p>If <var>r</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> that was explicitly caused by a user’s interaction with
-the user agent (by typing an address into the user agent directly, for example, or by
-clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</code>.</p>
-      <p class="issue" id="issue-db998fc3"><a class="self-link" href="#issue-db998fc3"></a> This is very hand-wavey. Surely there must be a better definition for this than <a href="https://html.spec.whatwg.org/#navigating-across-documents">HTML’s comment</a> that
-"A user agent may provide various ways for the user to explicitly cause a browsing
-context to navigate, in addition to those defined in this specification."?</p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1②">serializing</a> <var>header</var>.</p>
      <li data-md>
@@ -1698,6 +1698,48 @@ still not same-site with the other URLs.</p>
 malicious websites from convincing user agents to send forged metadata along with requests,
 which should give sites a bit more confidence in their ability to respond reasonably to
 the advertised information.</p>
+   <h3 class="heading settled" data-level="4.3" id="directly-user-initiated"><span class="secno">4.3. </span><span class="content">Directly User-Initiated Requests</span><a class="self-link" href="#directly-user-initiated"></a></h3>
+   <p>When <a data-link-type="abstract-op" href="#abstract-opdef-set-site" id="ref-for-abstract-opdef-set-site②">setting the <code>Sec-Fetch-Site</code> header</a>, user agents are asked to
+distinguish between navigation requests that are "explicitly caused by a user’s interaction". This
+somewhat poorly defined phrase is pulled from HTML, which <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigating-across-documents">suggests that</a> "A user agent may provide various ways for the user to explicitly cause a browsing context to
+navigate, in addition to those defined in this specification."</p>
+   <p>The goal is to distinguish between "webby" navigations that are controlled by a given (potentially
+malicious!) website (e.g. links, the <code>window.location</code> setter, form submissions, etc.), and those
+that are not (e.g. user interaction with a user agent’s address bar, bookmarks, etc). The former
+will be delivered with a <code>Sec-Fetch-Site</code> header whose value is <code>same-origin</code>, <code>same-site</code>, or <code>cross-site</code>, as appropriate. The latter will be distinguished with a value of <code>none</code>, as no
+specific site is actually responsible for the request, and it makes sense to allow servers to treat
+them as trusted, as they somehow represent a user’s direct intent.</p>
+   <p>Each user agent is likely to have a distinct set of interactions which might fall into one or the
+other category, and it will be hard to share an automated test suite for these cases. Still, it
+would be ideal to align on behavior for those which are likely to be common. Sme examples follow:</p>
+   <ul>
+    <li data-md>
+     <p>Navigation from the address bar: In the general case, this kind of navigation should be
+treated as directly user-initiated, and include <code>Sec-Fetch-Site: none</code>. It may be reasonable for
+user agents to include heuristics around pasting values into the address bar (especially if the
+"copy" action can be traced to a specific origin), and to treat such navigations distinctly from
+those which the user types themselves.</p>
+    <li data-md>
+     <p>Navigation from user agent UI (bookmarks, new tab page, etc): A user’s interaction with links in
+user agent UI should be treated similarly to their input in the user agent’s address bar,
+including <code>Sec-Fetch-Site: none</code> to demarcate the navigation as user-initiated.</p>
+    <li data-md>
+     <p>Navigation from a link’s context menu (e.g. "Open in new window"): as the link’s target is
+controlled by the page on which the link is present, user agents should treat the navigation as
+site-controlled, and set the <code>Sec-Fetch-Site</code> header appropriately for the relationship between
+the site which controls the link and the site which is being opened.</p>
+    <li data-md>
+     <p>Ctrl-click on a link: the same arguments and conclusions apply here as apply to a link’s context
+menu, discussed directly above.</p>
+    <li data-md>
+     <p>Navigation through history (e.g. a user agent’s "back" button):</p>
+    <li data-md>
+     <p>Drag-and-drop: It seems reasonable to distinguish behavior here based upon the source of the
+dragged content. If content is dragged from a tab, the user agent should be able to ascertain
+its origin, and set <code>Sec-Fetch-Site</code> accordingly. If content is dragged from elsewhere (the
+user agent’s bookmark bar, another app entirely, etc), then <code>Sec-Fetch-Site: none</code> may be
+appropriate.</p>
+   </ul>
    <h2 class="heading settled" data-level="5" id="deployment-considerations"><span class="secno">5. </span><span class="content">Deployment Considerations</span><a class="self-link" href="#deployment-considerations"></a></h2>
    <h3 class="heading settled" data-level="5.1" id="vary"><span class="secno">5.1. </span><span class="content">Vary</span><a class="self-link" href="#vary"></a></h3>
    <p>If a given endpoint’s response depends upon the values the client delivers in a <a data-link-type="dfn" href="#fetch-metadata-headers" id="ref-for-fetch-metadata-headers①">Fetch metadata header</a>, developers should be careful to include an appropriate <code>Vary</code> header <a data-link-type="biblio" href="#biblio-rfc7231">[RFC7231]</a>, in order to ensure that caches handle the response appropriately. For example, <code>Vary: Accept-Encoding, Sec-Fetch-Site</code>.</p>
@@ -1781,6 +1823,9 @@ under HTTP’s current HPACK compression algorithms.</p>
     <dd data-md>
      <p>This specification (See <a href="#sec-fetch-user-header">§2.4 The Sec-Fetch-User HTTP Request Header</a>)</p>
    </dl>
+   <h2 class="heading settled" data-level="7" id="acks"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acks"></a></h2>
+   <p>Thanks to Anne van Kesteren, Artur Janc, Dan Veditz, Łukasz Anforowicz, Mark Nottingham, and
+Roberto Clapis, who all provided substantial support in the design of this mechanism.</p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -2008,7 +2053,7 @@ under HTTP’s current HPACK compression algorithms.</p>
   <aside class="dfn-panel" data-for="term-for-concept-request-reserved-client">
    <a href="https://fetch.spec.whatwg.org/#concept-request-reserved-client">https://fetch.spec.whatwg.org/#concept-request-reserved-client</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-reserved-client">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-reserved-client">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-header-list-set">
@@ -2040,7 +2085,7 @@ under HTTP’s current HPACK compression algorithms.</p>
   <aside class="dfn-panel" data-for="term-for-environment">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment">https://html.spec.whatwg.org/multipage/webappapis.html#environment</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-environment">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-environment">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-img-element">
@@ -2052,7 +2097,7 @@ under HTTP’s current HPACK compression algorithms.</p>
   <aside class="dfn-panel" data-for="term-for-nested-browsing-context">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-nested-browsing-context">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-nested-browsing-context">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-picture-element">
@@ -2070,7 +2115,7 @@ under HTTP’s current HPACK compression algorithms.</p>
   <aside class="dfn-panel" data-for="term-for-concept-environment-target-browsing-context">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context">https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-environment-target-browsing-context">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-concept-environment-target-browsing-context">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-triggered-by-user-activation">
@@ -2224,12 +2269,9 @@ under HTTP’s current HPACK compression algorithms.</p>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> Fetch currently does not define <code>nested-document</code>. It would be
+   <div class="issue"> Fetch currently does not define <code>nested-navigate</code>. It would be
 ideal if we could add it. Until then, we check the request’s properties in this algorithm
-to distinguish "<code>document</code>" and "<code>nested-document</code>". <a href="https://github.com/whatwg/fetch/issues/755">&lt;https://github.com/whatwg/fetch/issues/755></a><a href="#issue-65dc3893"> ↵ </a></div>
-   <div class="issue"> This is very hand-wavey. Surely there must be a better definition for this than <a href="https://html.spec.whatwg.org/#navigating-across-documents">HTML’s comment</a> that
-"A user agent may provide various ways for the user to explicitly cause a browsing
-context to navigate, in addition to those defined in this specification."?<a href="#issue-db998fc3"> ↵ </a></div>
+to distinguish "<code>navigate</code>" and "<code>nested-navigate</code>". <a href="https://github.com/whatwg/fetch/issues/755">&lt;https://github.com/whatwg/fetch/issues/755></a><a href="#issue-7995f439"> ↵ </a></div>
    <div class="issue"> We need to pass this information into Fetch during HTML’s navigation algorithm.<a href="#issue-c2b2854b"> ↵ </a></div>
    <div class="issue"> Monkey patching! I should file a bug.<a href="#issue-dd2b978c"> ↵ </a></div>
   </div>
@@ -2277,6 +2319,7 @@ context to navigate, in addition to those defined in this specification."?<a hre
    <ul>
     <li><a href="#ref-for-abstract-opdef-set-site">3. Integration with Fetch</a>
     <li><a href="#ref-for-abstract-opdef-set-site①">4.1. Redirects</a>
+    <li><a href="#ref-for-abstract-opdef-set-site②">4.3. Directly User-Initiated Requests</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="http-headerdef-sec-fetch-user">

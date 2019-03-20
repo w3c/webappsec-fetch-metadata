@@ -47,6 +47,7 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
 spec:fetch; type:dfn; for:/; text:request
 spec:fetch; type:dfn; text:main fetch
 spec:url; type:dfn; for:/; text:url
+spec:html; type:dfn; text:environment
 </pre>
 
 Introduction {#intro}
@@ -137,8 +138,8 @@ Sec-Fetch-Dest: worker
 // Top-level navigations' destinations are "document"
 Sec-Fetch-Dest: document
 
-// `&lt;iframe&gt;` navigations' destinations are "nested-document"
-Sec-Fetch-Dest: nested-document
+// `&lt;iframe&gt;` navigations' destinations are "document"
+Sec-Fetch-Dest: document
 </pre>
 
 <div algorithm="set `Sec-Fetch-Dest`">
@@ -155,17 +156,9 @@ To <dfn abstract-op lt="set-dest">set the `Sec-Fetch-Dest` header</dfn> for a [=
         Note: We map Fetch's empty string [=request/destination=] onto an explicit "`empty`"
         [=structured header/token=] in order to simplify processing.
 
-    4.  If |header|'s value is "`document`", and |r|'s [=request/reserved client=] is either `null`
-        or an [=environment=] whose [=target browsing context=] is a [=nested browsing context=],
-        set |header's| to "`nested-document`".
+    4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
-        ISSUE(whatwg/fetch#755): Fetch currently does not define `nested-document`. It would be
-        ideal if we could add it. Until then, we check the request's properties in this algorithm
-        to distinguish "`document`" and "`nested-document`".
-
-    5.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
-
-    6.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-Dest`</a>&#96;/|value| in |r|'s
+    5.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-Dest`</a>&#96;/|value| in |r|'s
         [=request/header list=].
 </ol>
 </div>
@@ -196,6 +189,14 @@ To <dfn abstract-op lt="set-mode">set the `Sec-Fetch-Mode` header</dfn> for a [=
     2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
     3.  Set |header|'s value to |r|'s [=request/mode=].
+
+    4.  If |header|'s value is "`navigate`", and |r|'s [=request/reserved client=] is either `null`
+        or an [=environment=] whose [=target browsing context=] is a [=nested browsing context=],
+        set |header's| to "`nested-navigate`".
+
+        ISSUE(whatwg/fetch#755): Fetch currently does not define `nested-navigate`. It would be
+        ideal if we could add it. Until then, we check the request's properties in this algorithm
+        to distinguish "`navigate`" and "`nested-navigate`".
 
     4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
@@ -230,7 +231,13 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 
     3.  Set |header|'s value to `same-origin`.
 
-    4.  For each |url| in |r|'s [=request/url list=]:
+    4.  If |r| is a [=navigation request=] that was explicitly caused by a user's interaction with
+        the user agent (by typing an address into the user agent directly, for example, or by
+        clicking a bookmark, etc.), then set |header|'s value to `none`.
+
+        Note: See [[#directly-user-initiated]] for more detail on this somewhat poorly-defined step.
+
+    5.  If |header|'s value is not `none`, then for each |url| in |r|'s [=request/url list=]:
 
         1.  If |url| is [=same origin=] with |r|'s [=request/origin=], [=iteration/continue=].
 
@@ -239,14 +246,6 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 
         3.  Set |header|'s value to `same-site`.
 
-    5.  If |r| is a [=navigation request=] that was explicitly caused by a user's interaction with
-        the user agent (by typing an address into the user agent directly, for example, or by
-        clicking a bookmark, etc.), then set |header|'s value to `none`.
-
-        ISSUE: This is very hand-wavey. Surely there must be a better definition for this than
-        [HTML's comment](https://html.spec.whatwg.org/#navigating-across-documents) that
-        "A user agent may provide various ways for the user to explicitly cause a browsing
-        context to navigate, in addition to those defined in this specification."?
 
     6.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
@@ -348,6 +347,56 @@ malicious websites from convincing user agents to send forged metadata along wit
 which should give sites a bit more confidence in their ability to respond reasonably to
 the advertised information.
 
+Directly User-Initiated Requests {#directly-user-initiated}
+-----------------------------------------------------------
+
+When <a abstract-op lt='set-site'>setting the `Sec-Fetch-Site` header</a>, user agents are asked to
+distinguish between navigation requests that are "explicitly caused by a user's interaction". This
+somewhat poorly defined phrase is pulled from HTML, which
+[suggests that](https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigating-across-documents)
+"A user agent may provide various ways for the user to explicitly cause a browsing context to
+navigate, in addition to those defined in this specification."
+
+The goal is to distinguish between "webby" navigations that are controlled by a given (potentially
+malicious!) website (e.g. links, the `window.location` setter, form submissions, etc.), and those
+that are not (e.g. user interaction with a user agent's address bar, bookmarks, etc). The former
+will be delivered with a `Sec-Fetch-Site` header whose value is `same-origin`, `same-site`, or
+`cross-site`, as appropriate. The latter will be distinguished with a value of `none`, as no
+specific site is actually responsible for the request, and it makes sense to allow servers to treat
+them as trusted, as they somehow represent a user's direct intent.
+
+Each user agent is likely to have a distinct set of interactions which might fall into one or the
+other category, and it will be hard to share an automated test suite for these cases. Still, it
+would be ideal to align on behavior for those which are likely to be common. Sme examples follow:
+
+*   Navigation from the address bar: In the general case, this kind of navigation should be
+    treated as directly user-initiated, and include `Sec-Fetch-Site: none`. It may be reasonable for
+    user agents to include heuristics around pasting values into the address bar (especially if the
+    "copy" action can be traced to a specific origin), and to treat such navigations distinctly from
+    those which the user types themselves.
+
+*   Navigation from user agent UI (bookmarks, new tab page, etc): A user's interaction with links in
+    user agent UI should be treated similarly to their input in the user agent's address bar,
+    including `Sec-Fetch-Site: none` to demarcate the navigation as user-initiated.
+
+*   Navigation from a link's context menu (e.g. "Open in new window"): as the link's target is
+    controlled by the page on which the link is present, user agents should treat the navigation as
+    site-controlled, and set the `Sec-Fetch-Site` header appropriately for the relationship between
+    the site which controls the link and the site which is being opened.
+
+*   Ctrl-click on a link: the same arguments and conclusions apply here as apply to a link's context
+    menu, discussed directly above.
+
+*   Navigation through history (e.g. a user agent's "back" button): 
+
+*   Drag-and-drop: It seems reasonable to distinguish behavior here based upon the source of the
+    dragged content. If content is dragged from a tab, the user agent should be able to ascertain
+    its origin, and set `Sec-Fetch-Site` accordingly. If content is dragged from elsewhere (the
+    user agent's bookmark bar, another app entirely, etc), then `Sec-Fetch-Site: none` may be
+    appropriate.
+
+
+
 Deployment Considerations {#deployment-considerations}
 ======================================================
 
@@ -432,3 +481,9 @@ The permanent message header field registry should be updated with the following
 ::  Me
 :   Specification document
 ::  This specification (See [[#sec-fetch-user-header]])
+
+Acknowledgements {#acks}
+========================
+
+Thanks to Anne van Kesteren, Artur Janc, Dan Veditz, Łukasz Anforowicz, Mark Nottingham, and
+Roberto Clapis, who all provided substantial support in the design of this mechanism.
