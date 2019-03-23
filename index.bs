@@ -176,7 +176,7 @@ The <dfn http-header export>`Sec-Fetch-Mode`</dfn> HTTP request header exposes a
 Sec-Fetch-Mode = sh-token
 ```
 
-Valid `Sec-Fetch-Mode` values include "`cors`", "`navigate`", "`no-cors`", "`same-origin`",
+Valid `Sec-Fetch-Mode` values include "`cors`", "`navigate`", "`nested-navigate`", "`no-cors`", "`same-origin`",
 and "`websocket`". In order to support forward-compatibility with as-yet-unknown request types,
 servers SHOULD ignore this header if it contains an invalid value.
 
@@ -192,7 +192,7 @@ To <dfn abstract-op lt="set-mode">set the `Sec-Fetch-Mode` header</dfn> for a [=
 
     4.  If |header|'s value is "`navigate`", and |r|'s [=request/reserved client=] is either `null`
         or an [=environment=] whose [=target browsing context=] is a [=nested browsing context=],
-        set |header's| to "`nested-navigate`".
+        set |header|'s to "`nested-navigate`".
 
         ISSUE(whatwg/fetch#755): Fetch currently does not define `nested-navigate`. It would be
         ideal if we could add it. Until then, we check the request's properties in this algorithm
