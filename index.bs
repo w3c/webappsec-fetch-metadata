@@ -109,6 +109,10 @@ exposes an interesting [=request=] attribute to a server.
 The `Sec-Fetch-Dest` HTTP Request Header {#sec-fetch-dest-header}
 -----------------------------------------------------------------
 
+ISSUE(mikewest/sec-metadata#16): There are some concerns about the value this header would
+provide, particularly in the face of a Service Worker's ability to use cached responses in
+unexpected ways. It might be worth punting it to a future iteration.
+
 The <dfn http-header export>`Sec-Fetch-Dest`</dfn> HTTP request header exposes a [=request=]'s
 [=request/destination=] to a server. It is a [=Structured Header=] whose value MUST be a
 [=structured header/token=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
@@ -194,9 +198,8 @@ To <dfn abstract-op lt="set-mode">set the `Sec-Fetch-Mode` header</dfn> for a [=
         or an [=environment=] whose [=target browsing context=] is a [=nested browsing context=],
         set |header|'s to "`nested-navigate`".
 
-        ISSUE(whatwg/fetch#755): Fetch currently does not define `nested-navigate`. It would be
-        ideal if we could add it. Until then, we check the request's properties in this algorithm
-        to distinguish "`navigate`" and "`nested-navigate`".
+        NOTE: We're doing this work because Fetch does not currently define `nested-navigate`.
+        See [[#fetch-integration]].
 
     4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
@@ -274,10 +277,11 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
     
     2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
-    3.  Set |header|'s value to `true`, if |r| was [=triggered by user activation=], and `false`
-        otherwise.
+    3.  Set |header|'s value to the value of |r|'s [=request/user activation=] flag.
 
-        ISSUE: We need to pass this information into Fetch during HTML's navigation algorithm.
+        NOTE: This value is defined here, in [[#fetch-integration]]. Ideally, we can move it to Fetch.
+
+        ISSUE(mikewest/sec-metadata#19): Perhaps we should simply not send this header if the value is `false`?
 
     4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
@@ -289,6 +293,13 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 
 Integration with Fetch {#fetch-integration}
 ===========================================
+
+To support `Sec-Fetch-User`, [=request=] needs to be taught about requests which were
+[=triggered by user activation=]. Perhaps they could hold a boolean <dfn for="request">user
+activation</dfn> flag?
+
+We'll also want to resolve [whatwg/fetch#755](https://github.com/whatwg/fetch/issues/755) to
+add a "`nested-navigate`" mode to support `Sec-Fetch-Mode`.
 
 <div algorithm="set fetch metadata headers">
 To <dfn abstract-op export>set the Fetch metadata headers for a request</dfn>, given [=request=] |r|:
@@ -309,7 +320,7 @@ To <dfn abstract-op export>set the Fetch metadata headers for a request</dfn>, g
 Fetch will call into the algorithm above from within its [=main fetch=] algorithm. Please consult
 that specification for integration details [[!FETCH]].
 
-ISSUE: Monkey patching! I should file a bug.
+ISSUE(whatwg/fetch#885): Monkey patching!
 
 Security and Privacy Considerations {#sec-priv-considerations}
 ==============================================================
