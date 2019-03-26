@@ -142,7 +142,7 @@ Sec-Fetch-Dest: worker
 // Top-level navigations' destinations are "document"
 Sec-Fetch-Dest: document
 
-// `&lt;iframe&gt;` navigations' destinations are "document"
+// `<iframe>` navigations' destinations are "document"
 Sec-Fetch-Dest: document
 </pre>
 
