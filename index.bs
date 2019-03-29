@@ -262,26 +262,35 @@ The `Sec-Fetch-User` HTTP Request Header {#sec-fetch-user-header}
 -----------------------------------------------------------------
 
 The <dfn http-header export>`Sec-Fetch-User`</dfn> HTTP request header exposes whether or not a
-[=request=] was [=triggered by user activation=]. It is a [=Structured Header=] whose value is a
-[=structured header/boolean=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
+[=navigation request=] was [=triggered by user activation=]. It is a [=Structured Header=] whose
+value is a [=structured header/boolean=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
 
 ```
 Sec-Fetch-User = sh-boolean
 ```
+
+Note: The header is delivered only for [=navigation requests=], and only when its value is `true`.
+It might be reasonable to expand the headers' scope in the future to include subresource requests
+generally if we can spell out some use cases that would be improved by exposing that information
+(and if we can agree on ways to define that status for all the subresource request types we'd be
+interested in), but for the moment, navigation requests have clear use cases, and seem
+straightforward to define interoperably.
 
 <div algorithm="set `Sec-Fetch-User`">
 To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=request=] |r|:
 
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
-    
-    2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
-    3.  Set |header|'s value to the value of |r|'s [=request/user activation=] flag.
+    2.  If |r| is not a [=navigation request=], or if |r|'s [=request/user activation flag=] is
+        `false`, return.
 
-        NOTE: This value is defined here, in [[#fetch-integration]]. Ideally, we can move it to Fetch.
+    3.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
-        ISSUE(mikewest/sec-metadata#19): Perhaps we should simply not send this header if the value is `false`?
+    4.  Set |header|'s value to the value of |r|'s [=request/user activation flag=].
+
+        ISSUE(whatwg/fetch#885): This flag is defined here, in [[#fetch-integration]]. Ideally,
+        we can move it to Fetch rather than monkey-patching.
 
     4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
 
@@ -291,12 +300,27 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 </div>
 
 
-Integration with Fetch {#fetch-integration}
+Integration with Fetch and HTML {#fetch-integration}
 ===========================================
 
 To support `Sec-Fetch-User`, [=request=] needs to be taught about requests which were
-[=triggered by user activation=]. Perhaps they could hold a boolean <dfn for="request">user
-activation</dfn> flag?
+[=triggered by user activation=]:
+
+>   <strong>Monkeypatching [[FETCH]]:</strong>
+>
+>   A [=request=] has a boolean <dfn for="request">user activation flag</dfn>. Unless stated
+>   otherwise, it is `false`.
+>
+>   Note: This is only used for [=navigation requests=], and reflects whether a given navigation
+>   was [=triggered by user activation=].
+
+This flag could be populated from HTML's [=process a navigate fetch=] algorithm, perhaps by
+inserting the following step after the current algorithm's step 2:
+
+>   <strong>Monkeypatching [[HTML]]:</strong>
+>
+>   3.  If this algorithm was [=triggered by user activation=], set <var ignore>request</var>'s
+>       [=request/user activation flag=] to `true`.
 
 We'll also want to resolve [whatwg/fetch#755](https://github.com/whatwg/fetch/issues/755) to
 add a "`nested-navigate`" mode to support `Sec-Fetch-Mode`.

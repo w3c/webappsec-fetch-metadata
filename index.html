@@ -1212,8 +1212,8 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 8ac92da89bb2253e0da87e20a9b9caa745f5f5b6" name="generator">
-  <meta content="faef3fe1213a03907de82a7713eb950b0ff5fd63" name="document-revision">
+  <meta content="Bikeshed version 9c9e00cfdaddb9b81439182b02ae23e5d5b65b2d" name="generator">
+  <meta content="62b8b65113439d86e85b8ada95998052eedf6b57" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1413,7 +1413,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-03-24">24 March 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-03-29">29 March 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1453,7 +1453,7 @@ pre .property::before, pre .property::after {
       <li><a href="#sec-fetch-site-header"><span class="secno">2.3</span> <span class="content">The <code>Sec-Fetch-Site</code> HTTP Request Header</span></a>
       <li><a href="#sec-fetch-user-header"><span class="secno">2.4</span> <span class="content">The <code>Sec-Fetch-User</code> HTTP Request Header</span></a>
      </ol>
-    <li><a href="#fetch-integration"><span class="secno">3</span> <span class="content">Integration with Fetch</span></a>
+    <li><a href="#fetch-integration"><span class="secno">3</span> <span class="content">Integration with Fetch and HTML</span></a>
     <li>
      <a href="#sec-priv-considerations"><span class="secno">4</span> <span class="content">Security and Privacy Considerations</span></a>
      <ol class="toc">
@@ -1543,7 +1543,7 @@ unexpected ways. It might be worth punting it to a future iteration. <a href="ht
 "<code>xslt</code>", and "<code>nested-document</code>".</p>
    <p>In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
 this header if it contains an invalid value.</p>
-<pre class="example" id="example-28c16331"><a class="self-link" href="#example-28c16331"></a>// <code>fetch()</code>'s destination is the empty string:
+<pre class="example" id="example-5c6b56e0"><a class="self-link" href="#example-5c6b56e0"></a>// <code>fetch()</code>'s destination is the empty string:
 Sec-Fetch-Dest: empty
 
 // <code>&lt;img></code>'s destination is "image"
@@ -1555,7 +1555,7 @@ Sec-Fetch-Dest: worker
 // Top-level navigations' destinations are "document"
 Sec-Fetch-Dest: document
 
-// <code>&amp;lt;iframe&amp;gt;</code> navigations' destinations are "document"
+// <code>&lt;iframe></code> navigations' destinations are "document"
 Sec-Fetch-Dest: document
 </pre>
    <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-Dest`&apos;>Sec-Fetch-Dest</code>">
@@ -1595,7 +1595,7 @@ servers SHOULD ignore this header if it contains an invalid value.</p>
       <p>If <var>header</var>’s value is "<code>navigate</code>", and <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-reserved-client" id="ref-for-concept-request-reserved-client">reserved client</a> is either <code>null</code> or an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment" id="ref-for-environment">environment</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context">target browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing context</a>,
 set <var>header</var>’s to "<code>nested-navigate</code>".</p>
       <p class="note" role="note"><span>NOTE:</span> We’re doing this work because Fetch does not currently define <code>nested-navigate</code>.
-See <a href="#fetch-integration">§3 Integration with Fetch</a>.</p>
+See <a href="#fetch-integration">§3 Integration with Fetch and HTML</a>.</p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1①">serializing</a> <var>header</var>.</p>
      <li data-md>
@@ -1641,29 +1641,53 @@ clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</
     </ol>
    </div>
    <h3 class="heading settled" data-level="2.4" id="sec-fetch-user-header"><span class="secno">2.4. </span><span class="content">The <code>Sec-Fetch-User</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-user-header"></a></h3>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></dfn> HTTP request header exposes whether or not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑦">request</a> was <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation" id="ref-for-triggered-by-user-activation">triggered by user activation</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑥">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.11" id="ref-for-section-3.11">boolean</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></dfn> HTTP request header exposes whether or not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request①">navigation request</a> was <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation" id="ref-for-triggered-by-user-activation">triggered by user activation</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑥">Structured Header</a> whose
+value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.11" id="ref-for-section-3.11">boolean</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
 <pre>Sec-Fetch-User = sh-boolean
 </pre>
+   <p class="note" role="note"><span>Note:</span> The header is delivered only for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request②">navigation requests</a>, and only when its value is <code>true</code>.
+It might be reasonable to expand the headers' scope in the future to include subresource requests
+generally if we can spell out some use cases that would be improved by exposing that information
+(and if we can agree on ways to define that status for all the subresource request types we’d be
+interested in), but for the moment, navigation requests have clear use cases, and seem
+straightforward to define interoperably.</p>
    <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-User`&apos;>Sec-Fetch-User</code>">
-     To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-user" id="abstract-opdef-set-user">set the <code>Sec-Fetch-User</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑧">request</a> <var>r</var>: 
+     To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-user" id="abstract-opdef-set-user">set the <code>Sec-Fetch-User</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑦">request</a> <var>r</var>: 
     <ol class="algorithm">
      <li data-md>
       <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url③">potentially trustworthy URL</a>.</p>
      <li data-md>
+      <p>If <var>r</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request③">navigation request</a>, or if <var>r</var>’s <a data-link-type="dfn" href="#request-user-activation-flag" id="ref-for-request-user-activation-flag">user activation flag</a> is <code>false</code>, return.</p>
+     <li data-md>
       <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑦">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9⑦">token</a>.</p>
      <li data-md>
-      <p>Set <var>header</var>’s value to the value of <var>r</var>’s <a data-link-type="dfn" href="#request-user-activation" id="ref-for-request-user-activation">user activation</a> flag.</p>
-      <p class="note" role="note"><span>NOTE:</span> This value is defined here, in <a href="#fetch-integration">§3 Integration with Fetch</a>. Ideally, we can move it to Fetch.</p>
-      <p class="issue" id="issue-867853a4"><a class="self-link" href="#issue-867853a4"></a> Perhaps we should simply not send this header if the value is <code>false</code>? <a href="https://github.com/mikewest/sec-metadata/issues/19">&lt;https://github.com/mikewest/sec-metadata/issues/19></a></p>
+      <p>Set <var>header</var>’s value to the value of <var>r</var>’s <a data-link-type="dfn" href="#request-user-activation-flag" id="ref-for-request-user-activation-flag①">user activation flag</a>.</p>
+      <p class="issue" id="issue-43037b44"><a class="self-link" href="#issue-43037b44"></a> This flag is defined here, in <a href="#fetch-integration">§3 Integration with Fetch and HTML</a>. Ideally,
+we can move it to Fetch rather than monkey-patching. <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a></p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1③">serializing</a> <var>header</var>.</p>
      <li data-md>
       <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set" id="ref-for-concept-header-list-set③">Set</a> `<a data-link-type="http-header" href="#http-headerdef-sec-fetch-user" id="ref-for-http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></a>`/<var>value</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list③">header list</a>.</p>
     </ol>
    </div>
-   <h2 class="heading settled" data-level="3" id="fetch-integration"><span class="secno">3. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch-integration"></a></h2>
-   <p>To support <code>Sec-Fetch-User</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> needs to be taught about requests which were <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation" id="ref-for-triggered-by-user-activation①">triggered by user activation</a>. Perhaps they could hold a boolean <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-lt="user activation" data-noexport id="request-user-activation">user
-activation</dfn> flag?</p>
+   <h2 class="heading settled" data-level="3" id="fetch-integration"><span class="secno">3. </span><span class="content">Integration with Fetch and HTML</span><a class="self-link" href="#fetch-integration"></a></h2>
+   <p>To support <code>Sec-Fetch-User</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑧">request</a> needs to be taught about requests which were <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation" id="ref-for-triggered-by-user-activation①">triggered by user activation</a>:</p>
+   <blockquote>
+    <p><strong>Monkeypatching <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>:</strong></p>
+    <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> has a boolean <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-noexport id="request-user-activation-flag">user activation flag</dfn>. Unless stated
+  otherwise, it is <code>false</code>.</p>
+    <p class="note" role="note"><span>Note:</span> This is only used for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request④">navigation requests</a>, and reflects whether a given navigation
+  was <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation" id="ref-for-triggered-by-user-activation②">triggered by user activation</a>.</p>
+   </blockquote>
+   <p>This flag could be populated from HTML’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-fetch" id="ref-for-process-a-navigate-fetch">process a navigate fetch</a> algorithm, perhaps by
+inserting the following step after the current algorithm’s step 2:</p>
+   <blockquote>
+    <p><strong>Monkeypatching <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</strong></p>
+    <ol start="3">
+     <li data-md>
+      <p>If this algorithm was <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation" id="ref-for-triggered-by-user-activation③">triggered by user activation</a>, set <var>request</var>’s <a data-link-type="dfn" href="#request-user-activation-flag" id="ref-for-request-user-activation-flag②">user activation flag</a> to <code>true</code>.</p>
+    </ol>
+   </blockquote>
    <p>We’ll also want to resolve <a href="https://github.com/whatwg/fetch/issues/755">whatwg/fetch#755</a> to
 add a "<code>nested-navigate</code>" mode to support <code>Sec-Fetch-Mode</code>.</p>
    <div class="algorithm" data-algorithm="set fetch metadata headers">
@@ -1993,7 +2017,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <li><a href="#abstract-opdef-set-site">set-site</a><span>, in §2.3</span>
    <li><a href="#abstract-opdef-set-the-fetch-metadata-headers-for-a-request">set the Fetch metadata headers for a request</a><span>, in §3</span>
    <li><a href="#abstract-opdef-set-user">set-user</a><span>, in §2.4</span>
-   <li><a href="#request-user-activation">user activation</a><span>, in §3</span>
+   <li><a href="#request-user-activation-flag">user activation flag</a><span>, in §3</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-concept-request-current-url">
    <a href="https://fetch.spec.whatwg.org/#concept-request-current-url">https://fetch.spec.whatwg.org/#concept-request-current-url</a><b>Referenced in:</b>
@@ -2025,7 +2049,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
   <aside class="dfn-panel" data-for="term-for-concept-main-fetch">
    <a href="https://fetch.spec.whatwg.org/#concept-main-fetch">https://fetch.spec.whatwg.org/#concept-main-fetch</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-main-fetch">3. Integration with Fetch</a>
+    <li><a href="#ref-for-concept-main-fetch">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-mode">
@@ -2038,6 +2062,8 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <a href="https://fetch.spec.whatwg.org/#navigation-request">https://fetch.spec.whatwg.org/#navigation-request</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-navigation-request">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-navigation-request①">2.4. The Sec-Fetch-User HTTP Request Header</a> <a href="#ref-for-navigation-request②">(2)</a> <a href="#ref-for-navigation-request③">(3)</a>
+    <li><a href="#ref-for-navigation-request④">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-origin">
@@ -2053,8 +2079,8 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-concept-request①">2.1. The Sec-Fetch-Dest HTTP Request Header</a> <a href="#ref-for-concept-request②">(2)</a>
     <li><a href="#ref-for-concept-request③">2.2. The Sec-Fetch-Mode HTTP Request Header</a> <a href="#ref-for-concept-request④">(2)</a>
     <li><a href="#ref-for-concept-request⑤">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-concept-request⑥">(2)</a>
-    <li><a href="#ref-for-concept-request⑦">2.4. The Sec-Fetch-User HTTP Request Header</a> <a href="#ref-for-concept-request⑧">(2)</a>
-    <li><a href="#ref-for-concept-request⑨">3. Integration with Fetch</a> <a href="#ref-for-concept-request①⓪">(2)</a>
+    <li><a href="#ref-for-concept-request⑦">2.4. The Sec-Fetch-User HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request⑧">3. Integration with Fetch and HTML</a> <a href="#ref-for-concept-request⑨">(2)</a> <a href="#ref-for-concept-request①⓪">(3)</a>
     <li><a href="#ref-for-concept-request①①">4.1. Redirects</a>
    </ul>
   </aside>
@@ -2080,7 +2106,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-concept-request-url①">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
     <li><a href="#ref-for-concept-request-url②">2.3. The Sec-Fetch-Site HTTP Request Header</a>
     <li><a href="#ref-for-concept-request-url③">2.4. The Sec-Fetch-User HTTP Request Header</a>
-    <li><a href="#ref-for-concept-request-url④">3. Integration with Fetch</a>
+    <li><a href="#ref-for-concept-request-url④">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-url-list">
@@ -2114,6 +2140,12 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-the-picture-element">1.1. Examples</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-process-a-navigate-fetch">
+   <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-fetch">https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-fetch</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-process-a-navigate-fetch">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-same-origin">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#same-origin">https://html.spec.whatwg.org/multipage/origin.html#same-origin</a><b>Referenced in:</b>
    <ul>
@@ -2130,7 +2162,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <a href="https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation">https://html.spec.whatwg.org/multipage/interaction.html#triggered-by-user-activation</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-triggered-by-user-activation">2.4. The Sec-Fetch-User HTTP Request Header</a>
-    <li><a href="#ref-for-triggered-by-user-activation①">3. Integration with Fetch</a>
+    <li><a href="#ref-for-triggered-by-user-activation①">3. Integration with Fetch and HTML</a> <a href="#ref-for-triggered-by-user-activation②">(2)</a> <a href="#ref-for-triggered-by-user-activation③">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-section-3.11">
@@ -2185,7 +2217,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-potentially-trustworthy-url①">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
     <li><a href="#ref-for-potentially-trustworthy-url②">2.3. The Sec-Fetch-Site HTTP Request Header</a>
     <li><a href="#ref-for-potentially-trustworthy-url③">2.4. The Sec-Fetch-User HTTP Request Header</a>
-    <li><a href="#ref-for-potentially-trustworthy-url④">3. Integration with Fetch</a>
+    <li><a href="#ref-for-potentially-trustworthy-url④">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-host-registrable-domain">
@@ -2220,6 +2252,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
      <li><span class="dfn-paneled" id="term-for-the-img-element" style="color:initial">img</span>
      <li><span class="dfn-paneled" id="term-for-nested-browsing-context" style="color:initial">nested browsing context</span>
      <li><span class="dfn-paneled" id="term-for-the-picture-element" style="color:initial">picture</span>
+     <li><span class="dfn-paneled" id="term-for-process-a-navigate-fetch" style="color:initial">process a navigate fetch</span>
      <li><span class="dfn-paneled" id="term-for-same-origin" style="color:initial">same origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-environment-target-browsing-context" style="color:initial">target browsing context</span>
      <li><span class="dfn-paneled" id="term-for-triggered-by-user-activation" style="color:initial">triggered by user activation</span>
@@ -2281,7 +2314,8 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <div class="issue"> There are some concerns about the value this header would
 provide, particularly in the face of a Service Worker’s ability to use cached responses in
 unexpected ways. It might be worth punting it to a future iteration. <a href="https://github.com/mikewest/sec-metadata/issues/16">&lt;https://github.com/mikewest/sec-metadata/issues/16></a><a href="#issue-d1aaf268"> ↵ </a></div>
-   <div class="issue"> Perhaps we should simply not send this header if the value is <code>false</code>? <a href="https://github.com/mikewest/sec-metadata/issues/19">&lt;https://github.com/mikewest/sec-metadata/issues/19></a><a href="#issue-867853a4"> ↵ </a></div>
+   <div class="issue"> This flag is defined here, in <a href="#fetch-integration">§3 Integration with Fetch and HTML</a>. Ideally,
+we can move it to Fetch rather than monkey-patching. <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a><a href="#issue-43037b44"> ↵ </a></div>
    <div class="issue"> Monkey patching! <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a><a href="#issue-8b31d2cf"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="fetch-metadata-headers">
@@ -2301,7 +2335,7 @@ unexpected ways. It might be worth punting it to a future iteration. <a href="ht
   <aside class="dfn-panel" data-for="abstract-opdef-set-dest">
    <b><a href="#abstract-opdef-set-dest">#abstract-opdef-set-dest</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-set-dest">3. Integration with Fetch</a>
+    <li><a href="#ref-for-abstract-opdef-set-dest">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="http-headerdef-sec-fetch-mode">
@@ -2313,7 +2347,7 @@ unexpected ways. It might be worth punting it to a future iteration. <a href="ht
   <aside class="dfn-panel" data-for="abstract-opdef-set-mode">
    <b><a href="#abstract-opdef-set-mode">#abstract-opdef-set-mode</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-set-mode">3. Integration with Fetch</a>
+    <li><a href="#ref-for-abstract-opdef-set-mode">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="http-headerdef-sec-fetch-site">
@@ -2326,7 +2360,7 @@ unexpected ways. It might be worth punting it to a future iteration. <a href="ht
   <aside class="dfn-panel" data-for="abstract-opdef-set-site">
    <b><a href="#abstract-opdef-set-site">#abstract-opdef-set-site</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-set-site">3. Integration with Fetch</a>
+    <li><a href="#ref-for-abstract-opdef-set-site">3. Integration with Fetch and HTML</a>
     <li><a href="#ref-for-abstract-opdef-set-site①">4.1. Redirects</a>
     <li><a href="#ref-for-abstract-opdef-set-site②">4.3. Directly User-Initiated Requests</a>
    </ul>
@@ -2340,13 +2374,14 @@ unexpected ways. It might be worth punting it to a future iteration. <a href="ht
   <aside class="dfn-panel" data-for="abstract-opdef-set-user">
    <b><a href="#abstract-opdef-set-user">#abstract-opdef-set-user</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-set-user">3. Integration with Fetch</a>
+    <li><a href="#ref-for-abstract-opdef-set-user">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="request-user-activation">
-   <b><a href="#request-user-activation">#request-user-activation</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="request-user-activation-flag">
+   <b><a href="#request-user-activation-flag">#request-user-activation-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-request-user-activation">2.4. The Sec-Fetch-User HTTP Request Header</a>
+    <li><a href="#ref-for-request-user-activation-flag">2.4. The Sec-Fetch-User HTTP Request Header</a> <a href="#ref-for-request-user-activation-flag①">(2)</a>
+    <li><a href="#ref-for-request-user-activation-flag②">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
 <script>/* script-var-click-highlighting */
