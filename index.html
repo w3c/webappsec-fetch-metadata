@@ -1213,7 +1213,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 9c9e00cfdaddb9b81439182b02ae23e5d5b65b2d" name="generator">
-  <meta content="62b8b65113439d86e85b8ada95998052eedf6b57" name="document-revision">
+  <meta content="79938e05d6882a8b8a9109e3dcd8be6b88b52b2c" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1413,7 +1413,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-03-29">29 March 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-04-08">8 April 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1518,14 +1518,13 @@ HTTP request headers:</p>
 <pre>Sec-Fetch-Dest: image
 Sec-Fetch-Mode: no-cors
 Sec-Fetch-Site: cross-site
-Sec-Fetch-User: ?F
 </pre>
    <p>A top-level navigation from <code>https://example.com</code> to <code>https://example.com/</code> caused by a user’s click
 on an in-page link would result in a request containing the following HTTP request header:</p>
 <pre>Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: same-origin
-Sec-Fetch-User: ?T
+Sec-Fetch-User: ?1
 </pre>
    <h2 class="heading settled" data-level="2" id="framework"><span class="secno">2. </span><span class="content">Fetch Metadata Headers</span><a class="self-link" href="#framework"></a></h2>
    <p>The following sections define several <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="fetch-metadata-headers">fetch metadata headers</dfn>, each of which

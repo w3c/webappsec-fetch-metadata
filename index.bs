@@ -87,7 +87,6 @@ HTTP request headers:
 Sec-Fetch-Dest: image
 Sec-Fetch-Mode: no-cors
 Sec-Fetch-Site: cross-site
-Sec-Fetch-User: ?F
 ```
 
 A top-level navigation from `https://example.com` to `https://example.com/` caused by a user's click
@@ -97,7 +96,7 @@ on an in-page link would result in a request containing the following HTTP reque
 Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: same-origin
-Sec-Fetch-User: ?T
+Sec-Fetch-User: ?1
 ```
 
 Fetch Metadata Headers {#framework}
