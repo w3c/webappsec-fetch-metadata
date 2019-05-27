@@ -1,4 +1,6 @@
-# `Sec-Metadata` (TODO: [Bikeshed the name](https://github.com/mikewest/sec-metadata/issues/2))
+# Fetch Metadata
+
+**Spec**: https://w3c.github.io/webappsec-fetch-metadata/
 
 ## A Problem
 
@@ -14,13 +16,28 @@ Browsers could give servers the ability to make better decisions earlier if they
 
 ```
 // <picture>
-Sec-Metadata: initiator=imageset, destination=image, site=cross-site, target=subresource
+Sec-Fetch-Dest: image
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Site: cross-site
 
-// Top-level navigation
-Sec-Metadata: initiator="", destination=document, site=cross-site, target=top-level, cause=user-activation
+// Top-level navigtion https://example.com to https://example.com/ caused
+// by a user’s click on an in-page link:
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
 
-// <iframe> navigation
-Sec-Metadata: initiator="", destination=document, site=same-site, target=nested, cause=forced
+// Top-level navigtion from https://example.com to https://not-example.com/ caused
+// by JavaScript or <meta>:
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: cross-site
+
+// <iframe> navigtion from https://example.com to https://example.com/ caused
+// by JavaScript or <meta>:
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: nested-navigate
+Sec-Fetch-Site: same-origin
 ```
 
 So, what labels and values are interesting and valuable enough that we'd want to include them? Unsurprisingly, I have some suggestions:
