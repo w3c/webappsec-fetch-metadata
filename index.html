@@ -1029,7 +1029,7 @@ Possible extra rowspan handling
 		}
 	/* } */
 
-	@supports (display:grid) {
+	@supports (display:grid) and (display:contents) {
 		/* Use #toc over .toc to override non-@supports rules. */
 		#toc {
 			display: grid;
@@ -1212,9 +1212,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 8ac92da89bb2253e0da87e20a9b9caa745f5f5b6" name="generator">
-  <link href="https://github.com/w3c/webappsec-fetch-metadata" rel="canonical">
-  <meta content="14525210089bb33348f83c9b30ab611e20e4e705" name="document-revision">
+  <meta content="Bikeshed version 08c4b0e94d147852f66673459784d3429bb3bda1" name="generator">
+  <link href="https://w3.org/TR/fetch-metadata/" rel="canonical">
+  <meta content="561912bf8810d5904d2ae4b38d19b53587763286" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1414,17 +1414,19 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-05-29">29 May 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-09-03">3 September 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
-     <dd><a class="u-url" href="https://github.com/w3c/webappsec-fetch-metadata">https://github.com/w3c/webappsec-fetch-metadata</a>
+     <dd><a class="u-url" href="https://github.com/w3c/webappsec-fetch-metadata/">https://github.com/w3c/webappsec-fetch-metadata/</a>
+     <dt>Latest published version:
+     <dd><a href="https://w3.org/TR/fetch-metadata/">https://w3.org/TR/fetch-metadata/</a>
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-fetch-metadata/commits/master/index.bs">https://github.com/w3c/webappsec-fetch-metadata/commits/master/index.bs</a>
      <dt>Feedback:
      <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bfetch-metadata%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[fetch-metadata] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
      <dt>Issue Tracking:
-     <dd><a href="https://github.com/w3c/webappsec-fetch-metadata/issues/">GitHub</a>
+     <dd><a href="https://github.com/mikewest/sec-metadata/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editor:
      <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
@@ -1632,7 +1634,7 @@ servers SHOULD ignore this header if it contains an invalid value.</p>
       <p>If <var>header</var>’s value is "<code>navigate</code>", and <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-reserved-client" id="ref-for-concept-request-reserved-client">reserved client</a> is either <code>null</code> or an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment" id="ref-for-environment">environment</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context" id="ref-for-concept-environment-target-browsing-context">target browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context" id="ref-for-nested-browsing-context">nested browsing context</a>,
 set <var>header</var>’s to "<code>nested-navigate</code>".</p>
       <p class="note" role="note"><span>NOTE:</span> We’re doing this work because Fetch does not currently define <code>nested-navigate</code>.
-See <a href="#fetch-integration">§3 Integration with Fetch and HTML</a>.</p>
+See <a href="#fetch-integration">§ 3 Integration with Fetch and HTML</a>.</p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1①">serializing</a> <var>header</var>.</p>
      <li data-md>
@@ -1660,14 +1662,15 @@ this header if it contains an invalid value.</p>
       <p>If <var>r</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> that was explicitly caused by a user’s interaction with
 the user agent (by typing an address into the user agent directly, for example, or by
 clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</code>.</p>
-      <p class="note" role="note"><span>Note:</span> See <a href="#directly-user-initiated">§4.3 Directly User-Initiated Requests</a> for more detail on this somewhat poorly-defined step.</p>
+      <p class="note" role="note"><span>Note:</span> See <a href="#directly-user-initiated">§ 4.3 Directly User-Initiated Requests</a> for more detail on this somewhat poorly-defined step.</p>
      <li data-md>
       <p>If <var>header</var>’s value is not <code>none</code>, then for each <var>url</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list">url list</a>:</p>
       <ol>
        <li data-md>
         <p>If <var>url</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin">origin</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue">continue</a>.</p>
        <li data-md>
-        <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin①">origin</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain">registrable domain</a> is not the same as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain①">registrable domain</a>, set <var>header</var>’s value to <code>cross-site</code> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break" id="ref-for-iteration-break">break</a>.</p>
+        <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin①">origin</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme">scheme</a> is not the same as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a>, or if <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin②">origin</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain">registrable domain</a> is not the same
+as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain①">registrable domain</a>, set <var>header</var>’s value to <code>cross-site</code> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break" id="ref-for-iteration-break">break</a>.</p>
        <li data-md>
         <p>Set <var>header</var>’s value to <code>same-site</code>.</p>
       </ol>
@@ -1699,7 +1702,7 @@ straightforward to define interoperably.</p>
       <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑦">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9⑦">token</a>.</p>
      <li data-md>
       <p>Set <var>header</var>’s value to the value of <var>r</var>’s <a data-link-type="dfn" href="#request-user-activation-flag" id="ref-for-request-user-activation-flag①">user activation flag</a>.</p>
-      <p class="issue" id="issue-43037b44"><a class="self-link" href="#issue-43037b44"></a> This flag is defined here, in <a href="#fetch-integration">§3 Integration with Fetch and HTML</a>. Ideally,
+      <p class="issue" id="issue-43037b44"><a class="self-link" href="#issue-43037b44"></a> This flag is defined here, in <a href="#fetch-integration">§ 3 Integration with Fetch and HTML</a>. Ideally,
 we can move it to Fetch rather than monkey-patching. <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a></p>
      <li data-md>
       <p>Let <var>value</var> be the result of <a data-link-type="abstract-op" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-4.1" id="ref-for-section-4.1③">serializing</a> <var>header</var>.</p>
@@ -1835,7 +1838,7 @@ under HTTP’s current HPACK compression algorithms.</p>
      <p>Me</p>
     <dt data-md>Specification document
     <dd data-md>
-     <p>This specification (See <a href="#sec-fetch-dest-header">§2.1 The Sec-Fetch-Dest HTTP Request Header</a>)</p>
+     <p>This specification (See <a href="#sec-fetch-dest-header">§ 2.1 The Sec-Fetch-Dest HTTP Request Header</a>)</p>
    </dl>
    <h3 class="heading settled" data-level="6.2" id="sec-fetch-mode-reg"><span class="secno">6.2. </span><span class="content"><code>Sec-Fetch-Mode</code> Registration</span><a class="self-link" href="#sec-fetch-mode-reg"></a></h3>
    <dl>
@@ -1853,7 +1856,7 @@ under HTTP’s current HPACK compression algorithms.</p>
      <p>Me</p>
     <dt data-md>Specification document
     <dd data-md>
-     <p>This specification (See <a href="#sec-fetch-mode-header">§2.2 The Sec-Fetch-Mode HTTP Request Header</a>)</p>
+     <p>This specification (See <a href="#sec-fetch-mode-header">§ 2.2 The Sec-Fetch-Mode HTTP Request Header</a>)</p>
    </dl>
    <h3 class="heading settled" data-level="6.3" id="sec-fetch-site-reg"><span class="secno">6.3. </span><span class="content"><code>Sec-Fetch-Site</code> Registration</span><a class="self-link" href="#sec-fetch-site-reg"></a></h3>
    <dl>
@@ -1871,7 +1874,7 @@ under HTTP’s current HPACK compression algorithms.</p>
      <p>Me</p>
     <dt data-md>Specification document
     <dd data-md>
-     <p>This specification (See <a href="#sec-fetch-site-header">§2.3 The Sec-Fetch-Site HTTP Request Header</a>)</p>
+     <p>This specification (See <a href="#sec-fetch-site-header">§ 2.3 The Sec-Fetch-Site HTTP Request Header</a>)</p>
    </dl>
    <h3 class="heading settled" data-level="6.4" id="sec-fetch-user-reg"><span class="secno">6.4. </span><span class="content"><code>Sec-Fetch-User</code> Registration</span><a class="self-link" href="#sec-fetch-user-reg"></a></h3>
    <dl>
@@ -1889,7 +1892,7 @@ under HTTP’s current HPACK compression algorithms.</p>
      <p>Me</p>
     <dt data-md>Specification document
     <dd data-md>
-     <p>This specification (See <a href="#sec-fetch-user-header">§2.4 The Sec-Fetch-User HTTP Request Header</a>)</p>
+     <p>This specification (See <a href="#sec-fetch-user-header">§ 2.4 The Sec-Fetch-User HTTP Request Header</a>)</p>
    </dl>
    <h2 class="heading settled" data-level="7" id="acks"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acks"></a></h2>
    <p>Thanks to Anne van Kesteren, Artur Janc, Dan Veditz, Łukasz Anforowicz, Mark Nottingham, and
@@ -1992,7 +1995,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
   <aside class="dfn-panel" data-for="term-for-concept-request-origin">
    <a href="https://fetch.spec.whatwg.org/#concept-request-origin">https://fetch.spec.whatwg.org/#concept-request-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-concept-request-origin①">(2)</a>
+    <li><a href="#ref-for-concept-request-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-concept-request-origin①">(2)</a> <a href="#ref-for-concept-request-origin②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request">
@@ -2075,6 +2078,12 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-same-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-origin-scheme">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-origin-scheme">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-environment-target-browsing-context">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context">https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-target-browsing-context</a><b>Referenced in:</b>
    <ul>
@@ -2149,6 +2158,12 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-host-registrable-domain">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-host-registrable-domain①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
+   <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url-scheme">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
@@ -2177,6 +2192,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
      <li><span class="dfn-paneled" id="term-for-the-picture-element" style="color:initial">picture</span>
      <li><span class="dfn-paneled" id="term-for-process-a-navigate-fetch" style="color:initial">process a navigate fetch</span>
      <li><span class="dfn-paneled" id="term-for-same-origin" style="color:initial">same origin</span>
+     <li><span class="dfn-paneled" id="term-for-concept-origin-scheme" style="color:initial">scheme</span>
      <li><span class="dfn-paneled" id="term-for-concept-environment-target-browsing-context" style="color:initial">target browsing context</span>
      <li><span class="dfn-paneled" id="term-for-triggered-by-user-activation" style="color:initial">triggered by user activation</span>
     </ul>
@@ -2203,6 +2219,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-host-registrable-domain" style="color:initial">registrable domain</span>
+     <li><span class="dfn-paneled" id="term-for-concept-url-scheme" style="color:initial">scheme</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -2230,14 +2247,14 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <dt id="biblio-mnot-designing-headers">[MNOT-DESIGNING-HEADERS]
    <dd>Mark Nottingham. <a href="https://www.mnot.net/blog/2018/11/27/header_compression">Designing Headers for HTTP Compression</a>. URL: <a href="https://www.mnot.net/blog/2018/11/27/header_compression">https://www.mnot.net/blog/2018/11/27/header_compression</a>
    <dt id="biblio-rfc7231">[RFC7231]
-   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7231">https://tools.ietf.org/html/rfc7231</a>
+   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7231.html">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7231.html">https://httpwg.org/specs/rfc7231.html</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> There are some concerns about the value this header would
 provide, particularly in the face of a Service Worker’s ability to use cached responses in
 unexpected ways. It might be worth punting it to a future iteration. <a href="https://github.com/mikewest/sec-metadata/issues/16">&lt;https://github.com/mikewest/sec-metadata/issues/16></a><a href="#issue-d1aaf268"> ↵ </a></div>
-   <div class="issue"> This flag is defined here, in <a href="#fetch-integration">§3 Integration with Fetch and HTML</a>. Ideally,
+   <div class="issue"> This flag is defined here, in <a href="#fetch-integration">§ 3 Integration with Fetch and HTML</a>. Ideally,
 we can move it to Fetch rather than monkey-patching. <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a><a href="#issue-43037b44"> ↵ </a></div>
    <div class="issue"> Monkey patching! <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a><a href="#issue-8b31d2cf"> ↵ </a></div>
   </div>
