@@ -1214,7 +1214,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 08c4b0e94d147852f66673459784d3429bb3bda1" name="generator">
   <link href="https://w3.org/TR/fetch-metadata/" rel="canonical">
-  <meta content="561912bf8810d5904d2ae4b38d19b53587763286" name="document-revision">
+  <meta content="43165833dbb66890aa3739161dfc9c00dc0db09c" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1414,7 +1414,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-09-03">3 September 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-09-11">11 September 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1669,8 +1669,15 @@ clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</
        <li data-md>
         <p>If <var>url</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin">origin</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue">continue</a>.</p>
        <li data-md>
-        <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin①">origin</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme">scheme</a> is not the same as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a>, or if <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin②">origin</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain">registrable domain</a> is not the same
-as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain①">registrable domain</a>, set <var>header</var>’s value to <code>cross-site</code> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break" id="ref-for-iteration-break">break</a>.</p>
+        <p>Set <var>header</var>’s value to <code>cross-site</code> and break if any of the following are true:</p>
+        <ul>
+         <li data-md>
+          <p><var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin①">origin</a> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque">opaque origin</a>.</p>
+         <li data-md>
+          <p><var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin②">origin</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme">scheme</a> is not the same as <var>url</var>’s</p>
+         <li data-md>
+          <p><var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin③">origin</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain">registrable domain</a> is not the same as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain①">registrable domain</a></p>
+        </ul>
        <li data-md>
         <p>Set <var>header</var>’s value to <code>same-site</code>.</p>
       </ol>
@@ -1995,7 +2002,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
   <aside class="dfn-panel" data-for="term-for-concept-request-origin">
    <a href="https://fetch.spec.whatwg.org/#concept-request-origin">https://fetch.spec.whatwg.org/#concept-request-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-concept-request-origin①">(2)</a> <a href="#ref-for-concept-request-origin②">(3)</a>
+    <li><a href="#ref-for-concept-request-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-concept-request-origin①">(2)</a> <a href="#ref-for-concept-request-origin②">(3)</a> <a href="#ref-for-concept-request-origin③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request">
@@ -2058,6 +2065,12 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#nested-browsing-context</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-nested-browsing-context">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-origin-opaque">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-origin-opaque">2.3. The Sec-Fetch-Site HTTP Request Header</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-picture-element">
@@ -2130,12 +2143,6 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-section-3.9⑦">2.4. The Sec-Fetch-User HTTP Request Header</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-iteration-break">
-   <a href="https://infra.spec.whatwg.org/#iteration-break">https://infra.spec.whatwg.org/#iteration-break</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-iteration-break">2.3. The Sec-Fetch-Site HTTP Request Header</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-iteration-continue">
    <a href="https://infra.spec.whatwg.org/#iteration-continue">https://infra.spec.whatwg.org/#iteration-continue</a><b>Referenced in:</b>
    <ul>
@@ -2156,12 +2163,6 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <a href="https://url.spec.whatwg.org/#host-registrable-domain">https://url.spec.whatwg.org/#host-registrable-domain</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-host-registrable-domain">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-host-registrable-domain①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
-   <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-scheme">2.3. The Sec-Fetch-Site HTTP Request Header</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -2189,6 +2190,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
      <li><span class="dfn-paneled" id="term-for-environment" style="color:initial">environment</span>
      <li><span class="dfn-paneled" id="term-for-the-img-element" style="color:initial">img</span>
      <li><span class="dfn-paneled" id="term-for-nested-browsing-context" style="color:initial">nested browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-concept-origin-opaque" style="color:initial">opaque origin</span>
      <li><span class="dfn-paneled" id="term-for-the-picture-element" style="color:initial">picture</span>
      <li><span class="dfn-paneled" id="term-for-process-a-navigate-fetch" style="color:initial">process a navigate fetch</span>
      <li><span class="dfn-paneled" id="term-for-same-origin" style="color:initial">same origin</span>
@@ -2207,7 +2209,6 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-iteration-break" style="color:initial">break</span>
      <li><span class="dfn-paneled" id="term-for-iteration-continue" style="color:initial">continue</span>
     </ul>
    <li>
@@ -2219,7 +2220,6 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-host-registrable-domain" style="color:initial">registrable domain</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-scheme" style="color:initial">scheme</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
