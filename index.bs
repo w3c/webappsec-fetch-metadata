@@ -42,8 +42,8 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
         text: structured header; url: #
     for: structured header
         type: dfn
-            text: token; url: #section-3.9
-            text: boolean; url: #section-3.11
+            text: token; url: #section-3.7
+            text: boolean; url: #section-3.9
     type: abstract-op
         text: serialize Structured Header; url: #section-4.1
 </pre>
