@@ -164,11 +164,8 @@ To <dfn abstract-op lt="set-dest">set the `Sec-Fetch-Dest` header</dfn> for a [=
         Note: We map Fetch's empty string [=request/destination=] onto an explicit "`empty`"
         [=structured header/token=] in order to simplify processing.
 
-    4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
-
-    5.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-Dest`</a>&#96;/|value| in |r|'s
-        [=request/header list=].
-</ol>
+    4.  [=header list/Set a structured header=]
+        &#96;<a http-header>`Sec-Fetch-Dest`</a>&#96;/|header| in |r|'s [=request/header list=].
 </div>
 
 
@@ -205,10 +202,8 @@ To <dfn abstract-op lt="set-mode">set the `Sec-Fetch-Mode` header</dfn> for a [=
         NOTE: We're doing this work because Fetch does not currently define `nested-navigate`.
         See [[#fetch-integration]].
 
-    4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
-
-    5.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-Mode`</a>&#96;/|value| in |r|'s
-        [=request/header list=].
+    4.  [=header list/Set a structured header=]
+        &#96;<a http-header>`Sec-Fetch-Mode`</a>&#96;/|header| in |r|'s [=request/header list=].
 </ol>
 </div>
 
@@ -256,10 +251,8 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 
         3.  Set |header|'s value to `same-site`.
 
-    6.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
-
-    7.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-Site`</a>&#96;/|value| in |r|'s
-        [=request/header list=].
+    6.  [=header list/Set a structured header=]
+        &#96;<a http-header>`Sec-Fetch-Site`</a>&#96;/|header| in |r|'s [=request/header list=].
 </ol>
 </div>
 
@@ -298,10 +291,8 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
         ISSUE(whatwg/fetch#885): This flag is defined here, in [[#fetch-integration]]. Ideally,
         we can move it to Fetch rather than monkey-patching.
 
-    4.  Let |value| be the result of [$serialize Structured Header|serializing$] |header|.
-
-    5.  [=header list/Set=] &#96;<a http-header>`Sec-Fetch-User`</a>&#96;/|value| in |r|'s
-        [=request/header list=].
+    5.  [=header list/Set a structured header=]
+        &#96;<a http-header>`Sec-Fetch-User`</a>&#96;/|header| in |r|'s [=request/header list=].
 </ol>
 </div>
 
