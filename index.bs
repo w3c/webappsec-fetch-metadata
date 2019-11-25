@@ -281,7 +281,7 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 
     3.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
-    4.  Set |header|'s value to the value of |r|'s [=request/user activation flag=].
+    4.  Set |header|'s value to `true`.
 
         ISSUE(whatwg/fetch#885): This flag is defined here, in [[#fetch-integration]]. Ideally,
         we can move it to Fetch rather than monkey-patching.
