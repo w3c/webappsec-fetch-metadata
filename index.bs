@@ -113,10 +113,6 @@ exposes an interesting [=request=] attribute to a server.
 The `Sec-Fetch-Dest` HTTP Request Header {#sec-fetch-dest-header}
 -----------------------------------------------------------------
 
-ISSUE(mikewest/sec-metadata#16): There are some concerns about the value this header would
-provide, particularly in the face of a Service Worker's ability to use cached responses in
-unexpected ways. It might be worth punting it to a future iteration.
-
 The <dfn http-header export>`Sec-Fetch-Dest`</dfn> HTTP request header exposes a [=request=]'s
 [=request/destination=] to a server. It is a [=Structured Header=] whose value MUST be a
 [=structured header/token=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
@@ -155,7 +151,7 @@ To <dfn abstract-op lt="set-dest">set the `Sec-Fetch-Dest` header</dfn> for a [=
 
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
-    
+
     2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
     3.  If |r|'s [=request/destination=] is the empty string, set |header|'s value to the string
@@ -190,7 +186,7 @@ To <dfn abstract-op lt="set-mode">set the `Sec-Fetch-Mode` header</dfn> for a [=
 
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
-    
+
     2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
     3.  Set |header|'s value to |r|'s [=request/mode=].
@@ -228,7 +224,7 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
-    
+
     2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
 
     3.  Set |header|'s value to `same-origin`.

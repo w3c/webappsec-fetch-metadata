@@ -1212,9 +1212,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version b76a1f3caa65320a39ee72dbf2680ea887ace619" name="generator">
+  <meta content="Bikeshed version 08c4b0e94d147852f66673459784d3429bb3bda1" name="generator">
   <link href="https://w3.org/TR/fetch-metadata/" rel="canonical">
-  <meta content="04cbc361af4df1dae7d2e144f5ae82f1c44d7cb8" name="document-revision">
+  <meta content="e06ac9fc9a72097c7486f43426bcf03e95d26f45" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1414,7 +1414,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-10-04">4 October 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-11-25">25 November 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1426,7 +1426,7 @@ pre .property::before, pre .property::after {
      <dt>Feedback:
      <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bfetch-metadata%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[fetch-metadata] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
      <dt>Issue Tracking:
-     <dd><a href="https://github.com/w3c/webappsec-fetch-metadata/issues/">GitHub</a>
+     <dd><a href="https://github.com/mikewest/sec-metadata/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editor:
      <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
@@ -1570,9 +1570,6 @@ Sec-Fetch-User: ?1
    <p>The following sections define several <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="fetch-metadata-headers">fetch metadata headers</dfn>, each of which
 exposes an interesting <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> attribute to a server.</p>
    <h3 class="heading settled" data-level="2.1" id="sec-fetch-dest-header"><span class="secno">2.1. </span><span class="content">The <code>Sec-Fetch-Dest</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-dest-header"></a></h3>
-   <p class="issue" id="issue-d1aaf268"><a class="self-link" href="#issue-d1aaf268"></a> There are some concerns about the value this header would
-provide, particularly in the face of a Service Worker’s ability to use cached responses in
-unexpected ways. It might be worth punting it to a future iteration. <a href="https://github.com/mikewest/sec-metadata/issues/16">&lt;https://github.com/mikewest/sec-metadata/issues/16></a></p>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-dest"><code>Sec-Fetch-Dest</code></dfn> HTTP request header exposes a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a> to a server. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
 <pre>Sec-Fetch-Dest = sh-token
 </pre>
@@ -1672,7 +1669,7 @@ clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</
          <li data-md>
           <p><var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin②">origin</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme">scheme</a> is not the same as <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a></p>
          <li data-md>
-          <p><var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin③">origin</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host">host</a> is not <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-same-site" id="ref-for-host-same-site">same site</a> with <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host" id="ref-for-concept-url-host">host</a></p>
+          <p><var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin③">origin</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host">host</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site">same site</a> with <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host" id="ref-for-concept-url-host">host</a></p>
         </ul>
        <li data-md>
         <p>Set <var>header</var>’s value to <code>same-site</code>.</p>
@@ -2089,6 +2086,12 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-same-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-same-site">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#same-site">https://html.spec.whatwg.org/multipage/origin.html#same-site</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-same-site">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin-scheme">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme</a><b>Referenced in:</b>
    <ul>
@@ -2154,12 +2157,6 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-concept-url-host">2.3. The Sec-Fetch-Site HTTP Request Header</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-host-same-site">
-   <a href="https://url.spec.whatwg.org/#host-same-site">https://url.spec.whatwg.org/#host-same-site</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-host-same-site">2.3. The Sec-Fetch-Site HTTP Request Header</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
    <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
    <ul>
@@ -2196,6 +2193,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
      <li><span class="dfn-paneled" id="term-for-the-picture-element" style="color:initial">picture</span>
      <li><span class="dfn-paneled" id="term-for-process-a-navigate-fetch" style="color:initial">process a navigate fetch</span>
      <li><span class="dfn-paneled" id="term-for-same-origin" style="color:initial">same origin</span>
+     <li><span class="dfn-paneled" id="term-for-same-site" style="color:initial">same site</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-scheme" style="color:initial">scheme</span>
      <li><span class="dfn-paneled" id="term-for-concept-environment-target-browsing-context" style="color:initial">target browsing context</span>
      <li><span class="dfn-paneled" id="term-for-triggered-by-user-activation" style="color:initial">triggered by user activation</span>
@@ -2221,7 +2219,6 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-url-host" style="color:initial">host</span>
-     <li><span class="dfn-paneled" id="term-for-host-same-site" style="color:initial">same site</span>
      <li><span class="dfn-paneled" id="term-for-concept-url-scheme" style="color:initial">scheme</span>
     </ul>
   </ul>
@@ -2254,9 +2251,6 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> There are some concerns about the value this header would
-provide, particularly in the face of a Service Worker’s ability to use cached responses in
-unexpected ways. It might be worth punting it to a future iteration. <a href="https://github.com/mikewest/sec-metadata/issues/16">&lt;https://github.com/mikewest/sec-metadata/issues/16></a><a href="#issue-d1aaf268"> ↵ </a></div>
    <div class="issue"> This flag is defined here, in <a href="#fetch-integration">§ 3 Integration with Fetch and HTML</a>. Ideally,
 we can move it to Fetch rather than monkey-patching. <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a><a href="#issue-43037b44"> ↵ </a></div>
    <div class="issue"> Monkey patching! <a href="https://github.com/whatwg/fetch/issues/885">&lt;https://github.com/whatwg/fetch/issues/885></a><a href="#issue-8b31d2cf"> ↵ </a></div>
