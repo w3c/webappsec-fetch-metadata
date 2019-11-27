@@ -20,20 +20,20 @@ Sec-Fetch-Dest: image
 Sec-Fetch-Mode: no-cors
 Sec-Fetch-Site: cross-site
 
-// Top-level navigtion https://example.com to https://example.com/ caused
+// Top-level navigation https://example.com to https://example.com/ caused
 // by a user’s click on an in-page link:
 Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: same-origin
 Sec-Fetch-User: ?1
 
-// Top-level navigtion from https://example.com to https://not-example.com/ caused
+// Top-level navigation from https://example.com to https://not-example.com/ caused
 // by JavaScript or <meta>:
 Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: cross-site
 
-// <iframe> navigtion from https://example.com to https://example.com/ caused
+// <iframe> navigation from https://example.com to https://example.com/ caused
 // by JavaScript or <meta>:
 Sec-Fetch-Dest: document
 Sec-Fetch-Mode: nested-navigate
