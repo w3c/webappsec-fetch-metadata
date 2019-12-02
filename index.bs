@@ -238,13 +238,11 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 
         1.  If |url| is [=same origin=] with |r|'s [=request/origin=], [=iteration/continue=].
 
-        2.  Set |header|'s value to `cross-site` and break if any of the following are true:
+        2.  Set |header|'s value to `cross-site`.
+        
+        3.  If |r|'s [=request/origin=] is not [=same site=] with |url|'s [=url/origin=], then break.
 
-            *  |r|'s [=request/origin=] is an [=opaque origin=]
-            *  |r|'s [=request/origin=]'s [=origin/scheme=] is not the same as |url|'s [=url/scheme=]
-            *  |r|'s [=request/origin=]'s [=origin/host=] is not [=same site=] with |url|'s [=url/host=]
-
-        3.  Set |header|'s value to `same-site`.
+        4.  Set |header|'s value to `same-site`.
 
     6.  [=header list/Set a structured header=]
         &#96;<a http-header>`Sec-Fetch-Site`</a>&#96;/|header| in |r|'s [=request/header list=].
