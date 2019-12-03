@@ -240,7 +240,7 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 
         2.  Set |header|'s value to `cross-site`.
         
-        3.  If |r|'s [=request/origin=] is not [=same site=] with |url|'s [=url/origin=], then break.
+        3.  If |r|'s [=request/origin=] is not [=same site=] with |url|'s [=url/origin=], then [=iteration/break=].
 
         4.  Set |header|'s value to `same-site`.
 
