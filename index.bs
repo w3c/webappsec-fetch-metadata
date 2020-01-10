@@ -281,9 +281,6 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 
     4.  Set |header|'s value to `true`.
 
-        ISSUE(whatwg/fetch#885): This flag is defined here, in [[#fetch-integration]]. Ideally,
-        we can move it to Fetch rather than monkey-patching.
-
     5.  [=header list/Set a structured header=]
         &#96;<a http-header>`Sec-Fetch-User`</a>&#96;/|header| in |r|'s [=request/header list=].
 </ol>
@@ -304,6 +301,8 @@ To support `Sec-Fetch-User`, [=request=] needs to be taught about requests which
 >   Note: This is only used for [=navigation requests=], and reflects whether a given navigation
 >   was [=triggered by user activation=].
 
+ISSUE(whatwg/fetch#993): This should be defined in Fetch.
+
 This flag could be populated from HTML's [=process a navigate fetch=] algorithm, perhaps by
 inserting the following step after the current algorithm's step 2:
 
@@ -312,8 +311,7 @@ inserting the following step after the current algorithm's step 2:
 >   3.  If this algorithm was [=triggered by user activation=], set <var ignore>request</var>'s
 >       [=request/user activation flag=] to `true`.
 
-We'll also want to resolve [whatwg/fetch#755](https://github.com/whatwg/fetch/issues/755) to
-add a "`nested-navigate`" mode to support `Sec-Fetch-Mode`.
+ISSUE(whatwg/html#5203): This should be defined in HTML.
 
 <div algorithm="set fetch metadata headers">
 To <dfn abstract-op export>set the Fetch metadata headers for a request</dfn>, given [=request=] |r|:
@@ -334,7 +332,7 @@ To <dfn abstract-op export>set the Fetch metadata headers for a request</dfn>, g
 Fetch will call into the algorithm above from within its [=main fetch=] algorithm. Please consult
 that specification for integration details [[!FETCH]].
 
-ISSUE(whatwg/fetch#885): Monkey patching!
+ISSUE(whatwg/fetch#993): This should be called from in Fetch.
 
 Security and Privacy Considerations {#sec-priv-considerations}
 ==============================================================
