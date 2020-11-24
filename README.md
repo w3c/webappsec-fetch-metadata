@@ -35,8 +35,8 @@ Sec-Fetch-Site: cross-site
 
 // <iframe> navigation from https://example.com to https://example.com/ caused
 // by JavaScript or <meta>:
-Sec-Fetch-Dest: document
-Sec-Fetch-Mode: nested-navigate
+Sec-Fetch-Dest: iframe
+Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: same-origin
 ```
 
