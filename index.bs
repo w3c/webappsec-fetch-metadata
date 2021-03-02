@@ -307,8 +307,8 @@ inserting the following step after the current algorithm's step 2:
 
 ISSUE(whatwg/html#5203): This should be defined in HTML.
 
-<div algorithm="set fetch metadata headers">
-To <dfn abstract-op export>set the Fetch metadata headers for a request</dfn>, given [=request=] |r|:
+<div algorithm="append fetch metadata headers">
+To <dfn abstract-op export>append the Fetch metadata headers for a request</dfn>, given [=request=] |r|:
 
 <ol class="algorithm">
     1.  If |r|'s [=request/url=] is not an [=potentially trustworthy URL=], return.
@@ -323,8 +323,8 @@ To <dfn abstract-op export>set the Fetch metadata headers for a request</dfn>, g
 </ol>
 </div>
 
-Fetch will call into the algorithm above from within its [=main fetch=] algorithm. Please consult
-that specification for integration details [[!FETCH]].
+Fetch will call into the algorithm above from within its "HTTP-network-or-cache fetch" algorithm.
+Please consult that specification for integration details [[!FETCH]].
 
 ISSUE(whatwg/fetch#993): This should be called from in Fetch.
 
