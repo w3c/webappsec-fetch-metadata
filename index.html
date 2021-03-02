@@ -1486,7 +1486,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
   <link href="https://www.w3.org/TR/fetch-metadata/" rel="canonical">
-  <meta content="93915454d1aaf3b557b623fa306536dda5a70c36" name="document-revision">
+  <meta content="bbc55cd1e3ae1c01231d447f7649fded10632c52" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -2307,7 +2307,7 @@ clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</
      </div>
     </div>
    </div>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></dfn> HTTP request header exposes whether or not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request①">navigation request</a> was <a data-link-type="dfn">triggered by user activation</a>. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑥">Structured Header</a> whose
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></dfn> HTTP request header exposes whether or not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request①">navigation request</a> was triggered by user activation. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑥">Structured Header</a> whose
 value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9">boolean</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
 <pre>Sec-Fetch-User = sh-boolean
 </pre>
@@ -2323,7 +2323,7 @@ straightforward to define interoperably.</p>
      <li data-md>
       <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url③">potentially trustworthy URL</a>.</p>
      <li data-md>
-      <p>If <var>r</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request③">navigation request</a>, or if <var>r</var>’s <a data-link-type="dfn" href="#request-user-activation-flag" id="ref-for-request-user-activation-flag">user activation flag</a> is <code>false</code>, return.</p>
+      <p>If <var>r</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request③">navigation request</a>, or if <var>r</var>’s <a data-link-type="dfn" href="#request-user-activation" id="ref-for-request-user-activation">user activation</a> is <code>false</code>, return.</p>
      <li data-md>
       <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑦">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7⑦">token</a>.</p>
      <li data-md>
@@ -2333,13 +2333,13 @@ straightforward to define interoperably.</p>
     </ol>
    </div>
    <h2 class="heading settled" data-level="3" id="fetch-integration"><span class="secno">3. </span><span class="content">Integration with Fetch and HTML</span><a class="self-link" href="#fetch-integration"></a></h2>
-   <p>To support <code>Sec-Fetch-User</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑧">request</a> needs to be taught about requests which were <a data-link-type="dfn">triggered by user activation</a>:</p>
+   <p>To support <code>Sec-Fetch-User</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑧">request</a> needs to be taught about requests which were
+triggered by user activation:</p>
    <blockquote>
     <p><strong>Monkeypatching <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>:</strong></p>
-    <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> has a boolean <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-noexport id="request-user-activation-flag">user activation flag</dfn>. Unless stated
+    <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> has a boolean <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-noexport id="request-user-activation">user activation</dfn>. Unless stated
   otherwise, it is <code>false</code>.</p>
-    <p class="note" role="note"><span>Note:</span> This is only used for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request④">navigation requests</a>, and reflects whether a given navigation
-  was <a data-link-type="dfn">triggered by user activation</a>.</p>
+    <p class="note" role="note"><span>Note:</span> This is only used for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request④">navigation requests</a>.</p>
    </blockquote>
    <p class="issue" id="issue-31e10e5c"><a class="self-link" href="#issue-31e10e5c"></a> This should be defined in Fetch. <a href="https://github.com/whatwg/fetch/issues/993">&lt;https://github.com/whatwg/fetch/issues/993></a></p>
    <p>This flag could be populated from HTML’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-fetch" id="ref-for-process-a-navigate-fetch">process a navigate fetch</a> algorithm, perhaps by
@@ -2348,7 +2348,7 @@ inserting the following step after the current algorithm’s step 2:</p>
     <p><strong>Monkeypatching <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</strong></p>
     <ol start="3">
      <li data-md>
-      <p>If this algorithm was <a data-link-type="dfn">triggered by user activation</a>, set <var>request</var>’s <a data-link-type="dfn" href="#request-user-activation-flag" id="ref-for-request-user-activation-flag①">user activation flag</a> to <code>true</code>.</p>
+      <p>If <var>sourceBrowsingContext</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#windowproxy" id="ref-for-windowproxy">WindowProxy</a></code>'s <code>[[Window]]</code> value has <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation">transient activation</a>, then set <var>request</var>’s <a data-link-type="dfn" href="#request-user-activation" id="ref-for-request-user-activation①">user activation</a> to true.</p>
     </ol>
    </blockquote>
    <p class="issue" id="issue-b1fabf90"><a class="self-link" href="#issue-b1fabf90"></a> This should be defined in HTML. <a href="https://github.com/whatwg/html/issues/5203">&lt;https://github.com/whatwg/html/issues/5203></a></p>
@@ -2565,7 +2565,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <li><a href="#abstract-opdef-set-mode">set-mode</a><span>, in §2.2</span>
    <li><a href="#abstract-opdef-set-site">set-site</a><span>, in §2.3</span>
    <li><a href="#abstract-opdef-set-user">set-user</a><span>, in §2.4</span>
-   <li><a href="#request-user-activation-flag">user activation flag</a><span>, in §3</span>
+   <li><a href="#request-user-activation">user activation</a><span>, in §3</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-concept-request-current-url">
    <a href="https://fetch.spec.whatwg.org/#concept-request-current-url">https://fetch.spec.whatwg.org/#concept-request-current-url</a><b>Referenced in:</b>
@@ -2652,6 +2652,12 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-concept-request-url-list①">4.1. Redirects</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-windowproxy">
+   <a href="https://html.spec.whatwg.org/multipage/window-object.html#windowproxy">https://html.spec.whatwg.org/multipage/window-object.html#windowproxy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-windowproxy">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-the-img-element">
    <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element</a><b>Referenced in:</b>
    <ul>
@@ -2680,6 +2686,12 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <a href="https://html.spec.whatwg.org/multipage/origin.html#same-site">https://html.spec.whatwg.org/multipage/origin.html#same-site</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-same-site">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-transient-activation">
+   <a href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation">https://html.spec.whatwg.org/multipage/interaction.html#transient-activation</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-transient-activation">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-section-3.9">
@@ -2754,11 +2766,13 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-windowproxy">WindowProxy</span>
      <li><span class="dfn-paneled" id="term-for-the-img-element">img</span>
      <li><span class="dfn-paneled" id="term-for-the-picture-element">picture</span>
      <li><span class="dfn-paneled" id="term-for-process-a-navigate-fetch">process a navigate fetch</span>
      <li><span class="dfn-paneled" id="term-for-same-origin">same origin</span>
      <li><span class="dfn-paneled" id="term-for-same-site">same site</span>
+     <li><span class="dfn-paneled" id="term-for-transient-activation">transient activation</span>
     </ul>
    <li>
     <a data-link-type="biblio">[I-D.ietf-httpbis-header-structure]</a> defines the following terms:
@@ -2877,11 +2891,11 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     <li><a href="#ref-for-abstract-opdef-set-user">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="request-user-activation-flag">
-   <b><a href="#request-user-activation-flag">#request-user-activation-flag</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="request-user-activation">
+   <b><a href="#request-user-activation">#request-user-activation</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-request-user-activation-flag">2.4. The Sec-Fetch-User HTTP Request Header</a>
-    <li><a href="#ref-for-request-user-activation-flag①">3. Integration with Fetch and HTML</a>
+    <li><a href="#ref-for-request-user-activation">2.4. The Sec-Fetch-User HTTP Request Header</a>
+    <li><a href="#ref-for-request-user-activation①">3. Integration with Fetch and HTML</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
