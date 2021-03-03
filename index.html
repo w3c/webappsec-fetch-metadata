@@ -1,0 +1,1568 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Fetch Metadata Request Headers</title>
+  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
+  <meta content="Bikeshed version b94c7e755, updated Fri Feb 19 16:28:59 2021 -0800" name="generator">
+  <link href="https://www.w3.org/TR/fetch-metadata/" rel="canonical">
+  <meta content="24f66586e6f9acbb3f3e66b3c3bd32449e9b5dc8" name="document-revision">
+<style>/* style-autolinks */
+
+.css.css, .property.property, .descriptor.descriptor {
+    color: var(--a-normal-text);
+    font-size: inherit;
+    font-family: inherit;
+}
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
+}</style>
+<style>/* style-colors */
+
+/* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
+:root {
+    color-scheme: light dark;
+
+    --text: black;
+    --bg: white;
+
+    --unofficial-watermark: url(https://www.w3.org/StyleSheets/TR/2016/logos/UD-watermark);
+
+    --logo-bg: #1a5e9a;
+    --logo-active-bg: #c00;
+    --logo-text: white;
+
+    --tocnav-normal-text: #707070;
+    --tocnav-normal-bg: var(--bg);
+    --tocnav-hover-text: var(--tocnav-normal-text);
+    --tocnav-hover-bg: #f8f8f8;
+    --tocnav-active-text: #c00;
+    --tocnav-active-bg: var(--tocnav-normal-bg);
+
+    --tocsidebar-text: var(--text);
+    --tocsidebar-bg: #f7f8f9;
+    --tocsidebar-shadow: rgba(0,0,0,.1);
+    --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+    --toclink-text: var(--text);
+    --toclink-underline: #3980b5;
+    --toclink-visited-text: var(--toclink-text);
+    --toclink-visited-underline: #054572;
+
+    --heading-text: #005a9c;
+
+    --hr-text: var(--text);
+
+    --algo-border: #def;
+
+    --del-text: red;
+    --del-bg: transparent;
+    --ins-text: #080;
+    --ins-bg: transparent;
+
+    --a-normal-text: #034575;
+    --a-normal-underline: #707070;
+    --a-visited-text: var(--a-normal-text);
+    --a-visited-underline: #bbb;
+    --a-hover-bg: rgba(75%, 75%, 75%, .25);
+    --a-active-text: #c00;
+    --a-active-underline: #c00;
+
+    --blockquote-border: silver;
+    --blockquote-bg: transparent;
+    --blockquote-text: currentcolor;
+
+    --issue-border: #e05252;
+    --issue-bg: #fbe9e9;
+    --issue-text: var(--text);
+    --issueheading-text: #831616;
+
+    --example-border: #e0cb52;
+    --example-bg: #fcfaee;
+    --example-text: var(--text);
+    --exampleheading-text: #574b0f;
+
+    --note-border: #52e052;
+    --note-bg: #e9fbe9;
+    --note-text: var(--text);
+    --noteheading-text: hsl(120, 70%, 30%);
+    --notesummary-underline: silver;
+
+    --assertion-border: #aaa;
+    --assertion-bg: #eee;
+    --assertion-text: black;
+
+    --advisement-border: orange;
+    --advisement-bg: #fec;
+    --advisement-text: var(--text);
+    --advisementheading-text: #b35f00;
+
+    --warning-border: red;
+    --warning-bg: hsla(40,100%,50%,0.95);
+    --warning-text: var(--text);
+
+    --amendment-border: #330099;
+    --amendment-bg: #F5F0FF;
+    --amendment-text: var(--text);
+    --amendmentheading-text: #220066;
+
+    --def-border: #8ccbf2;
+    --def-bg: #def;
+    --def-text: var(--text);
+    --defrow-border: #bbd7e9;
+
+    --datacell-border: silver;
+
+    --indexinfo-text: #707070;
+
+    --indextable-hover-text: black;
+    --indextable-hover-bg: #f7f8f9;
+
+    --outdatedspec-bg: rgba(0, 0, 0, .5);
+    --outdatedspec-text: black;
+    --outdated-bg: maroon;
+    --outdated-text: white;
+    --outdated-shadow: red;
+
+    --editedrec-bg: darkorange;
+}</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
+<style>/* style-dfn-panel */
+
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    height: auto;
+    width: -webkit-fit-content;
+    width: fit-content;
+    max-width: 300px;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0; }
+.dfn-panel li { list-style: inside; }
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled { cursor: pointer; }
+</style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-mdn-anno */
+
+            @media (max-width: 767px) { .mdn-anno { opacity: .1 } }
+            .mdn-anno { font: 1em sans-serif; padding: 0.3em; position: absolute; z-index: 8; right: 0.3em; background: #EEE; color: black; box-shadow: 0 0 3px #999; overflow: hidden; border-collapse: initial; border-spacing: initial; min-width: 9em; max-width: min-content; white-space: nowrap; word-wrap: normal; hyphens: none}
+            .mdn-anno:not(.wrapped) { opacity: 1}
+            .mdn-anno:hover { z-index: 9 }
+            .mdn-anno.wrapped { min-width: 0 }
+            .mdn-anno.wrapped > :not(button) { display: none; }
+            .mdn-anno > .mdn-anno-btn { cursor: pointer; border: none; color: #000; background: transparent; margin: -8px; float: right; padding: 10px 8px 8px 8px; outline: none; }
+            .mdn-anno > .mdn-anno-btn > .less-than-two-engines-flag { color: red; padding-right: 2px; }
+            .mdn-anno > .mdn-anno-btn > .all-engines-flag { color: green; padding-right: 2px; }
+            .mdn-anno > .mdn-anno-btn > span { color: #fff; background-color: #000; font-weight: normal; font-family: zillaslab, Palatino, "Palatino Linotype", serif; padding: 2px 3px 0px 3px; line-height: 1.3em; vertical-align: top; }
+            .mdn-anno > .feature { margin-top: 20px; }
+            .mdn-anno > .feature:not(:first-of-type) { border-top: 1px solid #999; margin-top: 6px; padding-top: 2px; }
+            .mdn-anno > .feature > .less-than-two-engines-text { color: red }
+            .mdn-anno > .feature > .all-engines-text { color: green }
+            .mdn-anno > .feature > p { font-size: .75em; margin-top: 6px; margin-bottom: 0; }
+            .mdn-anno > .feature > p + p { margin-top: 3px; }
+            .mdn-anno > .feature > .support { display: block; font-size: 0.6em; margin: 0; padding: 0; margin-top: 2px }
+            .mdn-anno > .feature > .support + div { padding-top: 0.5em; }
+            .mdn-anno > .feature > .support > hr { display: block; border: none; border-top: 1px dotted #999; padding: 3px 0px 0px 0px; margin: 2px 3px 0px 3px; }
+            .mdn-anno > .feature > .support > hr::before { content: ""; }
+            .mdn-anno > .feature > .support > span { padding: 0.2em 0; display: block; display: table; }
+            .mdn-anno > .feature > .support > span.no { color: #CCCCCC; filter: grayscale(100%); }
+            .mdn-anno > .feature > .support > span.no::before { opacity: 0.5; }
+            .mdn-anno > .feature > .support > span:first-of-type { padding-top: 0.5em; }
+            .mdn-anno > .feature > .support > span > span { padding: 0 0.5em; display: table-cell; }
+            .mdn-anno > .feature > .support > span > span:first-child { width: 100%; }
+            .mdn-anno > .feature > .support > span > span:last-child { width: 100%; white-space: pre; padding: 0; }
+            .mdn-anno > .feature > .support > span::before { content: ' '; display: table-cell; min-width: 1.5em; height: 1.5em; background: no-repeat center center; background-size: contain; text-align: right; font-size: 0.75em; font-weight: bold; }
+            .mdn-anno > .feature > .support > .chrome_android::before { background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg); }
+            .mdn-anno > .feature > .support > .firefox_android::before { background-image: url(https://resources.whatwg.org/browser-logos/firefox.png); }
+            .mdn-anno > .feature > .support > .chrome::before { background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg); }
+            .mdn-anno > .feature > .support > .edge_blink::before { background-image: url(https://resources.whatwg.org/browser-logos/edge.svg); }
+            .mdn-anno > .feature > .support > .edge::before { background-image: url(https://resources.whatwg.org/browser-logos/edge_legacy.svg); }
+            .mdn-anno > .feature > .support > .firefox::before { background-image: url(https://resources.whatwg.org/browser-logos/firefox.png); }
+            .mdn-anno > .feature > .support > .ie::before { background-image: url(https://resources.whatwg.org/browser-logos/ie.png); }
+            .mdn-anno > .feature > .support > .safari_ios::before { background-image: url(https://resources.whatwg.org/browser-logos/safari-ios.svg); }
+            .mdn-anno > .feature > .support > .nodejs::before { background-image: url(https://nodejs.org/static/images/favicons/favicon.ico); }
+            .mdn-anno > .feature > .support > .opera_android::before { background-image: url(https://resources.whatwg.org/browser-logos/opera.svg); }
+            .mdn-anno > .feature > .support > .opera::before { background-image: url(https://resources.whatwg.org/browser-logos/opera.svg); }
+            .mdn-anno > .feature > .support > .safari::before { background-image: url(https://resources.whatwg.org/browser-logos/safari.png); }
+            .mdn-anno > .feature > .support > .samsunginternet_android::before { background-image: url(https://resources.whatwg.org/browser-logos/samsung.svg); }
+            .mdn-anno > .feature > .support > .webview_android::before { background-image: url(https://resources.whatwg.org/browser-logos/android-webview.png); }
+            .name-slug-mismatch { color: red }
+            .caniuse-status:hover { z-index: 9; }
+
+            /* dt, li, .issue, .note, and .example are "position: relative", so to put annotation at right margin, must move to right of containing block */
+            .h-entry:not(.status-LS) dt > .mdn-anno, .h-entry:not(.status-LS) li > .mdn-anno, .h-entry:not(.status-LS) .issue > .mdn-anno, .h-entry:not(.status-LS) .note > .mdn-anno, .h-entry:not(.status-LS) .example > .mdn-anno { right: -6.7em; }
+            .h-entry p + .mdn-anno { margin-top: 0; }
+            h2 + .mdn-anno.after { margin: -48px 0 0 0; }
+            h3 + .mdn-anno.after { margin: -46px 0 0 0; }
+            h4 + .mdn-anno.after { margin: -42px 0 0 0; }
+            h5 + .mdn-anno.after { margin: -40px 0 0 0; }
+            h6 + .mdn-anno.after { margin: -40px 0 0 0; }
+            </style>
+<style>/* style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+<style>/* style-var-click-highlighting */
+
+    var { cursor: pointer; }
+    var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
+    var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
+    var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
+    var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
+    var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
+    var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
+    var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+    </style>
+<style>/* style-darkmode */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #ddd;
+        --bg: black;
+
+        --unofficial-watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='%23100808' transform='translate(200 200) rotate(-45) translate(-200 -200)' stroke='%23100808' stroke-width='3'%3E%3Ctext x='50%25' y='220' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EUNOFFICIAL%3C/text%3E%3Ctext x='50%25' y='305' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EDRAFT%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+        --logo-bg: #1a5e9a;
+        --logo-active-bg: #c00;
+        --logo-text: white;
+
+        --tocnav-normal-text: #999;
+        --tocnav-normal-bg: var(--bg);
+        --tocnav-hover-text: var(--tocnav-normal-text);
+        --tocnav-hover-bg: #080808;
+        --tocnav-active-text: #f44;
+        --tocnav-active-bg: var(--tocnav-normal-bg);
+
+        --tocsidebar-text: var(--text);
+        --tocsidebar-bg: #080808;
+        --tocsidebar-shadow: rgba(255,255,255,.1);
+        --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+        --toclink-text: var(--text);
+        --toclink-underline: #6af;
+        --toclink-visited-text: var(--toclink-text);
+        --toclink-visited-underline: #054572;
+
+        --heading-text: #8af;
+
+        --hr-text: var(--text);
+
+        --algo-border: #456;
+
+        --del-text: #f44;
+        --del-bg: transparent;
+        --ins-text: #4a4;
+        --ins-bg: transparent;
+
+        --a-normal-text: #6af;
+        --a-normal-underline: #555;
+        --a-visited-text: var(--a-normal-text);
+        --a-visited-underline: var(--a-normal-underline);
+        --a-hover-bg: rgba(25%, 25%, 25%, .2);
+        --a-active-text: #f44;
+        --a-active-underline: var(--a-active-text);
+
+        --borderedblock-bg: rgba(255, 255, 255, .05);
+
+        --blockquote-border: silver;
+        --blockquote-bg: var(--borderedblock-bg);
+        --blockquote-text: currentcolor;
+
+        --issue-border: #e05252;
+        --issue-bg: var(--borderedblock-bg);
+        --issue-text: var(--text);
+        --issueheading-text: hsl(0deg, 70%, 70%);
+
+        --example-border: hsl(50deg, 90%, 60%);
+        --example-bg: var(--borderedblock-bg);
+        --example-text: var(--text);
+        --exampleheading-text: hsl(50deg, 70%, 70%);
+
+        --note-border: hsl(120deg, 100%, 35%);
+        --note-bg: var(--borderedblock-bg);
+        --note-text: var(--text);
+        --noteheading-text: hsl(120, 70%, 70%);
+        --notesummary-underline: silver;
+
+        --assertion-border: #444;
+        --assertion-bg: var(--borderedblock-bg);
+        --assertion-text: var(--text);
+
+        --advisement-border: orange;
+        --advisement-bg: #222218;
+        --advisement-text: var(--text);
+        --advisementheading-text: #f84;
+
+        --warning-border: red;
+        --warning-bg: hsla(40,100%,20%,0.95);
+        --warning-text: var(--text);
+
+        --amendment-border: #330099;
+        --amendment-bg: #080010;
+        --amendment-text: var(--text);
+        --amendmentheading-text: #cc00ff;
+
+        --def-border: #8ccbf2;
+        --def-bg: #080818;
+        --def-text: var(--text);
+        --defrow-border: #136;
+
+        --datacell-border: silver;
+
+        --indexinfo-text: #aaa;
+
+        --indextable-hover-text: var(--text);
+        --indextable-hover-bg: #181818;
+
+        --outdatedspec-bg: rgba(255, 255, 255, .5);
+        --outdatedspec-text: black;
+        --outdated-bg: maroon;
+        --outdated-text: white;
+        --outdated-shadow: red;
+
+        --editedrec-bg: darkorange;
+    }
+    /* In case a transparent-bg image doesn't expect to be on a dark bg,
+       which is quite common in practice... */
+    img { background: white; }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}</style>
+ <body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-03-03">3 March 2021</time></span></h2>
+   <div data-fill-with="spec-metadata">
+    <dl>
+     <dt>This version:
+     <dd><a class="u-url" href="https://github.com/w3c/webappsec-fetch-metadata/">https://github.com/w3c/webappsec-fetch-metadata/</a>
+     <dt>Latest published version:
+     <dd><a href="https://www.w3.org/TR/fetch-metadata/">https://www.w3.org/TR/fetch-metadata/</a>
+     <dt>Previous Versions:
+     <dd><a href="https://www.w3.org/TR/2019/WD-fetch-metadata-20200110/" rel="prev">https://www.w3.org/TR/2019/WD-fetch-metadata-20200110/</a>
+     <dt>Version History:
+     <dd><a href="https://github.com/w3c/webappsec-fetch-metadata/commits/master/index.bs">https://github.com/w3c/webappsec-fetch-metadata/commits/master/index.bs</a>
+     <dt>Feedback:
+     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bfetch-metadata%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[fetch-metadata] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+     <dt>Issue Tracking:
+     <dd><a href="https://github.com/w3c/webappsec-fetch-metadata/issues/">GitHub</a>
+     <dd><a href="#issues-index">Inline In Spec</a>
+     <dt class="editor">Editor:
+     <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
+     <dt>Participate:
+     <dd><a href="https://github.com/w3c/webappsec-fetch-metadata/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-fetch-metadata/issues">open issues</a>)
+     <dt>Tests:
+     <dd><a href="https://github.com/web-platform-tests/wpt/tree/master/fetch/sec-metadata">web-platform-tests fetch/sec-metadata/</a>
+    </dl>
+   </div>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <hr title="Separator for header">
+  </div>
+  <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <p>This document defines a set of Fetch metadata request headers that aim to provide servers with
+
+    enough information to make <i lang="la">a priori</i> decisions about whether or not to service
+    a request based on the way it was made, and the context in which it will be used.</p>
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p> This is a public copy of the editors’ draft.
+	It is provided for discussion only and may change at any moment.
+	Its publication here does not imply endorsement of its contents by W3C.
+	Don’t cite this document other than as work in progress. </p>
+   <p> <strong>Changes to this document may be tracked at <a href="https://github.com/w3c/webappsec">https://github.com/w3c/webappsec</a>.</strong> </p>
+   <p> The (<a href="https://lists.w3.org/Archives/Public/public-webappsec/">archived</a>) public mailing list <a href="mailto:public-webappsec@w3.org?Subject=%5Bfetch-metadata%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (see <a href="https://www.w3.org/Mail/Request">instructions</a>)
+	is preferred for discussion of this specification.
+	When sending e-mail,
+	please put the text “fetch-metadata” in the subject,
+	preferably like this:
+	“[fetch-metadata] <em>…summary of comment…</em>” </p>
+   <p> This document was produced by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
+   <p> This document was produced by a group operating under
+	the <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/">W3C Patent Policy</a>.
+	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
+	that page also includes instructions for disclosing a patent.
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2020/Process-20200915/" id="w3c_process_revision">15 September 2020 W3C Process Document</a>. </p>
+   <p></p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li>
+     <a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+     <ol class="toc">
+      <li><a href="#examples"><span class="secno">1.1</span> <span class="content">Examples</span></a>
+     </ol>
+    <li>
+     <a href="#framework"><span class="secno">2</span> <span class="content">Fetch Metadata Headers</span></a>
+     <ol class="toc">
+      <li><a href="#sec-fetch-dest-header"><span class="secno">2.1</span> <span class="content">The <code>Sec-Fetch-Dest</code> HTTP Request Header</span></a>
+      <li><a href="#sec-fetch-mode-header"><span class="secno">2.2</span> <span class="content">The <code>Sec-Fetch-Mode</code> HTTP Request Header</span></a>
+      <li><a href="#sec-fetch-site-header"><span class="secno">2.3</span> <span class="content">The <code>Sec-Fetch-Site</code> HTTP Request Header</span></a>
+      <li><a href="#sec-fetch-user-header"><span class="secno">2.4</span> <span class="content">The <code>Sec-Fetch-User</code> HTTP Request Header</span></a>
+     </ol>
+    <li><a href="#fetch-integration"><span class="secno">3</span> <span class="content">Integration with Fetch and HTML</span></a>
+    <li>
+     <a href="#sec-priv-considerations"><span class="secno">4</span> <span class="content">Security and Privacy Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#redirects"><span class="secno">4.1</span> <span class="content">Redirects</span></a>
+      <li><a href="#sec-prefix"><span class="secno">4.2</span> <span class="content">The <code>Sec-</code> Prefix</span></a>
+      <li><a href="#directly-user-initiated"><span class="secno">4.3</span> <span class="content">Directly User-Initiated Requests</span></a>
+     </ol>
+    <li>
+     <a href="#deployment-considerations"><span class="secno">5</span> <span class="content">Deployment Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#vary"><span class="secno">5.1</span> <span class="content">Vary</span></a>
+      <li><a href="#bloat"><span class="secno">5.2</span> <span class="content">Header Bloat</span></a>
+     </ol>
+    <li>
+     <a href="#iana"><span class="secno">6</span> <span class="content">IANA Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#sec-fetc-dest-reg"><span class="secno">6.1</span> <span class="content"><code>Sec-Fetch-Dest</code> Registration</span></a>
+      <li><a href="#sec-fetch-mode-reg"><span class="secno">6.2</span> <span class="content"><code>Sec-Fetch-Mode</code> Registration</span></a>
+      <li><a href="#sec-fetch-site-reg"><span class="secno">6.3</span> <span class="content"><code>Sec-Fetch-Site</code> Registration</span></a>
+      <li><a href="#sec-fetch-user-reg"><span class="secno">6.4</span> <span class="content"><code>Sec-Fetch-User</code> Registration</span></a>
+     </ol>
+    <li><a href="#acks"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
+    <li>
+     <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
+     <ol class="toc">
+      <li><a href="#conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
+      <li><a href="#conformant-algorithms"><span class="secno"></span> <span class="content">Conformant Algorithms</span></a>
+     </ol>
+    <li>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <ol class="toc">
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+      <li><a href="#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
+     </ol>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+     </ol>
+    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
+   </ol>
+  </nav>
+  <main>
+   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+   <p>Interesting web applications generally end up with a large number of web-exposed endpoints that
+might reveal sensitive data about a user, or take action on a user’s behalf. Since users' browsers
+can be easily convinced to make requests to those endpoints, and to include the users' ambient
+credentials (cookies, privileged position on an intranet, etc), applications need to be very careful
+about the way those endpoints work in order to avoid abuse.</p>
+   <p>Being careful turns out to be hard in some cases ("simple" CSRF), and practically impossible in
+others (cross-site search, timing attacks, etc). The latter category includes timing attacks based
+on the server-side processing necessary to generate certain responses, and length measurements (both
+via web-facing timing attacks and passive network attackers).</p>
+   <p>It would be helpful if servers could make more intelligent decisions about whether or not to respond
+to a given request based on the way that it’s made in order to mitigate the latter category. For
+example, it seems pretty unlikely that a "Transfer all my money" endpoint on a bank’s server would
+expect to be referenced from an <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element">img</a></code> tag, and likewise unlikely that <code>evil.com</code> is going to be
+making any legitimate requests whatsoever. Ideally, the server could reject these requests <i lang="la">a priori</i> rather than delivering them to the application backend.</p>
+   <p>Here, we describe a mechanims by which user agents can enable this kind of decision-making by
+adding additional context to outgoing requests. By delivering metadata to a server in a set of <a data-link-type="dfn" href="#fetch-metadata-headers" id="ref-for-fetch-metadata-headers">fetch metadata headers</a>, we enable applications to quickly reject requests based on testing a
+set of preconditions. That work can even be lifted up above the application layer (to reverse
+proxies, CDNs, etc) if desired.</p>
+   <h3 class="heading settled" data-level="1.1" id="examples"><span class="secno">1.1. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
+   <p>A request generated by a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element" id="ref-for-the-picture-element">picture</a></code> element would result in a request containing the following
+HTTP request headers:</p>
+<pre>Sec-Fetch-Dest: image
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Site: cross-site
+</pre>
+   <p>A top-level navigation from <code>https://example.com</code> to <code>https://example.com/</code> caused by a user’s click
+on an in-page link would result in a request containing the following HTTP request header:</p>
+<pre>Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+</pre>
+   <h2 class="heading settled" data-level="2" id="framework"><span class="secno">2. </span><span class="content">Fetch Metadata Headers</span><a class="self-link" href="#framework"></a></h2>
+   <p>The following sections define several <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="fetch-metadata-headers">fetch metadata headers</dfn>, each of which
+exposes an interesting <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> attribute to a server.</p>
+   <h3 class="heading settled" data-level="2.1" id="sec-fetch-dest-header"><span class="secno">2.1. </span><span class="content">The <code>Sec-Fetch-Dest</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-dest-header"></a></h3>
+   <div class="mdn-anno wrapped after">
+    <button class="mdn-anno-btn"><b class="less-than-two-engines-flag" title="This feature is in less than two current engines.">⚠</b><span>MDN</span></button>
+    <div class="feature">
+     <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Dest" title="The Sec-Fetch-Dest fetch metadata header indicates the request&apos;s destination, that is how the fetched data will be used.">Headers/Sec-Fetch-Dest</a></p>
+     <p class="less-than-two-engines-text">In only one current engine.</p>
+     <div class="support">
+      <span class="firefox no"><span>Firefox</span><span>None</span></span><span class="safari no"><span>Safari</span><span>None</span></span><span class="chrome yes"><span>Chrome</span><span>80+</span></span>
+      <hr>
+      <span class="opera yes"><span>Opera</span><span>67+</span></span><span class="edge_blink yes"><span>Edge</span><span>80+</span></span>
+      <hr>
+      <span class="edge no"><span>Edge (Legacy)</span><span>None</span></span><span class="ie no"><span>IE</span><span>None</span></span>
+      <hr>
+      <span class="firefox_android no"><span>Firefox for Android</span><span>None</span></span><span class="safari_ios no"><span>iOS Safari</span><span>None</span></span><span class="chrome_android yes"><span>Chrome for Android</span><span>80+</span></span><span class="webview_android yes"><span>Android WebView</span><span>80+</span></span><span class="samsunginternet_android no"><span>Samsung Internet</span><span>None</span></span><span class="opera_android no"><span>Opera Mobile</span><span>None</span></span>
+     </div>
+    </div>
+   </div>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-dest"><code>Sec-Fetch-Dest</code></dfn> HTTP request header exposes a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a> to a server. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-Dest = sh-token
+</pre>
+   <p>Valid <code>Sec-Fetch-Dest</code> values include "<code>audio</code>", "<code>audioworklet</code>", "<code>document</code>", "<code>embed</code>",
+"<code>empty</code>", "<code>font</code>", "<code>frame</code>", "<code>iframe</code>", "<code>image</code>", "<code>manifest</code>", "<code>object</code>", "<code>paintworklet</code>",
+"<code>report</code>", "<code>script</code>", "<code>serviceworker</code>", "<code>sharedworker</code>", "<code>style</code>", "<code>track</code>", "<code>video</code>",
+"<code>worker</code>", "<code>xslt</code>".</p>
+   <p class="issue" id="issue-928bdba7"><a class="self-link" href="#issue-928bdba7"></a> <code>frame</code> and <code>iframe</code> haven’t landed in Fetch yet. <a href="https://github.com/whatwg/fetch/issues/948">&lt;https://github.com/whatwg/fetch/issues/948></a></p>
+   <p>In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
+this header if it contains an invalid value.</p>
+<pre class="example" id="example-1349f6c4"><a class="self-link" href="#example-1349f6c4"></a>// <code>fetch()</code>'s destination is the empty string:
+Sec-Fetch-Dest: empty
+
+// <code>&lt;img></code>'s destination is "image"
+Sec-Fetch-Dest: image
+
+// <code>new Worker()</code>'s destination is "worker"
+Sec-Fetch-Dest: worker
+
+// Top-level navigations' destinations are "document"
+Sec-Fetch-Dest: document
+
+// <code>&lt;iframe></code> navigations' destinations are "iframe"
+Sec-Fetch-Dest: iframe
+</pre>
+   <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-Dest`&apos;>Sec-Fetch-Dest</code>">
+     To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-dest" id="abstract-opdef-set-dest">set the <code>Sec-Fetch-Dest</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">request</a> <var>r</var>: 
+    <ol class="algorithm">
+     <li data-md>
+      <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url">potentially trustworthy URL</a>.</p>
+     <li data-md>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-①">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7①">token</a>.</p>
+     <li data-md>
+      <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> is the empty string, set <var>header</var>’s value to the string
+"<code>empty</code>". Otherwise, set <var>header</var>’s value to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination②">destination</a>.</p>
+      <p class="note" role="note"><span>Note:</span> We map Fetch’s empty string <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination③">destination</a> onto an explicit "<code>empty</code>" <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7②">token</a> in order to simplify processing.</p>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header">Set a structured field value</a> `<a data-link-type="http-header" href="#http-headerdef-sec-fetch-dest" id="ref-for-http-headerdef-sec-fetch-dest"><code>Sec-Fetch-Dest</code></a>`/<var>header</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list">header list</a>.</p>
+    </ol>
+   </div>
+   <h3 class="heading settled" data-level="2.2" id="sec-fetch-mode-header"><span class="secno">2.2. </span><span class="content">The <code>Sec-Fetch-Mode</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-mode-header"></a></h3>
+   <div class="mdn-anno wrapped after">
+    <button class="mdn-anno-btn"><b class="less-than-two-engines-flag" title="This feature is in less than two current engines.">⚠</b><span>MDN</span></button>
+    <div class="feature">
+     <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode" title="The Sec-Fetch-Mode fetch metadata header indicates the request&apos;s mode.">Headers/Sec-Fetch-Mode</a></p>
+     <p class="less-than-two-engines-text">In only one current engine.</p>
+     <div class="support">
+      <span class="firefox no"><span>Firefox</span><span>None</span></span><span class="safari no"><span>Safari</span><span>None</span></span><span class="chrome yes"><span>Chrome</span><span>76+</span></span>
+      <hr>
+      <span class="opera yes"><span>Opera</span><span>63+</span></span><span class="edge_blink yes"><span>Edge</span><span>79+</span></span>
+      <hr>
+      <span class="edge no"><span>Edge (Legacy)</span><span>None</span></span><span class="ie no"><span>IE</span><span>None</span></span>
+      <hr>
+      <span class="firefox_android no"><span>Firefox for Android</span><span>None</span></span><span class="safari_ios no"><span>iOS Safari</span><span>None</span></span><span class="chrome_android yes"><span>Chrome for Android</span><span>76+</span></span><span class="webview_android yes"><span>Android WebView</span><span>76+</span></span><span class="samsunginternet_android no"><span>Samsung Internet</span><span>None</span></span><span class="opera_android yes"><span>Opera Mobile</span><span>54+</span></span>
+     </div>
+    </div>
+   </div>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-mode"><code>Sec-Fetch-Mode</code></dfn> HTTP request header exposes a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request③">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode">mode</a> to a server. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-②">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7③">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-Mode = sh-token
+</pre>
+   <p>Valid <code>Sec-Fetch-Mode</code> values include "<code>cors</code>", "<code>navigate</code>", "<code>no-cors</code>", "<code>same-origin</code>",
+and "<code>websocket</code>". In order to support forward-compatibility with as-yet-unknown request types,
+servers SHOULD ignore this header if it contains an invalid value.</p>
+   <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-Mode`&apos;>Sec-Fetch-Mode</code>">
+     To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-mode" id="abstract-opdef-set-mode">set the <code>Sec-Fetch-Mode</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">request</a> <var>r</var>: 
+    <ol class="algorithm">
+     <li data-md>
+      <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url①">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①">potentially trustworthy URL</a>.</p>
+     <li data-md>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-③">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7④">token</a>.</p>
+     <li data-md>
+      <p>Set <var>header</var>’s value to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode①">mode</a>.</p>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header①">Set a structured field value</a> `<a data-link-type="http-header" href="#http-headerdef-sec-fetch-mode" id="ref-for-http-headerdef-sec-fetch-mode"><code>Sec-Fetch-Mode</code></a>`/<var>header</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list①">header list</a>.</p>
+    </ol>
+   </div>
+   <h3 class="heading settled" data-level="2.3" id="sec-fetch-site-header"><span class="secno">2.3. </span><span class="content">The <code>Sec-Fetch-Site</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-site-header"></a></h3>
+   <div class="mdn-anno wrapped after">
+    <button class="mdn-anno-btn"><b class="less-than-two-engines-flag" title="This feature is in less than two current engines.">⚠</b><span>MDN</span></button>
+    <div class="feature">
+     <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Site" title="The Sec-Fetch-Site fetch metadata header indicates the relationship between a request initiator&apos;s origin and the origin of the resource.">Headers/Sec-Fetch-Site</a></p>
+     <p class="less-than-two-engines-text">In only one current engine.</p>
+     <div class="support">
+      <span class="firefox no"><span>Firefox</span><span>None</span></span><span class="safari no"><span>Safari</span><span>None</span></span><span class="chrome yes"><span>Chrome</span><span>76+</span></span>
+      <hr>
+      <span class="opera yes"><span>Opera</span><span>63+</span></span><span class="edge_blink yes"><span>Edge</span><span>79+</span></span>
+      <hr>
+      <span class="edge no"><span>Edge (Legacy)</span><span>None</span></span><span class="ie no"><span>IE</span><span>None</span></span>
+      <hr>
+      <span class="firefox_android no"><span>Firefox for Android</span><span>None</span></span><span class="safari_ios no"><span>iOS Safari</span><span>None</span></span><span class="chrome_android yes"><span>Chrome for Android</span><span>76+</span></span><span class="webview_android yes"><span>Android WebView</span><span>76+</span></span><span class="samsunginternet_android no"><span>Samsung Internet</span><span>None</span></span><span class="opera_android yes"><span>Opera Mobile</span><span>54+</span></span>
+     </div>
+    </div>
+   </div>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-site"><code>Sec-Fetch-Site</code></dfn> HTTP request header exposes the relationship
+between a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑤">request</a> initiator’s origin and its target’s origin. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-④">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7⑤">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-Site = sh-token
+</pre>
+   <p>Valid <code>Sec-Fetch-Site</code> values include "<code>cross-site</code>", "<code>same-origin</code>", "<code>same-site</code>", and "<code>none</code>".
+In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
+this header if it contains an invalid value.</p>
+   <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-Site`&apos;>Sec-Fetch-Site</code>">
+     To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-site" id="abstract-opdef-set-site">set the <code>Sec-Fetch-Site</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a> <var>r</var>: 
+    <ol class="algorithm">
+     <li data-md>
+      <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url②">potentially trustworthy URL</a>.</p>
+     <li data-md>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑤">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7⑥">token</a>.</p>
+     <li data-md>
+      <p>Set <var>header</var>’s value to <code>same-origin</code>.</p>
+     <li data-md>
+      <p>If <var>r</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> that was explicitly caused by a user’s interaction with
+the user agent (by typing an address into the user agent directly, for example, or by
+clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</code>.</p>
+      <p class="note" role="note"><span>Note:</span> See <a href="#directly-user-initiated">§ 4.3 Directly User-Initiated Requests</a> for more detail on this somewhat poorly-defined step.</p>
+     <li data-md>
+      <p>If <var>header</var>’s value is not <code>none</code>, then for each <var>url</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list">url list</a>:</p>
+      <ol>
+       <li data-md>
+        <p>If <var>url</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin">origin</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue">continue</a>.</p>
+       <li data-md>
+        <p>Set <var>header</var>’s value to <code>cross-site</code>.</p>
+       <li data-md>
+        <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-origin" id="ref-for-concept-request-origin①">origin</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site">same site</a> with <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break" id="ref-for-iteration-break">break</a>.</p>
+       <li data-md>
+        <p>Set <var>header</var>’s value to <code>same-site</code>.</p>
+      </ol>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header②">Set a structured field value</a> `<a data-link-type="http-header" href="#http-headerdef-sec-fetch-site" id="ref-for-http-headerdef-sec-fetch-site"><code>Sec-Fetch-Site</code></a>`/<var>header</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list②">header list</a>.</p>
+    </ol>
+   </div>
+   <h3 class="heading settled" data-level="2.4" id="sec-fetch-user-header"><span class="secno">2.4. </span><span class="content">The <code>Sec-Fetch-User</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-user-header"></a></h3>
+   <div class="mdn-anno wrapped after">
+    <button class="mdn-anno-btn"><b class="less-than-two-engines-flag" title="This feature is in less than two current engines.">⚠</b><span>MDN</span></button>
+    <div class="feature">
+     <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-User" title="The Sec-Fetch-User fetch metadata header is only sent for requests initiated by user activation, and its value will always be ?1.">Headers/Sec-Fetch-User</a></p>
+     <p class="less-than-two-engines-text">In only one current engine.</p>
+     <div class="support">
+      <span class="firefox no"><span>Firefox</span><span>None</span></span><span class="safari no"><span>Safari</span><span>None</span></span><span class="chrome yes"><span>Chrome</span><span>76+</span></span>
+      <hr>
+      <span class="opera yes"><span>Opera</span><span>63+</span></span><span class="edge_blink yes"><span>Edge</span><span>79+</span></span>
+      <hr>
+      <span class="edge no"><span>Edge (Legacy)</span><span>None</span></span><span class="ie no"><span>IE</span><span>None</span></span>
+      <hr>
+      <span class="firefox_android no"><span>Firefox for Android</span><span>None</span></span><span class="safari_ios no"><span>iOS Safari</span><span>None</span></span><span class="chrome_android yes"><span>Chrome for Android</span><span>76+</span></span><span class="webview_android yes"><span>Android WebView</span><span>76+</span></span><span class="samsunginternet_android no"><span>Samsung Internet</span><span>None</span></span><span class="opera_android yes"><span>Opera Mobile</span><span>54+</span></span>
+     </div>
+    </div>
+   </div>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></dfn> HTTP request header exposes whether or not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request①">navigation request</a> was triggered by user activation. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑥">Structured Header</a> whose
+value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9">boolean</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-User = sh-boolean
+</pre>
+   <p class="note" role="note"><span>Note:</span> The header is delivered only for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request②">navigation requests</a>, and only when its value is <code>true</code>.
+It might be reasonable to expand the headers' scope in the future to include subresource requests
+generally if we can spell out some use cases that would be improved by exposing that information
+(and if we can agree on ways to define that status for all the subresource request types we’d be
+interested in), but for the moment, navigation requests have clear use cases, and seem
+straightforward to define interoperably.</p>
+   <div class="algorithm" data-algorithm="set <code data-opaque bs-autolink-syntax=&apos;`Sec-Fetch-User`&apos;>Sec-Fetch-User</code>">
+     To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="set-user" id="abstract-opdef-set-user">set the <code>Sec-Fetch-User</code> header</dfn> for a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑦">request</a> <var>r</var>: 
+    <ol class="algorithm">
+     <li data-md>
+      <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url③">url</a> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url③">potentially trustworthy URL</a>.</p>
+     <li data-md>
+      <p>If <var>r</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request③">navigation request</a>, or if <var>r</var>’s <a data-link-type="dfn" href="#request-user-activation" id="ref-for-request-user-activation">user activation</a> is <code>false</code>, return.</p>
+     <li data-md>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="termref-for-⑦">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7⑦">token</a>.</p>
+     <li data-md>
+      <p>Set <var>header</var>’s value to <code>true</code>.</p>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header③">Set a structured field value</a> `<a data-link-type="http-header" href="#http-headerdef-sec-fetch-user" id="ref-for-http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></a>`/<var>header</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list③">header list</a>.</p>
+    </ol>
+   </div>
+   <h2 class="heading settled" data-level="3" id="fetch-integration"><span class="secno">3. </span><span class="content">Integration with Fetch and HTML</span><a class="self-link" href="#fetch-integration"></a></h2>
+   <p>To support <code>Sec-Fetch-User</code>, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑧">request</a> needs to be taught about requests which were
+triggered by user activation:</p>
+   <blockquote>
+    <p><strong>Monkeypatching <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>:</strong></p>
+    <p>A <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑨">request</a> has a boolean <dfn class="dfn-paneled" data-dfn-for="request" data-dfn-type="dfn" data-noexport id="request-user-activation">user activation</dfn>. Unless stated
+  otherwise, it is <code>false</code>.</p>
+    <p class="note" role="note"><span>Note:</span> This is only used for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request④">navigation requests</a>.</p>
+   </blockquote>
+   <p class="issue" id="issue-31e10e5c"><a class="self-link" href="#issue-31e10e5c"></a> This should be defined in Fetch. <a href="https://github.com/whatwg/fetch/issues/993">&lt;https://github.com/whatwg/fetch/issues/993></a></p>
+   <p>This flag could be populated from HTML’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-fetch" id="ref-for-process-a-navigate-fetch">process a navigate fetch</a> algorithm, perhaps by
+inserting the following step after the current algorithm’s step 2:</p>
+   <blockquote>
+    <p><strong>Monkeypatching <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</strong></p>
+    <ol start="3">
+     <li data-md>
+      <p>If <var>sourceBrowsingContext</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#windowproxy" id="ref-for-windowproxy">WindowProxy</a></code>'s <code>[[Window]]</code> value has <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation">transient activation</a>, then set <var>request</var>’s <a data-link-type="dfn" href="#request-user-activation" id="ref-for-request-user-activation①">user activation</a> to true.</p>
+    </ol>
+   </blockquote>
+   <p class="issue" id="issue-b1fabf90"><a class="self-link" href="#issue-b1fabf90"></a> This should be defined in HTML. <a href="https://github.com/whatwg/html/issues/5203">&lt;https://github.com/whatwg/html/issues/5203></a></p>
+   <div class="algorithm" data-algorithm="append fetch metadata headers">
+     To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-append-the-fetch-metadata-headers-for-a-request">append the Fetch metadata headers for a request<a class="self-link" href="#abstract-opdef-append-the-fetch-metadata-headers-for-a-request"></a></dfn>, given <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①⓪">request</a> <var>r</var>: 
+    <ol class="algorithm">
+     <li data-md>
+      <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url④">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url④">potentially trustworthy URL</a>, return.</p>
+     <li data-md>
+      <p><a data-link-type="abstract-op" href="#abstract-opdef-set-dest" id="ref-for-abstract-opdef-set-dest">Set the <code>Sec-Fetch-Dest</code> header</a> for <var>r</var>.</p>
+     <li data-md>
+      <p><a data-link-type="abstract-op" href="#abstract-opdef-set-mode" id="ref-for-abstract-opdef-set-mode">Set the <code>Sec-Fetch-Mode</code> header</a> for <var>r</var>.</p>
+     <li data-md>
+      <p><a data-link-type="abstract-op" href="#abstract-opdef-set-site" id="ref-for-abstract-opdef-set-site">Set the <code>Sec-Fetch-Site</code> header</a> for <var>r</var>.</p>
+     <li data-md>
+      <p><a data-link-type="abstract-op" href="#abstract-opdef-set-user" id="ref-for-abstract-opdef-set-user">Set the <code>Sec-Fetch-User</code> header</a> for <var>r</var>.</p>
+    </ol>
+   </div>
+   <p>Fetch will call into the algorithm above from within its "HTTP-network-or-cache fetch" algorithm.
+Please consult that specification for integration details <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>.</p>
+   <p class="issue" id="issue-03cc838f"><a class="self-link" href="#issue-03cc838f"></a> This should be called from in Fetch. <a href="https://github.com/whatwg/fetch/issues/993">&lt;https://github.com/whatwg/fetch/issues/993></a></p>
+   <h2 class="heading settled" data-level="4" id="sec-priv-considerations"><span class="secno">4. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#sec-priv-considerations"></a></h2>
+   <h3 class="heading settled" data-level="4.1" id="redirects"><span class="secno">4.1. </span><span class="content">Redirects</span><a class="self-link" href="#redirects"></a></h3>
+   <p>The user agent will send a <a data-link-type="http-header" href="#http-headerdef-sec-fetch-site" id="ref-for-http-headerdef-sec-fetch-site①"><code>Sec-Fetch-Site</code></a> header along with each request in a
+redirect chain. The header’s value will shift in the presence of cross-origin or cross-site
+redirection in order to mitigate confusion.</p>
+   <p>The algorithm to <a data-link-type="abstract-op" href="#abstract-opdef-set-site" id="ref-for-abstract-opdef-set-site①">set the <code>Sec-Fetch-Site</code> header</a> walks the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①①">request</a>'s entire <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list①">url list</a>, and will send <code>cross-site</code> if any URL in the list is cross-site to the
+request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-current-url" id="ref-for-concept-request-current-url">current url</a>, <code>same-site</code> only if all URLs in the list are same-site with the
+request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-current-url" id="ref-for-concept-request-current-url①">current url</a>, and <code>same-origin</code> only if all URLs in the list are same-origin
+with the request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-current-url" id="ref-for-concept-request-current-url②">current url</a>.</p>
+   <p>For example, if <code>https://example.com/</code> requests <code>https://example.com/redirect</code>, the initial
+request’s <code>Sec-Fetch-Site</code> value would be <code>same-origin</code>. If that response redirected to <code>https://subdomain.example.com/redirect</code>, that request’s <code>Sec-Fetch-Site</code> value would be <code>same-site</code> (as <code>https://subdomain.example.com/</code> and <code>https://example.com/</code> have the same
+registrable domain). If that response redirected to <code>https://example.net/redirect</code>, that
+request’s <code>Sec-Fetch-Site</code> value would be <code>cross-site</code> (as <code>https://example.net/</code> is not
+same-site with <code>https://example.com/</code> and <code>https://subdomain.example.com/</code>). If that response
+redirects all the way back to <code>https://example.com/</code>, the final request’s <code>Sec-Fetch-Site</code> value would still be <code>cross-site</code> (as the redirect chain includes <code>https://example.net/</code>, which is
+still not same-site with the other URLs.</p>
+   <h3 class="heading settled" data-level="4.2" id="sec-prefix"><span class="secno">4.2. </span><span class="content">The <code>Sec-</code> Prefix</span><a class="self-link" href="#sec-prefix"></a></h3>
+   <p>Each of the headers defined in this document is prefixed with <code>Sec-</code>, which makes them all <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#forbidden-header-name" id="ref-for-forbidden-header-name">forbidden header names</a>, and therefore unmodifiable from JavaScript. This will prevent
+malicious websites from convincing user agents to send forged metadata along with requests,
+which should give sites a bit more confidence in their ability to respond reasonably to
+the advertised information.</p>
+   <h3 class="heading settled" data-level="4.3" id="directly-user-initiated"><span class="secno">4.3. </span><span class="content">Directly User-Initiated Requests</span><a class="self-link" href="#directly-user-initiated"></a></h3>
+   <p>When <a data-link-type="abstract-op" href="#abstract-opdef-set-site" id="ref-for-abstract-opdef-set-site②">setting the <code>Sec-Fetch-Site</code> header</a>, user agents are asked to
+distinguish between navigation requests that are "explicitly caused by a user’s interaction". This
+somewhat poorly defined phrase is pulled from HTML, which <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigating-across-documents">suggests that</a> "A user agent may provide various ways for the user to explicitly cause a browsing context to
+navigate, in addition to those defined in this specification."</p>
+   <p>The goal is to distinguish between "webby" navigations that are controlled by a given (potentially
+malicious!) website (e.g. links, the <code>window.location</code> setter, form submissions, etc.), and those
+that are not (e.g. user interaction with a user agent’s address bar, bookmarks, etc). The former
+will be delivered with a <code>Sec-Fetch-Site</code> header whose value is <code>same-origin</code>, <code>same-site</code>, or <code>cross-site</code>, as appropriate. The latter will be distinguished with a value of <code>none</code>, as no
+specific site is actually responsible for the request, and it makes sense to allow servers to treat
+them as trusted, as they somehow represent a user’s direct intent.</p>
+   <p>Each user agent is likely to have a distinct set of interactions which might fall into one or the
+other category, and it will be hard to share an automated test suite for these cases. Still, it
+would be ideal to align on behavior for those which are likely to be common. Sme examples follow:</p>
+   <ul>
+    <li data-md>
+     <p>Navigation from the address bar: In the general case, this kind of navigation should be
+treated as directly user-initiated, and include <code>Sec-Fetch-Site: none</code>. It may be reasonable for
+user agents to include heuristics around pasting values into the address bar (especially if the
+"copy" action can be traced to a specific origin), and to treat such navigations distinctly from
+those which the user types themselves.</p>
+    <li data-md>
+     <p>Navigation from user agent UI (bookmarks, new tab page, etc): A user’s interaction with links in
+user agent UI should be treated similarly to their input in the user agent’s address bar,
+including <code>Sec-Fetch-Site: none</code> to demarcate the navigation as user-initiated.</p>
+    <li data-md>
+     <p>Navigation from a link’s context menu (e.g. "Open in new window"): as the link’s target is
+controlled by the page on which the link is present, user agents should treat the navigation as
+site-controlled, and set the <code>Sec-Fetch-Site</code> header appropriately for the relationship between
+the site which controls the link and the site which is being opened.</p>
+    <li data-md>
+     <p>Ctrl-click on a link: the same arguments and conclusions apply here as apply to a link’s context
+menu, discussed directly above.</p>
+    <li data-md>
+     <p>Navigation through history (e.g. a user agent’s "back" button):</p>
+    <li data-md>
+     <p>Drag-and-drop: It seems reasonable to distinguish behavior here based upon the source of the
+dragged content. If content is dragged from a tab, the user agent should be able to ascertain
+its origin, and set <code>Sec-Fetch-Site</code> accordingly. If content is dragged from elsewhere (the
+user agent’s bookmark bar, another app entirely, etc), then <code>Sec-Fetch-Site: none</code> may be
+appropriate.</p>
+   </ul>
+   <h2 class="heading settled" data-level="5" id="deployment-considerations"><span class="secno">5. </span><span class="content">Deployment Considerations</span><a class="self-link" href="#deployment-considerations"></a></h2>
+   <h3 class="heading settled" data-level="5.1" id="vary"><span class="secno">5.1. </span><span class="content">Vary</span><a class="self-link" href="#vary"></a></h3>
+   <p>If a given endpoint’s response depends upon the values the client delivers in a <a data-link-type="dfn" href="#fetch-metadata-headers" id="ref-for-fetch-metadata-headers①">Fetch metadata header</a>, developers should be careful to include an appropriate <code>Vary</code> header <a data-link-type="biblio" href="#biblio-rfc7231">[RFC7231]</a>, in order to ensure that caches handle the response appropriately. For example, <code>Vary: Accept-Encoding, Sec-Fetch-Site</code>.</p>
+   <h3 class="heading settled" data-level="5.2" id="bloat"><span class="secno">5.2. </span><span class="content">Header Bloat</span><a class="self-link" href="#bloat"></a></h3>
+   <p>An earlier version of this document defined a single <code>Sec-Metadata</code> header, whose contents were
+a dictionary. Subsequent discussion (as well as Mark Nottingham’s excellent <a data-link-type="biblio" href="#biblio-mnot-designing-headers">[mnot-designing-headers]</a>) shifted the design away from a single dictionary to a series of simple
+headers, each of which contains only a single token. This design should perform significantly better
+under HTTP’s current HPACK compression algorithms.</p>
+   <p>Further discussion on the topic can be found on the review thread in <a href="https://github.com/w3ctag/design-reviews/issues/280">w3ctag/design-reviews#280</a>.</p>
+   <h2 class="heading settled" data-level="6" id="iana"><span class="secno">6. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana"></a></h2>
+   <p>The permanent message header field registry should be updated with the following registrations for <a data-link-type="dfn" href="#fetch-metadata-headers" id="ref-for-fetch-metadata-headers②">Fetch metadata headers</a>: <a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a></p>
+   <h3 class="heading settled" data-level="6.1" id="sec-fetc-dest-reg"><span class="secno">6.1. </span><span class="content"><code>Sec-Fetch-Dest</code> Registration</span><a class="self-link" href="#sec-fetc-dest-reg"></a></h3>
+   <dl>
+    <dt data-md>Header field name
+    <dd data-md>
+     <p>Sec-Fetch-Dest</p>
+    <dt data-md>Applicable protocol
+    <dd data-md>
+     <p>http</p>
+    <dt data-md>Status
+    <dd data-md>
+     <p>standard</p>
+    <dt data-md>Author/Change controller
+    <dd data-md>
+     <p>Me</p>
+    <dt data-md>Specification document
+    <dd data-md>
+     <p>This specification (See <a href="#sec-fetch-dest-header">§ 2.1 The Sec-Fetch-Dest HTTP Request Header</a>)</p>
+   </dl>
+   <h3 class="heading settled" data-level="6.2" id="sec-fetch-mode-reg"><span class="secno">6.2. </span><span class="content"><code>Sec-Fetch-Mode</code> Registration</span><a class="self-link" href="#sec-fetch-mode-reg"></a></h3>
+   <dl>
+    <dt data-md>Header field name
+    <dd data-md>
+     <p>Sec-Fetch-Mode</p>
+    <dt data-md>Applicable protocol
+    <dd data-md>
+     <p>http</p>
+    <dt data-md>Status
+    <dd data-md>
+     <p>standard</p>
+    <dt data-md>Author/Change controller
+    <dd data-md>
+     <p>Me</p>
+    <dt data-md>Specification document
+    <dd data-md>
+     <p>This specification (See <a href="#sec-fetch-mode-header">§ 2.2 The Sec-Fetch-Mode HTTP Request Header</a>)</p>
+   </dl>
+   <h3 class="heading settled" data-level="6.3" id="sec-fetch-site-reg"><span class="secno">6.3. </span><span class="content"><code>Sec-Fetch-Site</code> Registration</span><a class="self-link" href="#sec-fetch-site-reg"></a></h3>
+   <dl>
+    <dt data-md>Header field name
+    <dd data-md>
+     <p>Sec-Fetch-Site</p>
+    <dt data-md>Applicable protocol
+    <dd data-md>
+     <p>http</p>
+    <dt data-md>Status
+    <dd data-md>
+     <p>standard</p>
+    <dt data-md>Author/Change controller
+    <dd data-md>
+     <p>Me</p>
+    <dt data-md>Specification document
+    <dd data-md>
+     <p>This specification (See <a href="#sec-fetch-site-header">§ 2.3 The Sec-Fetch-Site HTTP Request Header</a>)</p>
+   </dl>
+   <h3 class="heading settled" data-level="6.4" id="sec-fetch-user-reg"><span class="secno">6.4. </span><span class="content"><code>Sec-Fetch-User</code> Registration</span><a class="self-link" href="#sec-fetch-user-reg"></a></h3>
+   <dl>
+    <dt data-md>Header field name
+    <dd data-md>
+     <p>Sec-Fetch-User</p>
+    <dt data-md>Applicable protocol
+    <dd data-md>
+     <p>http</p>
+    <dt data-md>Status
+    <dd data-md>
+     <p>standard</p>
+    <dt data-md>Author/Change controller
+    <dd data-md>
+     <p>Me</p>
+    <dt data-md>Specification document
+    <dd data-md>
+     <p>This specification (See <a href="#sec-fetch-user-header">§ 2.4 The Sec-Fetch-User HTTP Request Header</a>)</p>
+   </dl>
+   <h2 class="heading settled" data-level="7" id="acks"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acks"></a></h2>
+   <p>Thanks to Anne van Kesteren, Artur Janc, Dan Veditz, Łukasz Anforowicz, Mark Nottingham, and
+Roberto Clapis, who all provided substantial support in the design of this mechanism.</p>
+  </main>
+  <h2 class="no-ref no-num heading settled" id="conformance"><span class="content">Conformance</span><a class="self-link" href="#conformance"></a></h2>
+  <h3 class="no-ref no-num heading settled" id="conventions"><span class="content">Document conventions</span><a class="self-link" href="#conventions"></a></h3>
+  <p>Conformance requirements are expressed with a combination of
+    descriptive assertions and RFC 2119 terminology. The key words “MUST”,
+    “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
+    “RECOMMENDED”, “MAY”, and “OPTIONAL” in the normative parts of this
+    document are to be interpreted as described in RFC 2119.
+    However, for readability, these words do not appear in all uppercase
+    letters in this specification. </p>
+  <p>All of the text of this specification is normative except sections
+    explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a></p>
+  <p>Examples in this specification are introduced with the words “for example”
+    or are set apart from the normative text with <code>class="example"</code>,
+    like this: </p>
+  <div class="example" id="example-ae2b6bc0">
+   <a class="self-link" href="#example-ae2b6bc0"></a> 
+   <p>This is an example of an informative example.</p>
+  </div>
+  <p>Informative notes begin with the word “Note” and are set apart from the
+    normative text with <code>class="note"</code>, like this: </p>
+  <p class="note" role="note">Note, this is an informative note.</p>
+  <h3 class="no-ref no-num heading settled" id="conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#conformant-algorithms"></a></h3>
+  <p>Requirements phrased in the imperative as part of algorithms (such as
+    "strip any leading space characters" or "return false and abort these
+    steps") are to be interpreted with the meaning of the key word ("must",
+    "should", "may", etc) used in introducing the algorithm.</p>
+  <p>Conformance requirements phrased as algorithms or specific steps can be
+    implemented in any manner, so long as the end result is equivalent. In
+    particular, the algorithms defined in this specification are intended to
+    be easy to understand and are not intended to be performant. Implementers
+    are encouraged to optimize.</p>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <ul class="index">
+   <li><a href="#abstract-opdef-append-the-fetch-metadata-headers-for-a-request">append the Fetch metadata headers for a request</a><span>, in §3</span>
+   <li><a href="#fetch-metadata-headers">fetch metadata headers</a><span>, in §2</span>
+   <li><a href="#http-headerdef-sec-fetch-dest">Sec-Fetch-Dest</a><span>, in §2.1</span>
+   <li><a href="#http-headerdef-sec-fetch-mode">Sec-Fetch-Mode</a><span>, in §2.2</span>
+   <li><a href="#http-headerdef-sec-fetch-site">Sec-Fetch-Site</a><span>, in §2.3</span>
+   <li><a href="#http-headerdef-sec-fetch-user">Sec-Fetch-User</a><span>, in §2.4</span>
+   <li><a href="#abstract-opdef-set-dest">set-dest</a><span>, in §2.1</span>
+   <li><a href="#abstract-opdef-set-mode">set-mode</a><span>, in §2.2</span>
+   <li><a href="#abstract-opdef-set-site">set-site</a><span>, in §2.3</span>
+   <li><a href="#abstract-opdef-set-user">set-user</a><span>, in §2.4</span>
+   <li><a href="#request-user-activation">user activation</a><span>, in §3</span>
+  </ul>
+  <aside class="dfn-panel" data-for="term-for-concept-request-current-url">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-current-url">https://fetch.spec.whatwg.org/#concept-request-current-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-current-url">4.1. Redirects</a> <a href="#ref-for-concept-request-current-url①">(2)</a> <a href="#ref-for-concept-request-current-url②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-destination">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-destination">https://fetch.spec.whatwg.org/#concept-request-destination</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-destination">2.1. The Sec-Fetch-Dest HTTP Request Header</a> <a href="#ref-for-concept-request-destination①">(2)</a> <a href="#ref-for-concept-request-destination②">(3)</a> <a href="#ref-for-concept-request-destination③">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-forbidden-header-name">
+   <a href="https://fetch.spec.whatwg.org/#forbidden-header-name">https://fetch.spec.whatwg.org/#forbidden-header-name</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-forbidden-header-name">4.2. The Sec- Prefix</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-header-list">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-header-list">https://fetch.spec.whatwg.org/#concept-request-header-list</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-header-list">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-header-list①">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-header-list②">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-header-list③">2.4. The Sec-Fetch-User HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-mode">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-mode">https://fetch.spec.whatwg.org/#concept-request-mode</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-mode">2.2. The Sec-Fetch-Mode HTTP Request Header</a> <a href="#ref-for-concept-request-mode①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-navigation-request">
+   <a href="https://fetch.spec.whatwg.org/#navigation-request">https://fetch.spec.whatwg.org/#navigation-request</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-navigation-request">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-navigation-request①">2.4. The Sec-Fetch-User HTTP Request Header</a> <a href="#ref-for-navigation-request②">(2)</a> <a href="#ref-for-navigation-request③">(3)</a>
+    <li><a href="#ref-for-navigation-request④">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-origin">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-origin">https://fetch.spec.whatwg.org/#concept-request-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-concept-request-origin①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request">
+   <a href="https://fetch.spec.whatwg.org/#concept-request">https://fetch.spec.whatwg.org/#concept-request</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request">2. Fetch Metadata Headers</a>
+    <li><a href="#ref-for-concept-request①">2.1. The Sec-Fetch-Dest HTTP Request Header</a> <a href="#ref-for-concept-request②">(2)</a>
+    <li><a href="#ref-for-concept-request③">2.2. The Sec-Fetch-Mode HTTP Request Header</a> <a href="#ref-for-concept-request④">(2)</a>
+    <li><a href="#ref-for-concept-request⑤">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-concept-request⑥">(2)</a>
+    <li><a href="#ref-for-concept-request⑦">2.4. The Sec-Fetch-User HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request⑧">3. Integration with Fetch and HTML</a> <a href="#ref-for-concept-request⑨">(2)</a> <a href="#ref-for-concept-request①⓪">(3)</a>
+    <li><a href="#ref-for-concept-request①①">4.1. Redirects</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-header-list-set-structured-header">
+   <a href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header">https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-header-list-set-structured-header">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-concept-header-list-set-structured-header①">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
+    <li><a href="#ref-for-concept-header-list-set-structured-header②">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-concept-header-list-set-structured-header③">2.4. The Sec-Fetch-User HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-url">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-url">https://fetch.spec.whatwg.org/#concept-request-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-url">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-url①">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-url②">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-url③">2.4. The Sec-Fetch-User HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-url④">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-request-url-list">
+   <a href="https://fetch.spec.whatwg.org/#concept-request-url-list">https://fetch.spec.whatwg.org/#concept-request-url-list</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-request-url-list">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-concept-request-url-list①">4.1. Redirects</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-windowproxy">
+   <a href="https://html.spec.whatwg.org/multipage/window-object.html#windowproxy">https://html.spec.whatwg.org/multipage/window-object.html#windowproxy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-windowproxy">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-img-element">
+   <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-img-element">1. Introduction</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-picture-element">
+   <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-picture-element">1.1. Examples</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-process-a-navigate-fetch">
+   <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-fetch">https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-fetch</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-process-a-navigate-fetch">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-same-origin">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#same-origin">https://html.spec.whatwg.org/multipage/origin.html#same-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-same-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-same-site">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#same-site">https://html.spec.whatwg.org/multipage/origin.html#same-site</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-same-site">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-transient-activation">
+   <a href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation">https://html.spec.whatwg.org/multipage/interaction.html#transient-activation</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-transient-activation">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-section-3.9">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-section-3.9">2.4. The Sec-Fetch-User HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#termref-for-">2.1. The Sec-Fetch-Dest HTTP Request Header</a> <a href="#termref-for-">(2)</a>
+    <li><a href="#termref-for-">2.2. The Sec-Fetch-Mode HTTP Request Header</a> <a href="#termref-for-">(2)</a>
+    <li><a href="#termref-for-">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#termref-for-">(2)</a>
+    <li><a href="#termref-for-">2.4. The Sec-Fetch-User HTTP Request Header</a> <a href="#termref-for-">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-section-3.7">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-section-3.7">2.1. The Sec-Fetch-Dest HTTP Request Header</a> <a href="#ref-for-section-3.7①">(2)</a> <a href="#ref-for-section-3.7②">(3)</a>
+    <li><a href="#ref-for-section-3.7③">2.2. The Sec-Fetch-Mode HTTP Request Header</a> <a href="#ref-for-section-3.7④">(2)</a>
+    <li><a href="#ref-for-section-3.7⑤">2.3. The Sec-Fetch-Site HTTP Request Header</a> <a href="#ref-for-section-3.7⑥">(2)</a>
+    <li><a href="#ref-for-section-3.7⑦">2.4. The Sec-Fetch-User HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-iteration-break">
+   <a href="https://infra.spec.whatwg.org/#iteration-break">https://infra.spec.whatwg.org/#iteration-break</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-iteration-break">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-iteration-continue">
+   <a href="https://infra.spec.whatwg.org/#iteration-continue">https://infra.spec.whatwg.org/#iteration-continue</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-iteration-continue">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-potentially-trustworthy-url">
+   <a href="https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url">https://w3c.github.io/webappsec-secure-contexts/#potentially-trustworthy-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-potentially-trustworthy-url">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+    <li><a href="#ref-for-potentially-trustworthy-url①">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
+    <li><a href="#ref-for-potentially-trustworthy-url②">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-potentially-trustworthy-url③">2.4. The Sec-Fetch-User HTTP Request Header</a>
+    <li><a href="#ref-for-potentially-trustworthy-url④">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url-origin">
+   <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url-origin">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+   </ul>
+  </aside>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <ul class="index">
+   <li>
+    <a data-link-type="biblio">[FETCH]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-request-current-url">current url</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-destination">destination</span>
+     <li><span class="dfn-paneled" id="term-for-forbidden-header-name">forbidden header name</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-header-list">header list</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-mode">mode</span>
+     <li><span class="dfn-paneled" id="term-for-navigation-request">navigation request</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-origin">origin</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request">request</span>
+     <li><span class="dfn-paneled" id="term-for-concept-header-list-set-structured-header">set a structured field value</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-url">url</span>
+     <li><span class="dfn-paneled" id="term-for-concept-request-url-list">url list</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-windowproxy">WindowProxy</span>
+     <li><span class="dfn-paneled" id="term-for-the-img-element">img</span>
+     <li><span class="dfn-paneled" id="term-for-the-picture-element">picture</span>
+     <li><span class="dfn-paneled" id="term-for-process-a-navigate-fetch">process a navigate fetch</span>
+     <li><span class="dfn-paneled" id="term-for-same-origin">same origin</span>
+     <li><span class="dfn-paneled" id="term-for-same-site">same site</span>
+     <li><span class="dfn-paneled" id="term-for-transient-activation">transient activation</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[I-D.ietf-httpbis-header-structure]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-section-3.9">boolean</span>
+     <li><span class="dfn-paneled" id="term-for-">structured header</span>
+     <li><span class="dfn-paneled" id="term-for-section-3.7">token</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-iteration-break">break</span>
+     <li><span class="dfn-paneled" id="term-for-iteration-continue">continue</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[secure-contexts]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-potentially-trustworthy-url">potentially trustworthy url</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[URL]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-url-origin">origin</span>
+    </ul>
+  </ul>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <dl>
+   <dt id="biblio-fetch">[FETCH]
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]
+   <dd>Mark Nottingham; Poul-Henning Kamp. <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">Structured Headers for HTTP</a>. ID. URL: <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure</a>
+   <dt id="biblio-infra">[INFRA]
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-rfc2119">[RFC2119]
+   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dt id="biblio-rfc3864">[RFC3864]
+   <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://tools.ietf.org/html/rfc3864">Registration Procedures for Message Header Fields</a>. September 2004. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc3864">https://tools.ietf.org/html/rfc3864</a>
+   <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
+   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/">Secure Contexts</a>. 15 September 2016. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
+   <dt id="biblio-url">[URL]
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+  </dl>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-mnot-designing-headers">[MNOT-DESIGNING-HEADERS]
+   <dd>Mark Nottingham. <a href="https://www.mnot.net/blog/2018/11/27/header_compression">Designing Headers for HTTP Compression</a>. URL: <a href="https://www.mnot.net/blog/2018/11/27/header_compression">https://www.mnot.net/blog/2018/11/27/header_compression</a>
+   <dt id="biblio-rfc7231">[RFC7231]
+   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7231.html">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7231.html">https://httpwg.org/specs/rfc7231.html</a>
+  </dl>
+  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
+  <div style="counter-reset:issue">
+   <div class="issue"> <code>frame</code> and <code>iframe</code> haven’t landed in Fetch yet. <a href="https://github.com/whatwg/fetch/issues/948">&lt;https://github.com/whatwg/fetch/issues/948></a><a href="#issue-928bdba7"> ↵ </a></div>
+   <div class="issue"> This should be defined in Fetch. <a href="https://github.com/whatwg/fetch/issues/993">&lt;https://github.com/whatwg/fetch/issues/993></a><a href="#issue-31e10e5c"> ↵ </a></div>
+   <div class="issue"> This should be defined in HTML. <a href="https://github.com/whatwg/html/issues/5203">&lt;https://github.com/whatwg/html/issues/5203></a><a href="#issue-b1fabf90"> ↵ </a></div>
+   <div class="issue"> This should be called from in Fetch. <a href="https://github.com/whatwg/fetch/issues/993">&lt;https://github.com/whatwg/fetch/issues/993></a><a href="#issue-03cc838f"> ↵ </a></div>
+  </div>
+  <aside class="dfn-panel" data-for="fetch-metadata-headers">
+   <b><a href="#fetch-metadata-headers">#fetch-metadata-headers</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-fetch-metadata-headers">1. Introduction</a>
+    <li><a href="#ref-for-fetch-metadata-headers①">5.1. Vary</a>
+    <li><a href="#ref-for-fetch-metadata-headers②">6. IANA Considerations</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="http-headerdef-sec-fetch-dest">
+   <b><a href="#http-headerdef-sec-fetch-dest">#http-headerdef-sec-fetch-dest</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-http-headerdef-sec-fetch-dest">2.1. The Sec-Fetch-Dest HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-dest">
+   <b><a href="#abstract-opdef-set-dest">#abstract-opdef-set-dest</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-dest">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="http-headerdef-sec-fetch-mode">
+   <b><a href="#http-headerdef-sec-fetch-mode">#http-headerdef-sec-fetch-mode</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-http-headerdef-sec-fetch-mode">2.2. The Sec-Fetch-Mode HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-mode">
+   <b><a href="#abstract-opdef-set-mode">#abstract-opdef-set-mode</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-mode">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="http-headerdef-sec-fetch-site">
+   <b><a href="#http-headerdef-sec-fetch-site">#http-headerdef-sec-fetch-site</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-http-headerdef-sec-fetch-site">2.3. The Sec-Fetch-Site HTTP Request Header</a>
+    <li><a href="#ref-for-http-headerdef-sec-fetch-site①">4.1. Redirects</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-site">
+   <b><a href="#abstract-opdef-set-site">#abstract-opdef-set-site</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-site">3. Integration with Fetch and HTML</a>
+    <li><a href="#ref-for-abstract-opdef-set-site①">4.1. Redirects</a>
+    <li><a href="#ref-for-abstract-opdef-set-site②">4.3. Directly User-Initiated Requests</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="http-headerdef-sec-fetch-user">
+   <b><a href="#http-headerdef-sec-fetch-user">#http-headerdef-sec-fetch-user</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-http-headerdef-sec-fetch-user">2.4. The Sec-Fetch-User HTTP Request Header</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-set-user">
+   <b><a href="#abstract-opdef-set-user">#abstract-opdef-set-user</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-set-user">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="request-user-activation">
+   <b><a href="#request-user-activation">#request-user-activation</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-request-user-activation">2.4. The Sec-Fetch-User HTTP Request Header</a>
+    <li><a href="#ref-for-request-user-activation①">3. Integration with Fetch and HTML</a>
+   </ul>
+  </aside>
+<script>/* script-dfn-panel */
+
+document.body.addEventListener("click", function(e) {
+    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+    // Find the dfn element or panel, if any, that was clicked on.
+    var el = e.target;
+    var target;
+    var hitALink = false;
+    while(el.parentElement) {
+        if(el.tagName == "A") {
+            // Clicking on a link in a <dfn> shouldn't summon the panel
+            hitALink = true;
+        }
+        if(el.classList.contains("dfn-paneled")) {
+            target = "dfn";
+            break;
+        }
+        if(el.classList.contains("dfn-panel")) {
+            target = "dfn-panel";
+            break;
+        }
+        el = el.parentElement;
+    }
+    if(target != "dfn-panel") {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+            el.classList.remove("on");
+            el.classList.remove("activated");
+        });
+    }
+    if(target == "dfn" && !hitALink) {
+        // open the panel
+        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
+        if(dfnPanel) {
+            dfnPanel.classList.add("on");
+            var rect = el.getBoundingClientRect();
+            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
+            dfnPanel.style.top = window.scrollY + rect.top + "px";
+            var panelRect = dfnPanel.getBoundingClientRect();
+            var panelWidth = panelRect.right - panelRect.left;
+            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
+                // Reposition, because the panel is overflowing
+                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+            }
+        } else {
+            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
+        }
+    } else if(target == "dfn-panel") {
+        // Switch it to "activated" state, which pins it.
+        el.classList.add("activated");
+        el.style.left = null;
+        el.style.top = null;
+    }
+
+});
+</script>
+<script>/* script-mdn-anno */
+
+            document.body.addEventListener("click", (e) => {
+                if(e.target.closest(".mdn-anno-btn")) {
+                    e.target.closest(".mdn-anno").classList.toggle("wrapped");
+                }
+            });
+            </script>
+<script>/* script-var-click-highlighting */
+
+    document.addEventListener("click", e=>{
+        if(e.target.nodeName == "VAR") {
+            highlightSameAlgoVars(e.target);
+        }
+    });
+    {
+        const indexCounts = new Map();
+        const indexNames = new Map();
+        function highlightSameAlgoVars(v) {
+            // Find the algorithm container.
+            let algoContainer = null;
+            let searchEl = v;
+            while(algoContainer == null && searchEl != document.body) {
+                searchEl = searchEl.parentNode;
+                if(searchEl.hasAttribute("data-algorithm")) {
+                    algoContainer = searchEl;
+                }
+            }
+
+            // Not highlighting document-global vars,
+            // too likely to be unrelated.
+            if(algoContainer == null) return;
+
+            const algoName = algoContainer.getAttribute("data-algorithm");
+            const varName = getVarName(v);
+            const addClass = !v.classList.contains("selected");
+            let highlightClass = null;
+            if(addClass) {
+                const index = chooseHighlightIndex(algoName, varName);
+                indexCounts.get(algoName)[index] += 1;
+                indexNames.set(algoName+"///"+varName, index);
+                highlightClass = nameFromIndex(index);
+            } else {
+                const index = previousHighlightIndex(algoName, varName);
+                indexCounts.get(algoName)[index] -= 1;
+                highlightClass = nameFromIndex(index);
+            }
+
+            // Find all same-name vars, and toggle their class appropriately.
+            for(const el of algoContainer.querySelectorAll("var")) {
+                if(getVarName(el) == varName) {
+                    el.classList.toggle("selected", addClass);
+                    el.classList.toggle(highlightClass, addClass);
+                }
+            }
+        }
+        function getVarName(el) {
+            return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+        }
+        function chooseHighlightIndex(algoName, varName) {
+            let indexes = null;
+            if(indexCounts.has(algoName)) {
+                indexes = indexCounts.get(algoName);
+            } else {
+                // 7 classes right now
+                indexes = [0,0,0,0,0,0,0];
+                indexCounts.set(algoName, indexes);
+            }
+
+            // If the element was recently unclicked,
+            // *and* that color is still unclaimed,
+            // give it back the same color.
+            const lastIndex = previousHighlightIndex(algoName, varName);
+            if(indexes[lastIndex] === 0) return lastIndex;
+
+            // Find the earliest index with the lowest count.
+            const minCount = Math.min.apply(null, indexes);
+            let index = null;
+            for(var i = 0; i < indexes.length; i++) {
+                if(indexes[i] == minCount) {
+                    return i;
+                }
+            }
+        }
+        function previousHighlightIndex(algoName, varName) {
+            return indexNames.get(algoName+"///"+varName);
+        }
+        function nameFromIndex(index) {
+            return "selected" + index;
+        }
+    }
+    </script>
