@@ -15,7 +15,7 @@ Abstract:
 Markup Shorthands: markdown yes
 !Participate: <a href="https://github.com/w3c/webappsec-fetch-metadata/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-fetch-metadata/issues">open issues</a>)
 !Tests: <a href=https://github.com/web-platform-tests/wpt/tree/master/fetch/sec-metadata>web-platform-tests fetch/sec-metadata/</a>
-Version History: https://github.com/w3c/webappsec-fetch-metadata/commits/master/index.bs
+Version History: https://github.com/w3c/webappsec-fetch-metadata/commits/main/index.bs
 </pre>
 <pre class="biblio">
 {
