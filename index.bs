@@ -3,7 +3,7 @@ Title: Fetch Metadata Request Headers
 Shortname: fetch-metadata
 Level: None
 Group: webappsec
-Status: ED
+Status: WD
 TR: https://www.w3.org/TR/fetch-metadata/
 ED: https://github.com/w3c/webappsec-fetch-metadata/
 Previous Version: https://www.w3.org/TR/2019/WD-fetch-metadata-20200110/
