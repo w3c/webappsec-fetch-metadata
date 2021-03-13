@@ -6,7 +6,7 @@ Group: webappsec
 Status: WD
 TR: https://www.w3.org/TR/fetch-metadata/
 ED: https://w3c.github.io/webappsec-fetch-metadata/
-Previous Version: https://www.w3.org/TR/2020/WD-fetch-metadata-20200110/
+Previous Version: from biblio
 Editor: Mike West 56384, Google Inc., mkwst@google.com
 Abstract:
     This document defines a set of Fetch metadata request headers that aim to provide servers with
