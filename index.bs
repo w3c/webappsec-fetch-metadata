@@ -124,8 +124,6 @@ Valid `Sec-Fetch-Dest` values include "`audio`", "`audioworklet`", "`document`",
 "`report`", "`script`", "`serviceworker`", "`sharedworker`", "`style`", "`track`", "`video`",
 "`worker`", "`xslt`".
 
-ISSUE(whatwg/fetch#948): `frame` and `iframe` haven't landed in Fetch yet.
-
 In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
 this header if it contains an invalid value.
 
@@ -284,27 +282,11 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 Integration with Fetch and HTML {#fetch-integration}
 ===========================================
 
-To support `Sec-Fetch-User`, [=request=] needs to be taught about requests which were
-triggered by user activation:
+To support `Sec-Fetch-User`, [=request=] has a [=request/user-activation=] which is false,
+unless otherwise populated by HTML's [=process a navigate fetch=] algorithm.
 
->   <strong>Monkeypatching [[FETCH]]:</strong>
->
->   A [=request=] has a boolean <dfn for="request">user activation</dfn>. Unless stated
->   otherwise, it is `false`.
->
->   Note: This is only used for [=navigation requests=].
-
-ISSUE(whatwg/fetch#993): This should be defined in Fetch.
-
-This flag could be populated from HTML's [=process a navigate fetch=] algorithm, perhaps by
-inserting the following step after the current algorithm's step 2:
-
->   <strong>Monkeypatching [[HTML]]:</strong>
->
->   3.  If <var ignore>sourceBrowsingContext</var>'s {{WindowProxy}}'s `[[Window]]` value has
->       [=transient activation=], then set <var ignore>request</var>'s [=request/user activation=] to true.
-
-ISSUE(whatwg/html#5203): This should be defined in HTML.
+Fetch Metadata headers are appended to outgoing requests from within Fetch's "HTTP-network-or-cache"
+algorithm, using the following steps. Consult that specification for integration details [[!FETCH]].
 
 <div algorithm="append fetch metadata headers">
 To <dfn abstract-op export>append the Fetch metadata headers for a request</dfn>, given [=request=] |r|:
@@ -322,10 +304,6 @@ To <dfn abstract-op export>append the Fetch metadata headers for a request</dfn>
 </ol>
 </div>
 
-Fetch will call into the algorithm above from within its "HTTP-network-or-cache fetch" algorithm.
-Please consult that specification for integration details [[!FETCH]].
-
-ISSUE(whatwg/fetch#993): This should be called from in Fetch.
 
 Security and Privacy Considerations {#sec-priv-considerations}
 ==============================================================
