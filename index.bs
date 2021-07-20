@@ -332,6 +332,12 @@ redirects all the way back to `https://example.com/`, the final request's `Sec-F
 value would still be `cross-site` (as the redirect chain includes `https://example.net/`, which is
 still not same-site with the other URLs.
 
+Note: For the special case of `Sec-Fetch-Site: None`, it seems reasonable to maintain that value
+through redirects in order to support the common case of copy/pasting shortlinks into the address
+bar. That is, if a user agent chooses to treat an address-bar navigation to `https://sho.rt/link`
+as `Sec-Fetch-Site: none`, a post-redirect navigation to `https://target.com/long/path/goes/here`
+should likewise assert `Sec-Fetch-Site: none`. 
+
 The `Sec-` Prefix {#sec-prefix}
 -------------------------------
 
