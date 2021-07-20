@@ -412,7 +412,7 @@ With these goals in mind, user agents are encouraged to implement the following 
     If the extension does have access to a given URL, the `Sec-Fetch-Site` value could be `same-origin`.
 
 2.  The `Origin` header could be included with outgoing requests from extension contexts, with an
-    [=implementation defined=] value that allows servers to distinguish extension-initiated requests
+    [=implementation-defined=] value that allows servers to distinguish extension-initiated requests
     from web-initiated requests.
 
 Deployment Considerations {#deployment-considerations}
