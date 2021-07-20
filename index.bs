@@ -401,7 +401,7 @@ satisfy two goals:
 1.  Extensions without special privileges for a given site cannot cause requests that would bypass
     that site's server-side Fetch Metadata logic.
 
-2.  Developer can recognize extensions' requests so that they can be exempted from the server's Fetch
+2.  Developers can recognize extensions' requests so that they can be exempted from the server's Fetch
     Metadata logic if it chooses to do so. This increases developers' ability to confidently deploy
     Fetch Metadata protections without undermining legitimate user interests.
     
