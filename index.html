@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-WD" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version bb6b91100, updated Mon Jul 12 16:52:37 2021 -0700" name="generator">
   <link href="https://www.w3.org/TR/fetch-metadata/" rel="canonical">
-  <meta content="971e035a8a7af3289a9161fc2239fcc989a00a5f" name="document-revision">
+  <meta content="c390bc2af0e8ce9ce5ea0c1ce97077c3e73344a0" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -283,7 +283,7 @@ dfn > a.self-link::before      { content: "#"; }
      <dt>Editor's Draft:
      <dd><a href="https://w3c.github.io/webappsec-fetch-metadata/">https://w3c.github.io/webappsec-fetch-metadata/</a>
      <dt>Previous Versions:
-     <dd><a href="https://www.w3.org/TR/2021/WD-fetch-metadata-20210604/" rel="prev">https://www.w3.org/TR/2021/WD-fetch-metadata-20210604/</a>
+     <dd><a href="https://www.w3.org/TR/2021/WD-fetch-metadata-20210720/" rel="prev">https://www.w3.org/TR/2021/WD-fetch-metadata-20210720/</a>
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-fetch-metadata/commits/main/index.bs">https://github.com/w3c/webappsec-fetch-metadata/commits/main/index.bs</a>
      <dt>Feedback:
@@ -653,6 +653,9 @@ request’s <code>Sec-Fetch-Site</code> value would be <code>cross-site</code> (
 same-site with <code>https://example.com/</code> and <code>https://subdomain.example.com/</code>). If that response
 redirects all the way back to <code>https://example.com/</code>, the final request’s <code>Sec-Fetch-Site</code> value would still be <code>cross-site</code> (as the redirect chain includes <code>https://example.net/</code>, which is
 still not same-site with the other URLs.</p>
+   <p class="note" role="note"><span>Note:</span> For the special case of <code>Sec-Fetch-Site: None</code>, it seems reasonable to maintain that value
+through redirects in order to support the common case of copy/pasting shortlinks into the address
+bar. That is, if a user agent chooses to treat an address-bar navigation to <code>https://sho.rt/link</code> as <code>Sec-Fetch-Site: none</code>, a post-redirect navigation to <code>https://target.com/long/path/goes/here</code> should likewise assert <code>Sec-Fetch-Site: none</code>.</p>
    <h3 class="heading settled" data-level="4.2" id="sec-prefix"><span class="secno">4.2. </span><span class="content">The <code>Sec-</code> Prefix</span><a class="self-link" href="#sec-prefix"></a></h3>
    <p>Each of the headers defined in this document is prefixed with <code>Sec-</code>, which makes them all <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#forbidden-header-name" id="ref-for-forbidden-header-name">forbidden header names</a>, and therefore unmodifiable from JavaScript. This will prevent
 malicious websites from convincing user agents to send forged metadata along with requests,
