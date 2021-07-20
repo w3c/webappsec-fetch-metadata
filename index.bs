@@ -395,7 +395,7 @@ Extension-Initiated Requests {#extension-initiated}
 Some user agents support extensions which are capable of making requests, and which can be empowered
 beyond regular web content in order to give users more control over their web experience. While these
 are somewhat outside the scope of the web platform, user agents are encouraged to carefully consider
-how these requests should be represented to servers. In general, it would be ideal for user agents to
+how these requests are to be represented to servers. In general, it would be ideal for user agents to
 satisfy two goals:
 
 1.  Extensions without special privileges for a given site cannot cause requests that would bypass
