@@ -395,7 +395,31 @@ would be ideal to align on behavior for those which are likely to be common. Sme
     user agent's bookmark bar, another app entirely, etc), then `Sec-Fetch-Site: none` may be
     appropriate.
 
+Extension-Initiated Requests {#extension-initiated}
+---------------------------------------------------
 
+Some user agents support extensions which are capable of making requests, and which can be empowered
+beyond regular web content in order to give users more control over their web experience. While these
+are somewhat outside the scope of the web platform, user agents are encouraged to carefully consider
+how these requests are to be represented to servers. In general, it would be ideal for user agents to
+satisfy two goals:
+
+1.  Extensions without special privileges for a given site cannot cause requests that would bypass
+    that site's server-side Fetch Metadata logic.
+
+2.  Developers can recognize extensions' requests so that they can be exempted from the server's Fetch
+    Metadata logic if it chooses to do so. This increases developers' ability to confidently deploy
+    Fetch Metadata protections without undermining legitimate user interests.
+    
+With these goals in mind, user agents are encouraged to implement the following behaviors:
+
+1.  If an extension does not have permission to access to a given URL, its requests to that URL could
+    contain a `Sec-Fetch-Site` header whose value is `cross-site`, just as a normal web request would.
+    If the extension does have access to a given URL, the `Sec-Fetch-Site` value could be `same-origin`.
+
+2.  The `Origin` header could be included with outgoing requests from extension contexts, with an
+    [=implementation-defined=] value that allows servers to distinguish extension-initiated requests
+    from web-initiated requests.
 
 Deployment Considerations {#deployment-considerations}
 ======================================================
