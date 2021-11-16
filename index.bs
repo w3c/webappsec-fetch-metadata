@@ -175,7 +175,7 @@ The <dfn http-header export>`Sec-Fetch-Mode`</dfn> HTTP request header exposes a
 Sec-Fetch-Mode = sh-token
 ```
 
-Valid `Sec-Fetch-Mode` values include "`cors`", "`navigate`", "`no-cors`", "`same-origin`",
+Valid `Sec-Fetch-Mode` values include "`cors`", "`navigate`", "`nested-navigate`", "`no-cors`", "`same-origin`",
 and "`websocket`". In order to support forward-compatibility with as-yet-unknown request types,
 servers SHOULD ignore this header if it contains an invalid value.
 
