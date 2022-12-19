@@ -278,6 +278,35 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 </ol>
 </div>
 
+The `Sec-Purpose` HTTP Request Header {#sec-purpose-header}
+-----------------------------------------------------------------
+
+The <dfn http-header export>`Sec-Purpose`</dfn> HTTP request header exposes the purpose of the
+fetch, i.e. whether it's a [^link/rel/prefetch^|prefetch] or a regular fetch. It is a
+[=Structured Header=] whose value is a [=structured header/token=].
+[[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
+
+```
+Sec-Purpose = sh-token
+```
+
+Valid `Sec-Purpose` values include "`prefetch`". In order to support forward-compatibility with
+as-yet-unknown request types, servers SHOULD ignore this header if it contains an invalid value.
+
+<div algorithm="set `Sec-Purpose`">
+To <dfn abstract-op lt="set-purpose">set the `Sec-Purpose` header</dfn> for a [=request=] |r|:
+
+<ol class="algorithm">
+    2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
+
+    3.  If [=request/initiator=] is `prefetch`, set |header|'s value to "`prefetch`".
+
+    4.  [=header list/Set a structured field value=]
+        &#96;<a http-header>`Sec-Fetch-Mode`</a>&#96;/|header| in |r|'s [=request/header list=].
+</ol>
+</div>
+
+
 
 Integration with Fetch and HTML {#fetch-integration}
 ===========================================
@@ -301,6 +330,8 @@ To <dfn abstract-op export>append the Fetch metadata headers for a request</dfn>
     4.  <a abstract-op lt='set-site'>Set the `Sec-Fetch-Site` header</a> for |r|.
 
     5.  <a abstract-op lt='set-user'>Set the `Sec-Fetch-User` header</a> for |r|.
+
+    6.  <a abstract-op lt='set-purpose'>Set the `Sec-Purpose` header</a> for |r|.
 </ol>
 </div>
 
@@ -505,6 +536,20 @@ The permanent message header field registry should be updated with the following
 ::  Me
 :   Specification document
 ::  This specification (See [[#sec-fetch-user-header]])
+
+`Sec-Purpose` Registration {#sec-purpose-reg}
+-----------------------------
+
+:   Header field name
+::  Sec-Purpose
+:   Applicable protocol
+::  http
+:   Status
+::  standard
+:   Author/Change controller
+::  Me
+:   Specification document
+::  This specification (See [[#sec-purpose-header]])
 
 Acknowledgements {#acks}
 ========================
