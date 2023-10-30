@@ -123,10 +123,8 @@ The <dfn http-header export>`Sec-Fetch-Dest`</dfn> HTTP request header exposes a
 Sec-Fetch-Dest = sh-token
 ```
 
-Valid `Sec-Fetch-Dest` values include "`audio`", "`audioworklet`", "`document`", "`embed`",
-"`empty`", "`font`", "`frame`", "`iframe`", "`image`", "`manifest`", "`object`", "`paintworklet`",
-"`report`", "`script`", "`serviceworker`", "`sharedworker`", "`style`", "`track`", "`video`",
-"`worker`", "`xslt`".
+Valid `Sec-Fetch-Dest` values include the set of valid [=request=] [=request/destinations=]
+defined by [[!Fetch]].
 
 In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
 this header if it contains an invalid value.
