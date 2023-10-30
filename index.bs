@@ -44,13 +44,17 @@ urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec
             text: boolean; url: #section-3.9
     type: abstract-op
         text: serialize Structured Header; url: #section-4.1
+urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html;
+    type: dfn
+        text: create navigation params by fetching; url: #create-navigation-params-by-fetching
 </pre>
 
 <pre class="link-defaults">
+spec:html; type:dfn; text:environment
+spec:html; type:dfn; for:site; text:same site
 spec:fetch; type:dfn; for:/; text:request
 spec:fetch; type:dfn; text:main fetch
 spec:url; type:dfn; for:/; text:url
-spec:html; type:dfn; text:environment
 </pre>
 
 Introduction {#intro}
@@ -154,7 +158,7 @@ To <dfn abstract-op lt="set-dest">set the `Sec-Fetch-Dest` header</dfn> for a [=
 
     3.  If |r|'s [=request/destination=] is the empty string, set |header|'s value to the string
         "`empty`". Otherwise, set |header|'s value to |r|'s [=request/destination=].
-       
+
         Note: We map Fetch's empty string [=request/destination=] onto an explicit "`empty`"
         [=structured header/token=] in order to simplify processing.
 
@@ -231,7 +235,7 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
         1.  If |url| is [=same origin=] with |r|'s [=request/origin=], [=iteration/continue=].
 
         2.  Set |header|'s value to `cross-site`.
-        
+
         3.  If |r|'s [=request/origin=] is not [=same site=] with |url|'s [=url/origin=], then [=iteration/break=].
 
         4.  Set |header|'s value to `same-site`.
@@ -266,7 +270,7 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
 
-    2.  If |r| is not a [=navigation request=], or if |r|'s [=request/user activation=] is
+    2.  If |r| is not a [=navigation request=], or if |r|'s [=request/user-activation=] is
         `false`, return.
 
     3.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
@@ -283,7 +287,7 @@ Integration with Fetch and HTML {#fetch-integration}
 ===========================================
 
 To support `Sec-Fetch-User`, [=request=] has a [=request/user-activation=] which is false,
-unless otherwise populated by HTML's [=process a navigate fetch=] algorithm.
+unless otherwise populated by HTML's [=create navigation params by fetching=] algorithm.
 
 Fetch Metadata headers are appended to outgoing requests from within Fetch's "HTTP-network-or-cache"
 algorithm, using the following steps. Consult that specification for integration details [[!FETCH]].
@@ -336,13 +340,13 @@ Note: For the special case of `Sec-Fetch-Site: None`, it seems reasonable to mai
 through redirects in order to support the common case of copy/pasting shortlinks into the address
 bar. That is, if a user agent chooses to treat an address-bar navigation to `https://sho.rt/link`
 as `Sec-Fetch-Site: none`, a post-redirect navigation to `https://target.com/long/path/goes/here`
-should likewise assert `Sec-Fetch-Site: none`. 
+should likewise assert `Sec-Fetch-Site: none`.
 
 The `Sec-` Prefix {#sec-prefix}
 -------------------------------
 
 Each of the headers defined in this document is prefixed with `Sec-`, which makes them all
-[=forbidden header names=], and therefore unmodifiable from JavaScript. This will prevent
+[=forbidden response-header names=], and therefore unmodifiable from JavaScript. This will prevent
 malicious websites from convincing user agents to send forged metadata along with requests,
 which should give sites a bit more confidence in their ability to respond reasonably to
 the advertised information.
@@ -387,7 +391,7 @@ would be ideal to align on behavior for those which are likely to be common. Sme
 *   Ctrl-click on a link: the same arguments and conclusions apply here as apply to a link's context
     menu, discussed directly above.
 
-*   Navigation through history (e.g. a user agent's "back" button): 
+*   Navigation through history (e.g. a user agent's "back" button):
 
 *   Drag-and-drop: It seems reasonable to distinguish behavior here based upon the source of the
     dragged content. If content is dragged from a tab, the user agent should be able to ascertain
@@ -410,7 +414,7 @@ satisfy two goals:
 2.  Developers can recognize extensions' requests so that they can be exempted from the server's Fetch
     Metadata logic if it chooses to do so. This increases developers' ability to confidently deploy
     Fetch Metadata protections without undermining legitimate user interests.
-    
+
 With these goals in mind, user agents are encouraged to implement the following behaviors:
 
 1.  If an extension does not have permission to access to a given URL, its requests to that URL could
@@ -429,7 +433,7 @@ Vary {#vary}
 
 If a given endpoint's response depends upon the values the client delivers in a
 [=Fetch metadata header=], developers should be careful to include an appropriate `Vary` header
-[[RFC7231]], in order to ensure that caches handle the response appropriately. For example,
+[[RFC9110]], in order to ensure that caches handle the response appropriately. For example,
 `Vary: Accept-Encoding, Sec-Fetch-Site`.
 
 Header Bloat {#bloat}
