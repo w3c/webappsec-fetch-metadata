@@ -19,13 +19,6 @@ Version History: https://github.com/w3c/webappsec-fetch-metadata/commits/main/in
 </pre>
 <pre class="biblio">
 {
-  "I-D.ietf-httpbis-header-structure": {
-    "authors": [ "Mark Nottingham", "Poul-Henning Kamp" ],
-    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-header-structure",
-    "title": "Structured Headers for HTTP",
-    "status": "ID",
-    "publisher": "IETF"
-  },
   "mnot-designing-headers": {
     "authors": [ "Mark Nottingham" ],
     "href": "https://www.mnot.net/blog/2018/11/27/header_compression",
@@ -35,16 +28,16 @@ Version History: https://github.com/w3c/webappsec-fetch-metadata/commits/main/in
 </pre>
 
 <pre class="anchors">
-urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-header-structure; spec: I-D.ietf-httpbis-header-structure
+urlPrefix: https://www.rfc-editor.org/rfc/rfc9651.html; spec: RFC9651
     type: dfn
-        text: structured header; url: #
-    for: structured header
-        type: dfn
-            text: token; url: #section-3.7
-            text: boolean; url: #section-3.9
-    type: abstract-op
-        text: serialize Structured Header; url: #section-4.1
-urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html;
+        text: structured field; url: #name-introduction
+        for: structured field
+            text: boolean; url: #name-booleans
+            text: token; url: #name-tokens
+    type: grammar
+        text: sf-token; url: #name-abnf
+        text: sf-boolean; url: #name-abnf
+urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html; spec: HTML
     type: dfn
         text: create navigation params by fetching; url: #create-navigation-params-by-fetching
 </pre>
@@ -116,12 +109,12 @@ The `Sec-Fetch-Dest` HTTP Request Header {#sec-fetch-dest-header}
 -----------------------------------------------------------------
 
 The <dfn http-header export>`Sec-Fetch-Dest`</dfn> HTTP request header exposes a [=request=]'s
-[=request/destination=] to a server. It is a [=Structured Header=] whose value MUST be a
-[=structured header/token=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
+[=request/destination=] to a server. It is a [=Structured Field=] whose value MUST be a
+[=structured field/token=]. [[!RFC9651]] Its ABNF is:
 
-```
-Sec-Fetch-Dest = sh-token
-```
+<pre>
+Sec-Fetch-Dest = <a grammar>sf-token</a>
+</pre>
 
 Valid `Sec-Fetch-Dest` values include the set of valid [=request=] [=request/destinations=]
 defined by [[!Fetch]].
@@ -152,16 +145,17 @@ To <dfn abstract-op lt="set-dest">set the `Sec-Fetch-Dest` header</dfn> for a [=
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
 
-    2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
+    2.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
 
     3.  If |r|'s [=request/destination=] is the empty string, set |header|'s value to the string
         "`empty`". Otherwise, set |header|'s value to |r|'s [=request/destination=].
 
         Note: We map Fetch's empty string [=request/destination=] onto an explicit "`empty`"
-        [=structured header/token=] in order to simplify processing.
+        [=structured field/token=] in order to simplify processing.
 
     4.  [=header list/Set a structured field value=]
         &#96;<a http-header>`Sec-Fetch-Dest`</a>&#96;/|header| in |r|'s [=request/header list=].
+</ol>
 </div>
 
 
@@ -170,12 +164,12 @@ The `Sec-Fetch-Mode` HTTP Request Header {#sec-fetch-mode-header}
 -----------------------------------------------------------------
 
 The <dfn http-header export>`Sec-Fetch-Mode`</dfn> HTTP request header exposes a [=request=]'s
-[=request/mode=] to a server. It is a [=Structured Header=] whose value is a
-[=structured header/token=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
+[=request/mode=] to a server. It is a [=Structured Field=] whose value MUST be a
+[=structured field/token=]. [[!RFC9651]] Its ABNF is:
 
-```
-Sec-Fetch-Mode = sh-token
-```
+<pre>
+Sec-Fetch-Mode = <a grammar>sf-token</a>
+</pre>
 
 Valid `Sec-Fetch-Mode` values include "`cors`", "`navigate`", "`no-cors`", "`same-origin`",
 and "`websocket`". In order to support forward-compatibility with as-yet-unknown request types,
@@ -187,7 +181,7 @@ To <dfn abstract-op lt="set-mode">set the `Sec-Fetch-Mode` header</dfn> for a [=
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
 
-    2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
+    2.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
 
     3.  Set |header|'s value to |r|'s [=request/mode=].
 
@@ -201,12 +195,12 @@ The `Sec-Fetch-Site` HTTP Request Header {#sec-fetch-site-header}
 -----------------------------------------------------------------
 
 The <dfn http-header export>`Sec-Fetch-Site`</dfn> HTTP request header exposes the relationship
-between a [=request=] initiator's origin and its target's origin. It is a [=Structured Header=]
-whose value is a [=structured header/token=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
+between a [=request=] initiator's origin and its target's origin. It is a [=Structured Field=]
+whose value is a [=structured field/token=]. [[!RFC9651]] Its ABNF is:
 
-```
-Sec-Fetch-Site = sh-token
-```
+<pre>
+Sec-Fetch-Site = <a grammar>sf-token</a>
+</pre>
 
 Valid `Sec-Fetch-Site` values include "`cross-site`", "`same-origin`", "`same-site`", and "`none`".
 In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
@@ -218,7 +212,7 @@ To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=
 <ol class="algorithm">
     1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
 
-    2.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
+    2.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
 
     3.  Set |header|'s value to `same-origin`.
 
@@ -248,12 +242,12 @@ The `Sec-Fetch-User` HTTP Request Header {#sec-fetch-user-header}
 -----------------------------------------------------------------
 
 The <dfn http-header export>`Sec-Fetch-User`</dfn> HTTP request header exposes whether or not a
-[=navigation request=] was triggered by user activation. It is a [=Structured Header=] whose
-value is a [=structured header/boolean=]. [[!I-D.ietf-httpbis-header-structure]] Its ABNF is:
+[=navigation request=] was triggered by user activation. It is a [=Structured Field=] whose
+value is a [=structured field/boolean=]. [[!RFC9651]] Its ABNF is:
 
-```
-Sec-Fetch-User = sh-boolean
-```
+<pre>
+Sec-Fetch-User = <a grammar>sf-boolean</a>
+</pre>
 
 Note: The header is delivered only for [=navigation requests=], and only when its value is `true`.
 It might be reasonable to expand the headers' scope in the future to include subresource requests
@@ -271,7 +265,7 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
     2.  If |r| is not a [=navigation request=], or if |r|'s [=request/user-activation=] is
         `false`, return.
 
-    3.  Let |header| be a [=Structured Header=] whose value is a [=structured header/token=].
+    3.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
 
     4.  Set |header|'s value to `true`.
 
