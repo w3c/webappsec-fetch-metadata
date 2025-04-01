@@ -5,9 +5,11 @@
   <title>Fetch Metadata Request Headers</title>
   <meta content="WD" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-WD" rel="stylesheet">
-  <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
+  <meta content="Bikeshed version b25686b9f, updated Fri Mar 14 14:15:20 2025 -0700" name="generator">
   <link href="https://www.w3.org/TR/fetch-metadata/" rel="canonical">
-  <meta content="8624131b818d0e3ffc59d5bb5daba9c182fcee50" name="document-revision">
+  <meta content="6d0c5bffaa3ab068747cb66cf10503d0ad1107e5" name="revision">
+  <meta content="dark light" name="color-scheme">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -79,7 +81,6 @@ pre .property::before, pre .property::after {
 }
 </style>
 <style>/* Boilerplate: style-colors */
-
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
     color-scheme: light dark;
@@ -333,11 +334,15 @@ figcaption:not(.no-marker)::before {
 :root {
     --dfnpanel-bg: #ddd;
     --dfnpanel-text: var(--text);
+    --dfnpanel-target-bg: #ffc;
+    --dfnpanel-target-outline: orange;
 }
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
+        --dfnpanel-target-bg: #333;
+        --dfnpanel-target-outline: silver;
     }
 }
 .dfn-panel {
@@ -360,11 +365,13 @@ figcaption:not(.no-marker)::before {
 .dfn-panel > b { display: block; }
 .dfn-panel a { color: var(--dfnpanel-text); }
 .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel a:focus {
+    outline: 5px auto Highlight;
+    outline: 5px auto -webkit-focus-ring-color;
+}
 .dfn-panel > b + b { margin-top: 0.25em; }
 .dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
 .dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
     max-width: calc(300px - 1.5em - 1em);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -373,67 +380,79 @@ figcaption:not(.no-marker)::before {
 .dfn-panel.activated {
     display: inline-block;
     position: fixed;
-    left: .5em;
+    left: 8px;
     bottom: 2em;
     margin: 0 auto;
     max-width: calc(100vw - 1.5em - .4em - .5em);
     max-height: 30vh;
+    transition: left 1s ease-out, bottom 1s ease-out;
 }
 
-.dfn-paneled[role="button"] { cursor: pointer; }
-</style>
-<style>/* Boilerplate: style-dfn-panel */
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
+.dfn-panel .link-item:hover {
+    text-decoration: underline;
 }
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
+.dfn-panel .link-item .copy-icon {
+    opacity: 0;
+}
+.dfn-panel .link-item:hover .copy-icon,
+.dfn-panel .link-item .copy-icon:focus {
+    opacity: 1;
+}
+
+.dfn-panel .copy-icon {
+    display: inline-block;
+    margin-right: 0.5em;
+    width: 0.85em;
+    height: 1em;
+    border-radius: 3px;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.dfn-panel .copy-icon .icon {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.dfn-panel .copy-icon .icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    background-color: #ccc;
+    opacity: 0.25;
+    transform: translate(3px, -3px);
+}
+
+.dfn-panel .copy-icon:active .icon::before {
+    opacity: 1;
+}
+
+.dfn-paneled[role="button"] { cursor: help; }
+
+.highlighted {
+    animation: target-fade 3s;
+}
+
+@keyframes target-fade {
+    from {
+        background-color: var(--dfnpanel-target-bg);
+        outline: 5px solid var(--dfnpanel-target-outline);
+    }
+    to {
+        color: var(--a-normal-text);
+        background-color: transparent;
+        outline: transparent;
     }
 }
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    width: 20em;
-    width: 300px;
-    height: auto;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-    white-space: normal; /* in case it's moved into a pre */
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
-.dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
-    max-width: calc(300px - 1.5em - 1em);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled[role="button"] { cursor: pointer; }
 </style>
 <style>/* Boilerplate: style-issues */
 a[href].issue-return {
@@ -459,12 +478,16 @@ a[href].issue-return {
 	--mdn-bg: #EEE;
 	--mdn-shadow: #999;
 	--mdn-nosupport-text: #ccc;
+	--mdn-pass: green;
+	--mdn-fail: red;
 }
 @media (prefers-color-scheme: dark) {
 	:root {
 		--mdn-bg: #222;
 		--mdn-shadow: #444;
 		--mdn-nosupport-text: #666;
+		--mdn-pass: #690;
+		--mdn-fail: #d22;
 	}
 }
 .mdn-anno {
@@ -507,11 +530,11 @@ a[href].issue-return {
 	display: block;
 }
 .mdn-anno > summary > .less-than-two-engines-flag {
-	color: red;
+	color: var(--mdn-fail);
 	padding-right: 2px;
 }
 .mdn-anno > summary > .all-engines-flag {
-	color: green;
+	color: var(--mdn-pass);
 	padding-right: 2px;
 }
 .mdn-anno > summary > span {
@@ -532,10 +555,10 @@ a[href].issue-return {
 	padding-top: 2px;
 }
 .mdn-anno > .feature > .less-than-two-engines-text {
-	color: red;
+	color: var(--mdn-fail);
 }
 .mdn-anno > .feature > .all-engines-text {
-	color: green;
+	color: var(--mdn-pass);
 }
 .mdn-anno > .feature > p {
 	font-size: .75em;
@@ -628,7 +651,7 @@ a[href].issue-return {
 	background-image: url(https://resources.whatwg.org/browser-logos/safari-ios.svg);
 }
 .mdn-anno > .feature > .support > .nodejs::before {
-	background-image: url(https://nodejs.org/static/images/favicons/favicon.ico);
+	background-image: url(https://nodejs.org/favicon.ico);
 }
 .mdn-anno > .feature > .support > .opera_android::before {
 	background-image: url(https://resources.whatwg.org/browser-logos/opera.svg);
@@ -674,8 +697,40 @@ a[href].issue-return {
 	margin: -40px 0 0 0;
 }
 </style>
-<style>/* Boilerplate: style-selflinks */
+<style>/* Boilerplate: style-ref-hints */
+:root {
+    --ref-hint-bg: #ddd;
+    --ref-hint-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ref-hint-bg: #222;
+        --ref-hint-text: var(--text);
+    }
+}
 
+.ref-hint {
+    display: inline-block;
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.5em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--ref-hint-bg);
+    color: var(--ref-hint-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+
+.ref-hint * { margin: 0; padding: 0; text-indent: 0; }
+
+.ref-hint ul { padding: 0 0 0 1em; list-style: none; }
+</style>
+<style>/* Boilerplate: style-selflinks */
 :root {
     --selflink-text: white;
     --selflink-bg: gray;
@@ -745,33 +800,55 @@ D50 2deg illuminant, L in [0,100], a and b in [-128, 128]
 4 = lab(85,5,15)
 5 = lab(85,-10,-50)
 6 = lab(85,35,-15)
+
+For darkmode:
+0 = oklab(50%   0%  108%)
+1 = oklab(50% -51%   51%)
+2 = oklab(50% -64%  -20%)
+3 = oklab(50%   6%   19%)
+4 = oklab(50% -12%  -64%)
+5 = oklab(50%  44%  -19%)  
+6 = oklab(50% 102%   38%)
 */
-var { cursor: pointer; }
-var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
-var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
-var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
-var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
-var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
-var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
-var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+
+[data-algorithm] var { cursor: pointer; }
+var[data-var-color] { background-color: var(--var-bg); box-shadow: 0 0 0 2px var(--var-bg); }
+
+var[data-var-color] { --var-bg: #F4D200; }
+var[data-var-color="1"] { --var-bg: #FF87A2; }
+var[data-var-color="2"] { --var-bg: #96E885; }
+var[data-var-color="3"] { --var-bg: #3EEED2; }
+var[data-var-color="4"] { --var-bg: #EACFB6; }
+var[data-var-color="5"] { --var-bg: #82DDFF; }
+var[data-var-color="6"] { --var-vg: #FFBCF2; }
+
+@media (prefers-color-scheme: dark) {
+	var[data-var-color] { --var-bg: #bc1a00; }
+	var[data-var-color="1"] { --var-bg: #007f00; }
+	var[data-var-color="2"] { --var-bg: #008698; }
+	var[data-var-color="3"] { --var-bg: #7f5b2b; }
+	var[data-var-color="4"] { --var-bg: #004df3; }
+	var[data-var-color="5"] { --var-bg: #a1248a; }
+	var[data-var-color="6"] { --var-vg: #ff0000; }
+}
 </style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Fetch Metadata Request Headers</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#WD">W3C Working Draft</a>, <time class="dt-updated" datetime="2023-10-31">31 October 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#WD">W3C Working Draft</a>, <time class="dt-updated" datetime="2025-04-01">1 April 2025</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
      <dl>
       <dt>This version:
-      <dd><a class="u-url" href="https://www.w3.org/TR/2023/WD-fetch-metadata-20231031/">https://www.w3.org/TR/2023/WD-fetch-metadata-20231031/</a>
+      <dd><a class="u-url" href="https://www.w3.org/TR/2025/WD-fetch-metadata-20250401/">https://www.w3.org/TR/2025/WD-fetch-metadata-20250401/</a>
       <dt>Latest published version:
       <dd><a href="https://www.w3.org/TR/fetch-metadata/">https://www.w3.org/TR/fetch-metadata/</a>
       <dt>Editor's Draft:
       <dd><a href="https://w3c.github.io/webappsec-fetch-metadata/">https://w3c.github.io/webappsec-fetch-metadata/</a>
       <dt>Previous Versions:
-      <dd><a href="https://www.w3.org/TR/2021/WD-fetch-metadata-20210720/" rel="prev">https://www.w3.org/TR/2021/WD-fetch-metadata-20210720/</a>
+      <dd><a href="https://www.w3.org/TR/2023/WD-fetch-metadata-20231031/" rel="prev">https://www.w3.org/TR/2023/WD-fetch-metadata-20231031/</a>
       <dt>History:
       <dd><a class="u-url" href="https://www.w3.org/standards/history/fetch-metadata/">https://www.w3.org/standards/history/fetch-metadata/</a>
       <dt>Feedback:
@@ -787,15 +864,14 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-software" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>This document defines a set of Fetch metadata request headers that aim to provide servers with
-
-    enough information to make <i lang="la">a priori</i> decisions about whether or not to service
-    a request based on the way it was made, and the context in which it will be used.</p>
+enough information to make <i lang="la">a priori</i> decisions about whether or not to service
+a request based on the way it was made, and the context in which it will be used.</p>
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
@@ -804,7 +880,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   current W3C publications and the latest revision of this technical report
   can be found in the <a href="https://www.w3.org/TR/">W3C technical reports
   index at https://www.w3.org/TR/.</a></em> </p>
-   <p> This document was published by the <a href="https://www.w3.org/groups/wg/webappsec">Web Application Security Working Group</a> as a Working Draft using the <a href="https://www.w3.org/2023/Process-20230612/#recs-and-notes">Recommendation
+   <p> This document was published by the <a href="https://www.w3.org/groups/wg/webappsec">Web Application Security Working Group</a> as a Working Draft using the <a href="https://www.w3.org/policies/process/20231103/#recs-and-notes">Recommendation
       track</a>. This document is intended to become a W3C Recommendation. </p>
    <p> The (<a href="https://lists.w3.org/Archives/Public/public-webappsec/">archived</a>) public mailing list <a href="mailto:public-webappsec@w3.org?Subject=%5Bfetch-metadata%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (see <a href="https://www.w3.org/Mail/Request">instructions</a>)
 	is preferred for discussion of this specification.
@@ -817,11 +893,11 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   document as other than work in progress. </p>
    <p> This document was produced by the <a href="https://www.w3.org/groups/wg/webappsec">Web Application Security Working Group</a>. </p>
    <p> This document was produced by a group operating under
-	the <a href="https://www.w3.org/Consortium/Patent-Policy/">W3C Patent Policy</a>.
+	the <a href="https://www.w3.org/policies/patent-policy/">W3C Patent Policy</a>.
 	W3C maintains a <a href="https://www.w3.org/groups/wg/webappsec/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
-	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2023/Process-20230612/" id="w3c_process_revision">12 June 2023 W3C Process Document</a>. </p>
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/policies/patent-policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/policies/patent-policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/policies/process/20231103/" id="w3c_process_revision">03 November 2023 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -923,8 +999,8 @@ Sec-Fetch-User: ?1
    <p>The following sections define several <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="fetch-metadata-headers">fetch metadata headers</dfn>, each of which
 exposes an interesting <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request">request</a> attribute to a server.</p>
    <h3 class="heading settled" data-level="2.1" id="sec-fetch-dest-header"><span class="secno">2.1. </span><span class="content">The <code>Sec-Fetch-Dest</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-dest-header"></a></h3>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-dest"><code>Sec-Fetch-Dest</code></dfn> HTTP request header exposes a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a> to a server. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something">Structured Header</a> whose value MUST be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure" title="Structured Headers for HTTP">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
-<pre>Sec-Fetch-Dest = sh-token
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-dest"><code>Sec-Fetch-Dest</code></dfn> HTTP request header exposes a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①">request</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination">destination</a> to a server. It is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction">Structured Field</a> whose value MUST be a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens">token</a>. <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[RFC9651]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-Dest = <a data-link-type="grammar" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf" id="ref-for-name-abnf">sf-token</a>
 </pre>
    <p>Valid <code>Sec-Fetch-Dest</code> values include the set of valid <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request②">request</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destinations</a> defined by <a data-link-type="biblio" href="#biblio-fetch" title="Fetch Standard">[Fetch]</a>.</p>
    <p>In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
@@ -950,18 +1026,18 @@ Sec-Fetch-Dest: iframe
      <li data-md>
       <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url">url</a> is a <a data-link-type="dfn" href="https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url">potentially trustworthy URL</a>.</p>
      <li data-md>
-      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something①">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7①">token</a>.</p>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction①">Structured Field</a> whose value is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens①">token</a>.</p>
      <li data-md>
       <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination②">destination</a> is the empty string, set <var>header</var>’s value to the string
 "<code>empty</code>". Otherwise, set <var>header</var>’s value to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination③">destination</a>.</p>
-      <p class="note" role="note"><span class="marker">Note:</span> We map Fetch’s empty string <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination④">destination</a> onto an explicit "<code>empty</code>" <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7②">token</a> in order to simplify processing.</p>
+      <p class="note" role="note"><span class="marker">Note:</span> We map Fetch’s empty string <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination④">destination</a> onto an explicit "<code>empty</code>" <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens②">token</a> in order to simplify processing.</p>
      <li data-md>
       <p><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header" id="ref-for-concept-header-list-set-structured-header">Set a structured field value</a> `<a data-link-type="http-header" href="#http-headerdef-sec-fetch-dest" id="ref-for-http-headerdef-sec-fetch-dest"><code>Sec-Fetch-Dest</code></a>`/<var>header</var> in <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list">header list</a>.</p>
     </ol>
    </div>
    <h3 class="heading settled" data-level="2.2" id="sec-fetch-mode-header"><span class="secno">2.2. </span><span class="content">The <code>Sec-Fetch-Mode</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-mode-header"></a></h3>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-mode"><code>Sec-Fetch-Mode</code></dfn> HTTP request header exposes a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">request</a>'s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode">mode</a> to a server. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something②">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7③">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure" title="Structured Headers for HTTP">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
-<pre>Sec-Fetch-Mode = sh-token
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-mode"><code>Sec-Fetch-Mode</code></dfn> HTTP request header exposes a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request④">request</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode">mode</a> to a server. It is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction②">Structured Field</a> whose value MUST be a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens③">token</a>. <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[RFC9651]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-Mode = <a data-link-type="grammar" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf" id="ref-for-name-abnf①">sf-token</a>
 </pre>
    <p>Valid <code>Sec-Fetch-Mode</code> values include "<code>cors</code>", "<code>navigate</code>", "<code>no-cors</code>", "<code>same-origin</code>",
 and "<code>websocket</code>". In order to support forward-compatibility with as-yet-unknown request types,
@@ -972,7 +1048,7 @@ servers SHOULD ignore this header if it contains an invalid value.</p>
      <li data-md>
       <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url①">url</a> is a <a data-link-type="dfn" href="https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url①">potentially trustworthy URL</a>.</p>
      <li data-md>
-      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something③">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7④">token</a>.</p>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction③">Structured Field</a> whose value is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens④">token</a>.</p>
      <li data-md>
       <p>Set <var>header</var>’s value to <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-mode" id="ref-for-concept-request-mode①">mode</a>.</p>
      <li data-md>
@@ -981,8 +1057,8 @@ servers SHOULD ignore this header if it contains an invalid value.</p>
    </div>
    <h3 class="heading settled" data-level="2.3" id="sec-fetch-site-header"><span class="secno">2.3. </span><span class="content">The <code>Sec-Fetch-Site</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-site-header"></a></h3>
    <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-site"><code>Sec-Fetch-Site</code></dfn> HTTP request header exposes the relationship
-between a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a> initiator’s origin and its target’s origin. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something④">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7⑤">token</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure" title="Structured Headers for HTTP">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
-<pre>Sec-Fetch-Site = sh-token
+between a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request⑥">request</a> initiator’s origin and its target’s origin. It is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction④">Structured Field</a> whose value is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens⑤">token</a>. <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[RFC9651]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-Site = <a data-link-type="grammar" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf" id="ref-for-name-abnf②">sf-token</a>
 </pre>
    <p>Valid <code>Sec-Fetch-Site</code> values include "<code>cross-site</code>", "<code>same-origin</code>", "<code>same-site</code>", and "<code>none</code>".
 In order to support forward-compatibility with as-yet-unknown request types, servers SHOULD ignore
@@ -993,7 +1069,7 @@ this header if it contains an invalid value.</p>
      <li data-md>
       <p class="assertion">Assert: <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url②">url</a> is a <a data-link-type="dfn" href="https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url②">potentially trustworthy URL</a>.</p>
      <li data-md>
-      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something⑤">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7⑥">token</a>.</p>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction⑤">Structured Field</a> whose value is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens⑥">token</a>.</p>
      <li data-md>
       <p>Set <var>header</var>’s value to <code>same-origin</code>.</p>
      <li data-md>
@@ -1018,9 +1094,9 @@ clicking a bookmark, etc.), then set <var>header</var>’s value to <code>none</
     </ol>
    </div>
    <h3 class="heading settled" data-level="2.4" id="sec-fetch-user-header"><span class="secno">2.4. </span><span class="content">The <code>Sec-Fetch-User</code> HTTP Request Header</span><a class="self-link" href="#sec-fetch-user-header"></a></h3>
-   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></dfn> HTTP request header exposes whether or not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request①">navigation request</a> was triggered by user activation. It is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something⑥">Structured Header</a> whose
-value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9" id="ref-for-section-3.9">boolean</a>. <a data-link-type="biblio" href="#biblio-i-dietf-httpbis-header-structure" title="Structured Headers for HTTP">[I-D.ietf-httpbis-header-structure]</a> Its ABNF is:</p>
-<pre>Sec-Fetch-User = sh-boolean
+   <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export id="http-headerdef-sec-fetch-user"><code>Sec-Fetch-User</code></dfn> HTTP request header exposes whether or not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request①">navigation request</a> was triggered by user activation. It is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction⑥">Structured Field</a> whose
+value is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-booleans" id="ref-for-name-booleans">boolean</a>. <a data-link-type="biblio" href="#biblio-rfc9651" title="Structured Field Values for HTTP">[RFC9651]</a> Its ABNF is:</p>
+<pre>Sec-Fetch-User = <a data-link-type="grammar" data-refhint-key="90843f80" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf" id="ref-for-name-abnf③">sf-boolean</a>
 </pre>
    <p class="note" role="note"><span class="marker">Note:</span> The header is delivered only for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request②">navigation requests</a>, and only when its value is <code>true</code>.
 It might be reasonable to expand the headers' scope in the future to include subresource requests
@@ -1036,7 +1112,7 @@ straightforward to define interoperably.</p>
      <li data-md>
       <p>If <var>r</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request③">navigation request</a>, or if <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#request-user-activation" id="ref-for-request-user-activation">user-activation</a> is <code>false</code>, return.</p>
      <li data-md>
-      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#" id="ref-for-something⑦">Structured Header</a> whose value is a <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7" id="ref-for-section-3.7⑦">token</a>.</p>
+      <p>Let <var>header</var> be a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction" id="ref-for-name-introduction⑦">Structured Field</a> whose value is a <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens" id="ref-for-name-tokens⑦">token</a>.</p>
      <li data-md>
       <p>Set <var>header</var>’s value to <code>true</code>.</p>
      <li data-md>
@@ -1049,7 +1125,7 @@ unless otherwise populated by HTML’s <a data-link-type="dfn" href="https://htm
    <p>Fetch Metadata headers are appended to outgoing requests from within Fetch’s "HTTP-network-or-cache"
 algorithm, using the following steps. Consult that specification for integration details <a data-link-type="biblio" href="#biblio-fetch" title="Fetch Standard">[FETCH]</a>.</p>
    <div class="algorithm" data-algorithm="append fetch metadata headers">
-     To <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-append-the-fetch-metadata-headers-for-a-request">append the Fetch metadata headers for a request<a class="self-link" href="#abstract-opdef-append-the-fetch-metadata-headers-for-a-request"></a></dfn>, given <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①⓪">request</a> <var>r</var>: 
+     To <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-append-the-fetch-metadata-headers-for-a-request">append the Fetch metadata headers for a request</dfn>, given <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①⓪">request</a> <var>r</var>: 
     <ol class="algorithm">
      <li data-md>
       <p>If <var>r</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url" id="ref-for-concept-request-url④">url</a> is not an <a data-link-type="dfn" href="https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url④">potentially trustworthy URL</a>, return.</p>
@@ -1068,7 +1144,7 @@ algorithm, using the following steps. Consult that specification for integration
    <p>The user agent will send a <a data-link-type="http-header" href="#http-headerdef-sec-fetch-site" id="ref-for-http-headerdef-sec-fetch-site①"><code>Sec-Fetch-Site</code></a> header along with each request in a
 redirect chain. The header’s value will shift in the presence of cross-origin or cross-site
 redirection in order to mitigate confusion.</p>
-   <p>The algorithm to <a data-link-type="abstract-op" href="#abstract-opdef-set-site" id="ref-for-abstract-opdef-set-site①">set the <code>Sec-Fetch-Site</code> header</a> walks the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①①">request</a>'s entire <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list①">url list</a>, and will send <code>cross-site</code> if any URL in the list is cross-site to the
+   <p>The algorithm to <a data-link-type="abstract-op" href="#abstract-opdef-set-site" id="ref-for-abstract-opdef-set-site①">set the <code>Sec-Fetch-Site</code> header</a> walks the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request" id="ref-for-concept-request①①">request</a>’s entire <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-url-list" id="ref-for-concept-request-url-list①">url list</a>, and will send <code>cross-site</code> if any URL in the list is cross-site to the
 request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-current-url" id="ref-for-concept-request-current-url">current url</a>, <code>same-site</code> only if all URLs in the list are same-site with the
 request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-current-url" id="ref-for-concept-request-current-url①">current url</a>, and <code>same-origin</code> only if all URLs in the list are same-origin
 with the request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-current-url" id="ref-for-concept-request-current-url②">current url</a>.</p>
@@ -1284,7 +1360,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     Implementers are encouraged to optimize. </p>
    </section>
   </div>
-<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
+  <script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
@@ -1302,14 +1378,9 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="07ad3048">create navigation params by fetching</span>
-    </ul>
-   <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="3f2ca4de">current url</span>
+     <li><span class="dfn-paneled" id="3f2ca4de">current URL</span>
      <li><span class="dfn-paneled" id="3ae34c95">destination</span>
      <li><span class="dfn-paneled" id="5c95fcb9">forbidden response-header name</span>
      <li><span class="dfn-paneled" id="6ee0eab1">header list</span>
@@ -1318,24 +1389,18 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
      <li><span class="dfn-paneled" id="f78d5b5c">origin</span>
      <li><span class="dfn-paneled" id="55213b5b">request</span>
      <li><span class="dfn-paneled" id="35b98f13">set a structured field value</span>
-     <li><span class="dfn-paneled" id="dc1cd39b">url</span>
-     <li><span class="dfn-paneled" id="ae56d57e">url list</span>
+     <li><span class="dfn-paneled" id="dc1cd39b">URL</span>
+     <li><span class="dfn-paneled" id="ae56d57e">URL list</span>
      <li><span class="dfn-paneled" id="9939e831">user-activation</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="07ad3048">create navigation params by fetching</span>
      <li><span class="dfn-paneled" id="f0811ff8">img</span>
      <li><span class="dfn-paneled" id="29399d44">picture</span>
      <li><span class="dfn-paneled" id="7393da89">same origin</span>
      <li><span class="dfn-paneled" id="f0482ed2">same site</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[I-D.ietf-httpbis-header-structure]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="253ab96e">boolean</span>
-     <li><span class="dfn-paneled" id="455b8b09">structured header</span>
-     <li><span class="dfn-paneled" id="517fbfac">token</span>
     </ul>
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
@@ -1345,9 +1410,18 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
      <li><span class="dfn-paneled" id="860300d4">implementation-defined</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[RFC9651]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="b7f2e2a7">boolean</span>
+     <li><span class="dfn-paneled" id="7537012d">sf-boolean</span>
+     <li><span class="dfn-paneled" id="2de47c3e">sf-token</span>
+     <li><span class="dfn-paneled" id="37b9ae34">structured field</span>
+     <li><span class="dfn-paneled" id="c12ccfe9">token</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[SECURE-CONTEXTS]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="f5d4a41e">potentially trustworthy url</span>
+     <li><span class="dfn-paneled" id="f5d4a41e">potentially trustworthy URL</span>
     </ul>
    <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
@@ -1362,16 +1436,16 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
-   <dt id="biblio-i-dietf-httpbis-header-structure">[I-D.ietf-httpbis-header-structure]
-   <dd>Mark Nottingham; Poul-Henning Kamp. <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure"><cite>Structured Headers for HTTP</cite></a>. ID. URL: <a href="https://tools.ietf.org/html/draft-ietf-httpbis-header-structure">https://tools.ietf.org/html/draft-ietf-httpbis-header-structure</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc3864">[RFC3864]
    <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://www.rfc-editor.org/rfc/rfc3864"><cite>Registration Procedures for Message Header Fields</cite></a>. September 2004. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc3864">https://www.rfc-editor.org/rfc/rfc3864</a>
+   <dt id="biblio-rfc9651">[RFC9651]
+   <dd>M. Nottingham; P-H. Kamp. <a href="https://www.rfc-editor.org/rfc/rfc9651"><cite>Structured Field Values for HTTP</cite></a>. September 2024. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9651">https://www.rfc-editor.org/rfc/rfc9651</a>
    <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
-   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/"><cite>Secure Contexts</cite></a>. 18 September 2021. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
+   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/"><cite>Secure Contexts</cite></a>. 10 November 2023. CRD. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
    <dt id="biblio-url">[URL]
    <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/"><cite>URL Standard</cite></a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
   </dl>
@@ -1380,7 +1454,7 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
    <dt id="biblio-mnot-designing-headers">[MNOT-DESIGNING-HEADERS]
    <dd>Mark Nottingham. <a href="https://www.mnot.net/blog/2018/11/27/header_compression"><cite>Designing Headers for HTTP Compression</cite></a>. URL: <a href="https://www.mnot.net/blog/2018/11/27/header_compression">https://www.mnot.net/blog/2018/11/27/header_compression</a>
    <dt id="biblio-rfc9110">[RFC9110]
-   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc9110"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>
+   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc9110.html"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://httpwg.org/specs/rfc9110.html">https://httpwg.org/specs/rfc9110.html</a>
   </dl>
   <details class="mdn-anno unpositioned" data-anno-for="sec-fetch-dest-header">
    <summary><b class="all-engines-flag" title="This feature is in all current engines.">✔</b><span>MDN</span></summary>
@@ -1446,350 +1520,8 @@ Roberto Clapis, who all provided substantial support in the design of this mecha
     </div>
    </div>
   </details>
-<script>/* Boilerplate: script-dfn-panel */
-"use strict";
-{
-    const dfnsJson = window.dfnsJson || {};
-
-    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
-        return mk.aside({
-            class: "dfn-panel",
-            id: `infopanel-for-${dfnID}`,
-            "data-for": dfnID,
-            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
-            },
-            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
-                `Info about the '${dfnText}' ${external?"external":""} reference.`),
-            mk.a({href:url}, url),
-            mk.b({}, "Referenced in:"),
-            mk.ul({},
-                ...refSections.map(section=>
-                    mk.li({},
-                        ...section.refs.map((ref, refI)=>
-                            [
-                                mk.a({
-                                    href: `#${ref.id}`
-                                    },
-                                    (refI == 0) ? section.title : `(${refI + 1})`
-                                ),
-                                " ",
-                            ]
-                        ),
-                    ),
-                ),
-            ),
-        );
-    }
-
-    function genAllDfnPanels() {
-        for(const panelData of Object.values(window.dfnpanelData)) {
-            const dfnID = panelData.dfnID;
-            const dfn = document.getElementById(dfnID);
-            if(!dfn) {
-                console.log(`Can't find dfn#${dfnID}.`, panelData);
-            } else {
-                const panel = genDfnPanel(panelData);
-                append(document.body, panel);
-                insertDfnPopupAction(dfn, panel)
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-        genAllDfnPanels();
-
-        // Add popup behavior to all dfns to show the corresponding dfn-panel.
-        var dfns = queryAll('.dfn-paneled');
-        for(let dfn of dfns) { ; }
-
-        document.body.addEventListener("click", (e) => {
-            // If not handled already, just hide all dfn panels.
-            hideAllDfnPanels();
-        });
-    })
-
-
-    function hideAllDfnPanels() {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
-    }
-
-    function showDfnPanel(dfnPanel, dfn) {
-        hideAllDfnPanels(); // Only display one at this time.
-        dfn.setAttribute("aria-expanded", "true");
-        dfnPanel.classList.add("on");
-        dfnPanel.style.left = "5px";
-        dfnPanel.style.top = "0px";
-        const panelRect = dfnPanel.getBoundingClientRect();
-        const panelWidth = panelRect.right - panelRect.left;
-        if (panelRect.right > document.body.scrollWidth) {
-            // Panel's overflowing the screen.
-            // Just drop it below the dfn and flip it rightward instead.
-            // This still wont' fix things if the screen is *really* wide,
-            // but fixing that's a lot harder without 'anchor()'.
-            dfnPanel.style.top = "1.5em";
-            dfnPanel.style.left = "auto";
-            dfnPanel.style.right = "0px";
-        }
-    }
-
-    function pinDfnPanel(dfnPanel) {
-        // Switch it to "activated" state, which pins it.
-        dfnPanel.classList.add("activated");
-        dfnPanel.style.left = null;
-        dfnPanel.style.top = null;
-    }
-
-    function hideDfnPanel(dfnPanel, dfn) {
-        if(!dfn) {
-            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
-        }
-        dfn.setAttribute("aria-expanded", "false")
-        dfnPanel.classList.remove("on");
-        dfnPanel.classList.remove("activated");
-    }
-
-    function toggleDfnPanel(dfnPanel, dfn) {
-        if(dfnPanel.classList.contains("on")) {
-            hideDfnPanel(dfnPanel, dfn);
-        } else {
-            showDfnPanel(dfnPanel, dfn);
-        }
-    }
-
-    function insertDfnPopupAction(dfn, dfnPanel) {
-        // Find dfn panel
-        const panelWrapper = document.createElement('span');
-        panelWrapper.appendChild(dfnPanel);
-        panelWrapper.style.position = "relative";
-        panelWrapper.style.height = "0px";
-        dfn.insertAdjacentElement("afterend", panelWrapper);
-        dfn.setAttribute('role', 'button');
-        dfn.setAttribute('aria-expanded', 'false')
-        dfn.tabIndex = 0;
-        dfn.classList.add('has-dfn-panel');
-        dfn.addEventListener('click', (event) => {
-            showDfnPanel(dfnPanel, dfn);
-            event.stopPropagation();
-        });
-        dfn.addEventListener('keypress', (event) => {
-            const kc = event.keyCode;
-            // 32->Space, 13->Enter
-            if(kc == 32 || kc == 13) {
-                toggleDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-
-        dfnPanel.addEventListener('click', (event) => {
-            if (event.target.nodeName == 'A') {
-                pinDfnPanel(dfnPanel);
-            }
-            event.stopPropagation();
-        });
-
-        dfnPanel.addEventListener('keydown', (event) => {
-            if(event.keyCode == 27) { // Escape key
-                hideDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        })
-    }
-}
-</script>
-<script>/* Boilerplate: script-dfn-panel */
-"use strict";
-{
-    const dfnsJson = window.dfnsJson || {};
-
-    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
-        return mk.aside({
-            class: "dfn-panel",
-            id: `infopanel-for-${dfnID}`,
-            "data-for": dfnID,
-            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
-            },
-            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
-                `Info about the '${dfnText}' ${external?"external":""} reference.`),
-            mk.a({href:url}, url),
-            mk.b({}, "Referenced in:"),
-            mk.ul({},
-                ...refSections.map(section=>
-                    mk.li({},
-                        ...section.refs.map((ref, refI)=>
-                            [
-                                mk.a({
-                                    href: `#${ref.id}`
-                                    },
-                                    (refI == 0) ? section.title : `(${refI + 1})`
-                                ),
-                                " ",
-                            ]
-                        ),
-                    ),
-                ),
-            ),
-        );
-    }
-
-    function genAllDfnPanels() {
-        for(const panelData of Object.values(window.dfnpanelData)) {
-            const dfnID = panelData.dfnID;
-            const dfn = document.getElementById(dfnID);
-            if(!dfn) {
-                console.log(`Can't find dfn#${dfnID}.`, panelData);
-            } else {
-                const panel = genDfnPanel(panelData);
-                append(document.body, panel);
-                insertDfnPopupAction(dfn, panel)
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-        genAllDfnPanels();
-
-        // Add popup behavior to all dfns to show the corresponding dfn-panel.
-        var dfns = queryAll('.dfn-paneled');
-        for(let dfn of dfns) { ; }
-
-        document.body.addEventListener("click", (e) => {
-            // If not handled already, just hide all dfn panels.
-            hideAllDfnPanels();
-        });
-    })
-
-
-    function hideAllDfnPanels() {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
-    }
-
-    function showDfnPanel(dfnPanel, dfn) {
-        hideAllDfnPanels(); // Only display one at this time.
-        dfn.setAttribute("aria-expanded", "true");
-        dfnPanel.classList.add("on");
-        dfnPanel.style.left = "5px";
-        dfnPanel.style.top = "0px";
-        const panelRect = dfnPanel.getBoundingClientRect();
-        const panelWidth = panelRect.right - panelRect.left;
-        if (panelRect.right > document.body.scrollWidth) {
-            // Panel's overflowing the screen.
-            // Just drop it below the dfn and flip it rightward instead.
-            // This still wont' fix things if the screen is *really* wide,
-            // but fixing that's a lot harder without 'anchor()'.
-            dfnPanel.style.top = "1.5em";
-            dfnPanel.style.left = "auto";
-            dfnPanel.style.right = "0px";
-        }
-    }
-
-    function pinDfnPanel(dfnPanel) {
-        // Switch it to "activated" state, which pins it.
-        dfnPanel.classList.add("activated");
-        dfnPanel.style.left = null;
-        dfnPanel.style.top = null;
-    }
-
-    function hideDfnPanel(dfnPanel, dfn) {
-        if(!dfn) {
-            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
-        }
-        dfn.setAttribute("aria-expanded", "false")
-        dfnPanel.classList.remove("on");
-        dfnPanel.classList.remove("activated");
-    }
-
-    function toggleDfnPanel(dfnPanel, dfn) {
-        if(dfnPanel.classList.contains("on")) {
-            hideDfnPanel(dfnPanel, dfn);
-        } else {
-            showDfnPanel(dfnPanel, dfn);
-        }
-    }
-
-    function insertDfnPopupAction(dfn, dfnPanel) {
-        // Find dfn panel
-        const panelWrapper = document.createElement('span');
-        panelWrapper.appendChild(dfnPanel);
-        panelWrapper.style.position = "relative";
-        panelWrapper.style.height = "0px";
-        dfn.insertAdjacentElement("afterend", panelWrapper);
-        dfn.setAttribute('role', 'button');
-        dfn.setAttribute('aria-expanded', 'false')
-        dfn.tabIndex = 0;
-        dfn.classList.add('has-dfn-panel');
-        dfn.addEventListener('click', (event) => {
-            showDfnPanel(dfnPanel, dfn);
-            event.stopPropagation();
-        });
-        dfn.addEventListener('keypress', (event) => {
-            const kc = event.keyCode;
-            // 32->Space, 13->Enter
-            if(kc == 32 || kc == 13) {
-                toggleDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-
-        dfnPanel.addEventListener('click', (event) => {
-            if (event.target.nodeName == 'A') {
-                pinDfnPanel(dfnPanel);
-            }
-            event.stopPropagation();
-        });
-
-        dfnPanel.addEventListener('keydown', (event) => {
-            if(event.keyCode == 27) { // Escape key
-                hideDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        })
-    }
-}
-</script>
-<script>/* Boilerplate: script-dfn-panel-json */
-window.dfnpanelData = {};
-window.dfnpanelData['07ad3048'] = {"dfnID": "07ad3048", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#create-navigation-params-by-fetching", "dfnText": "create navigation params by fetching", "refSections": [{"refs": [{"id": "ref-for-create-navigation-params-by-fetching"}], "title": "3. Integration with Fetch and HTML"}], "external": true};
-window.dfnpanelData['3f2ca4de'] = {"dfnID": "3f2ca4de", "url": "https://fetch.spec.whatwg.org/#concept-request-current-url", "dfnText": "current url", "refSections": [{"refs": [{"id": "ref-for-concept-request-current-url"}, {"id": "ref-for-concept-request-current-url\u2460"}, {"id": "ref-for-concept-request-current-url\u2461"}], "title": "4.1. Redirects"}], "external": true};
-window.dfnpanelData['3ae34c95'] = {"dfnID": "3ae34c95", "url": "https://fetch.spec.whatwg.org/#concept-request-destination", "dfnText": "destination", "refSections": [{"refs": [{"id": "ref-for-concept-request-destination"}, {"id": "ref-for-concept-request-destination\u2460"}, {"id": "ref-for-concept-request-destination\u2461"}, {"id": "ref-for-concept-request-destination\u2462"}, {"id": "ref-for-concept-request-destination\u2463"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}], "external": true};
-window.dfnpanelData['5c95fcb9'] = {"dfnID": "5c95fcb9", "url": "https://fetch.spec.whatwg.org/#forbidden-response-header-name", "dfnText": "forbidden response-header name", "refSections": [{"refs": [{"id": "ref-for-forbidden-response-header-name"}], "title": "4.2. The Sec- Prefix"}], "external": true};
-window.dfnpanelData['6ee0eab1'] = {"dfnID": "6ee0eab1", "url": "https://fetch.spec.whatwg.org/#concept-request-header-list", "dfnText": "header list", "refSections": [{"refs": [{"id": "ref-for-concept-request-header-list"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-header-list\u2460"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-header-list\u2461"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-header-list\u2462"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}], "external": true};
-window.dfnpanelData['cb98f71f'] = {"dfnID": "cb98f71f", "url": "https://fetch.spec.whatwg.org/#concept-request-mode", "dfnText": "mode", "refSections": [{"refs": [{"id": "ref-for-concept-request-mode"}, {"id": "ref-for-concept-request-mode\u2460"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}], "external": true};
-window.dfnpanelData['2889d1ec'] = {"dfnID": "2889d1ec", "url": "https://fetch.spec.whatwg.org/#navigation-request", "dfnText": "navigation request", "refSections": [{"refs": [{"id": "ref-for-navigation-request"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-navigation-request\u2460"}, {"id": "ref-for-navigation-request\u2461"}, {"id": "ref-for-navigation-request\u2462"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}], "external": true};
-window.dfnpanelData['f78d5b5c'] = {"dfnID": "f78d5b5c", "url": "https://fetch.spec.whatwg.org/#concept-request-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-request-origin"}, {"id": "ref-for-concept-request-origin\u2460"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}], "external": true};
-window.dfnpanelData['55213b5b'] = {"dfnID": "55213b5b", "url": "https://fetch.spec.whatwg.org/#concept-request", "dfnText": "request", "refSections": [{"refs": [{"id": "ref-for-concept-request"}], "title": "2. Fetch Metadata Headers"}, {"refs": [{"id": "ref-for-concept-request\u2460"}, {"id": "ref-for-concept-request\u2461"}, {"id": "ref-for-concept-request\u2462"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request\u2463"}, {"id": "ref-for-concept-request\u2464"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request\u2465"}, {"id": "ref-for-concept-request\u2466"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request\u2467"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request\u2468"}, {"id": "ref-for-concept-request\u2460\u24ea"}], "title": "3. Integration with Fetch and HTML"}, {"refs": [{"id": "ref-for-concept-request\u2460\u2460"}], "title": "4.1. Redirects"}], "external": true};
-window.dfnpanelData['35b98f13'] = {"dfnID": "35b98f13", "url": "https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header", "dfnText": "set a structured field value", "refSections": [{"refs": [{"id": "ref-for-concept-header-list-set-structured-header"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-header-list-set-structured-header\u2460"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-header-list-set-structured-header\u2461"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-header-list-set-structured-header\u2462"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}], "external": true};
-window.dfnpanelData['dc1cd39b'] = {"dfnID": "dc1cd39b", "url": "https://fetch.spec.whatwg.org/#concept-request-url", "dfnText": "url", "refSections": [{"refs": [{"id": "ref-for-concept-request-url"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-url\u2460"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-url\u2461"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-url\u2462"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-url\u2463"}], "title": "3. Integration with Fetch and HTML"}], "external": true};
-window.dfnpanelData['ae56d57e'] = {"dfnID": "ae56d57e", "url": "https://fetch.spec.whatwg.org/#concept-request-url-list", "dfnText": "url list", "refSections": [{"refs": [{"id": "ref-for-concept-request-url-list"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-concept-request-url-list\u2460"}], "title": "4.1. Redirects"}], "external": true};
-window.dfnpanelData['9939e831'] = {"dfnID": "9939e831", "url": "https://fetch.spec.whatwg.org/#request-user-activation", "dfnText": "user-activation", "refSections": [{"refs": [{"id": "ref-for-request-user-activation"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}, {"refs": [{"id": "ref-for-request-user-activation\u2460"}], "title": "3. Integration with Fetch and HTML"}], "external": true};
-window.dfnpanelData['f0811ff8'] = {"dfnID": "f0811ff8", "url": "https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element", "dfnText": "img", "refSections": [{"refs": [{"id": "ref-for-the-img-element"}], "title": "1. Introduction"}], "external": true};
-window.dfnpanelData['29399d44'] = {"dfnID": "29399d44", "url": "https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element", "dfnText": "picture", "refSections": [{"refs": [{"id": "ref-for-the-picture-element"}], "title": "1.1. Examples"}], "external": true};
-window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}], "external": true};
-window.dfnpanelData['f0482ed2'] = {"dfnID": "f0482ed2", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site", "dfnText": "same site", "refSections": [{"refs": [{"id": "ref-for-concept-site-same-site"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}], "external": true};
-window.dfnpanelData['253ab96e'] = {"dfnID": "253ab96e", "url": "https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.9", "dfnText": "boolean", "refSections": [{"refs": [{"id": "ref-for-section-3.9"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}], "external": true};
-window.dfnpanelData['455b8b09'] = {"dfnID": "455b8b09", "url": "https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#", "dfnText": "structured header", "refSections": [{"refs": [{"id": "ref-for-something"}, {"id": "ref-for-something\u2460"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}, {"refs": [{"id": "ref-for-something\u2461"}, {"id": "ref-for-something\u2462"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}, {"refs": [{"id": "ref-for-something\u2463"}, {"id": "ref-for-something\u2464"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-something\u2465"}, {"id": "ref-for-something\u2466"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}], "external": true};
-window.dfnpanelData['517fbfac'] = {"dfnID": "517fbfac", "url": "https://tools.ietf.org/html/draft-ietf-httpbis-header-structure#section-3.7", "dfnText": "token", "refSections": [{"refs": [{"id": "ref-for-section-3.7"}, {"id": "ref-for-section-3.7\u2460"}, {"id": "ref-for-section-3.7\u2461"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}, {"refs": [{"id": "ref-for-section-3.7\u2462"}, {"id": "ref-for-section-3.7\u2463"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}, {"refs": [{"id": "ref-for-section-3.7\u2464"}, {"id": "ref-for-section-3.7\u2465"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-section-3.7\u2466"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}], "external": true};
-window.dfnpanelData['7b0d918d'] = {"dfnID": "7b0d918d", "url": "https://infra.spec.whatwg.org/#iteration-break", "dfnText": "break", "refSections": [{"refs": [{"id": "ref-for-iteration-break"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}], "external": true};
-window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}], "external": true};
-window.dfnpanelData['860300d4'] = {"dfnID": "860300d4", "url": "https://infra.spec.whatwg.org/#implementation-defined", "dfnText": "implementation-defined", "refSections": [{"refs": [{"id": "ref-for-implementation-defined"}], "title": "4.4. Extension-Initiated Requests"}], "external": true};
-window.dfnpanelData['f5d4a41e'] = {"dfnID": "f5d4a41e", "url": "https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url", "dfnText": "potentially trustworthy url", "refSections": [{"refs": [{"id": "ref-for-potentially-trustworthy-url"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}, {"refs": [{"id": "ref-for-potentially-trustworthy-url\u2460"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}, {"refs": [{"id": "ref-for-potentially-trustworthy-url\u2461"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-potentially-trustworthy-url\u2462"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}, {"refs": [{"id": "ref-for-potentially-trustworthy-url\u2463"}], "title": "3. Integration with Fetch and HTML"}], "external": true};
-window.dfnpanelData['959ad97b'] = {"dfnID": "959ad97b", "url": "https://url.spec.whatwg.org/#concept-url-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-url-origin"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}], "external": true};
-window.dfnpanelData['fetch-metadata-headers'] = {"dfnID": "fetch-metadata-headers", "url": "#fetch-metadata-headers", "dfnText": "fetch metadata headers", "refSections": [{"refs": [{"id": "ref-for-fetch-metadata-headers"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-fetch-metadata-headers\u2460"}], "title": "5.1. Vary"}, {"refs": [{"id": "ref-for-fetch-metadata-headers\u2461"}], "title": "6. IANA Considerations"}], "external": false};
-window.dfnpanelData['http-headerdef-sec-fetch-dest'] = {"dfnID": "http-headerdef-sec-fetch-dest", "url": "#http-headerdef-sec-fetch-dest", "dfnText": "Sec-Fetch-Dest", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-sec-fetch-dest"}], "title": "2.1. The Sec-Fetch-Dest HTTP Request Header"}], "external": false};
-window.dfnpanelData['abstract-opdef-set-dest'] = {"dfnID": "abstract-opdef-set-dest", "url": "#abstract-opdef-set-dest", "dfnText": "set the Sec-Fetch-Dest header", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-set-dest"}], "title": "3. Integration with Fetch and HTML"}], "external": false};
-window.dfnpanelData['http-headerdef-sec-fetch-mode'] = {"dfnID": "http-headerdef-sec-fetch-mode", "url": "#http-headerdef-sec-fetch-mode", "dfnText": "Sec-Fetch-Mode", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-sec-fetch-mode"}], "title": "2.2. The Sec-Fetch-Mode HTTP Request Header"}], "external": false};
-window.dfnpanelData['abstract-opdef-set-mode'] = {"dfnID": "abstract-opdef-set-mode", "url": "#abstract-opdef-set-mode", "dfnText": "set the Sec-Fetch-Mode header", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-set-mode"}], "title": "3. Integration with Fetch and HTML"}], "external": false};
-window.dfnpanelData['http-headerdef-sec-fetch-site'] = {"dfnID": "http-headerdef-sec-fetch-site", "url": "#http-headerdef-sec-fetch-site", "dfnText": "Sec-Fetch-Site", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-sec-fetch-site"}], "title": "2.3. The Sec-Fetch-Site HTTP Request Header"}, {"refs": [{"id": "ref-for-http-headerdef-sec-fetch-site\u2460"}], "title": "4.1. Redirects"}], "external": false};
-window.dfnpanelData['abstract-opdef-set-site'] = {"dfnID": "abstract-opdef-set-site", "url": "#abstract-opdef-set-site", "dfnText": "set the Sec-Fetch-Site header", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-set-site"}], "title": "3. Integration with Fetch and HTML"}, {"refs": [{"id": "ref-for-abstract-opdef-set-site\u2460"}], "title": "4.1. Redirects"}, {"refs": [{"id": "ref-for-abstract-opdef-set-site\u2461"}], "title": "4.3. Directly User-Initiated Requests"}], "external": false};
-window.dfnpanelData['http-headerdef-sec-fetch-user'] = {"dfnID": "http-headerdef-sec-fetch-user", "url": "#http-headerdef-sec-fetch-user", "dfnText": "Sec-Fetch-User", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-sec-fetch-user"}], "title": "2.4. The Sec-Fetch-User HTTP Request Header"}], "external": false};
-window.dfnpanelData['abstract-opdef-set-user'] = {"dfnID": "abstract-opdef-set-user", "url": "#abstract-opdef-set-user", "dfnText": "set the Sec-Fetch-User header", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-set-user"}], "title": "3. Integration with Fetch and HTML"}], "external": false};
-</script>
 <script>/* Boilerplate: script-dom-helper */
+"use strict";
 function query(sel) { return document.querySelector(sel); }
 
 function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
@@ -1983,34 +1715,438 @@ function parseHTML(markup) {
 		el.innerHTML = markup;
 		return el.content;
 	}
+}</script>
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+let dfnPanelData = {
+"07ad3048": {"dfnID":"07ad3048","dfnText":"create navigation params by fetching","external":true,"refSections":[{"refs":[{"id":"ref-for-create-navigation-params-by-fetching"}],"title":"3. Integration with Fetch and HTML"}],"url":"https://html.spec.whatwg.org/multipage/browsing-the-web.html#create-navigation-params-by-fetching"},
+"2889d1ec": {"dfnID":"2889d1ec","dfnText":"navigation request","external":true,"refSections":[{"refs":[{"id":"ref-for-navigation-request"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-navigation-request\u2460"},{"id":"ref-for-navigation-request\u2461"},{"id":"ref-for-navigation-request\u2462"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://fetch.spec.whatwg.org/#navigation-request"},
+"29399d44": {"dfnID":"29399d44","dfnText":"picture","external":true,"refSections":[{"refs":[{"id":"ref-for-the-picture-element"}],"title":"1.1. Examples"}],"url":"https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element"},
+"2de47c3e": {"dfnID":"2de47c3e","dfnText":"sf-token","external":true,"refSections":[{"refs":[{"id":"ref-for-name-abnf"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-name-abnf\u2460"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-name-abnf\u2461"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-name-abnf\u2462"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf"},
+"35b98f13": {"dfnID":"35b98f13","dfnText":"set a structured field value","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-header-list-set-structured-header"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-concept-header-list-set-structured-header\u2460"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-concept-header-list-set-structured-header\u2461"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-concept-header-list-set-structured-header\u2462"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header"},
+"37b9ae34": {"dfnID":"37b9ae34","dfnText":"structured field","external":true,"refSections":[{"refs":[{"id":"ref-for-name-introduction"},{"id":"ref-for-name-introduction\u2460"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-name-introduction\u2461"},{"id":"ref-for-name-introduction\u2462"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-name-introduction\u2463"},{"id":"ref-for-name-introduction\u2464"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-name-introduction\u2465"},{"id":"ref-for-name-introduction\u2466"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction"},
+"3ae34c95": {"dfnID":"3ae34c95","dfnText":"destination","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request-destination"},{"id":"ref-for-concept-request-destination\u2460"},{"id":"ref-for-concept-request-destination\u2461"},{"id":"ref-for-concept-request-destination\u2462"},{"id":"ref-for-concept-request-destination\u2463"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"}],"url":"https://fetch.spec.whatwg.org/#concept-request-destination"},
+"3f2ca4de": {"dfnID":"3f2ca4de","dfnText":"current URL","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request-current-url"},{"id":"ref-for-concept-request-current-url\u2460"},{"id":"ref-for-concept-request-current-url\u2461"}],"title":"4.1. Redirects"}],"url":"https://fetch.spec.whatwg.org/#concept-request-current-url"},
+"55213b5b": {"dfnID":"55213b5b","dfnText":"request","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request"}],"title":"2. Fetch Metadata Headers"},{"refs":[{"id":"ref-for-concept-request\u2460"},{"id":"ref-for-concept-request\u2461"},{"id":"ref-for-concept-request\u2462"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request\u2463"},{"id":"ref-for-concept-request\u2464"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request\u2465"},{"id":"ref-for-concept-request\u2466"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request\u2467"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request\u2468"},{"id":"ref-for-concept-request\u2460\u24ea"}],"title":"3. Integration with Fetch and HTML"},{"refs":[{"id":"ref-for-concept-request\u2460\u2460"}],"title":"4.1. Redirects"}],"url":"https://fetch.spec.whatwg.org/#concept-request"},
+"5c95fcb9": {"dfnID":"5c95fcb9","dfnText":"forbidden response-header name","external":true,"refSections":[{"refs":[{"id":"ref-for-forbidden-response-header-name"}],"title":"4.2. The Sec- Prefix"}],"url":"https://fetch.spec.whatwg.org/#forbidden-response-header-name"},
+"6ee0eab1": {"dfnID":"6ee0eab1","dfnText":"header list","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request-header-list"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-header-list\u2460"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-header-list\u2461"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-header-list\u2462"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://fetch.spec.whatwg.org/#concept-request-header-list"},
+"7393da89": {"dfnID":"7393da89","dfnText":"same origin","external":true,"refSections":[{"refs":[{"id":"ref-for-same-origin"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"}],"url":"https://html.spec.whatwg.org/multipage/browsers.html#same-origin"},
+"7537012d": {"dfnID":"7537012d","dfnText":"sf-boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-name-abnf"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-name-abnf\u2460"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-name-abnf\u2461"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-name-abnf\u2462"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf"},
+"7b0d918d": {"dfnID":"7b0d918d","dfnText":"break","external":true,"refSections":[{"refs":[{"id":"ref-for-iteration-break"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"}],"url":"https://infra.spec.whatwg.org/#iteration-break"},
+"860300d4": {"dfnID":"860300d4","dfnText":"implementation-defined","external":true,"refSections":[{"refs":[{"id":"ref-for-implementation-defined"}],"title":"4.4. Extension-Initiated Requests"}],"url":"https://infra.spec.whatwg.org/#implementation-defined"},
+"959ad97b": {"dfnID":"959ad97b","dfnText":"origin","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-url-origin"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"}],"url":"https://url.spec.whatwg.org/#concept-url-origin"},
+"9939e831": {"dfnID":"9939e831","dfnText":"user-activation","external":true,"refSections":[{"refs":[{"id":"ref-for-request-user-activation"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"},{"refs":[{"id":"ref-for-request-user-activation\u2460"}],"title":"3. Integration with Fetch and HTML"}],"url":"https://fetch.spec.whatwg.org/#request-user-activation"},
+"abstract-opdef-append-the-fetch-metadata-headers-for-a-request": {"dfnID":"abstract-opdef-append-the-fetch-metadata-headers-for-a-request","dfnText":"append the Fetch metadata headers for a request","external":false,"refSections":[],"url":"#abstract-opdef-append-the-fetch-metadata-headers-for-a-request"},
+"abstract-opdef-set-dest": {"dfnID":"abstract-opdef-set-dest","dfnText":"set the Sec-Fetch-Dest header","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-set-dest"}],"title":"3. Integration with Fetch and HTML"}],"url":"#abstract-opdef-set-dest"},
+"abstract-opdef-set-mode": {"dfnID":"abstract-opdef-set-mode","dfnText":"set the Sec-Fetch-Mode header","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-set-mode"}],"title":"3. Integration with Fetch and HTML"}],"url":"#abstract-opdef-set-mode"},
+"abstract-opdef-set-site": {"dfnID":"abstract-opdef-set-site","dfnText":"set the Sec-Fetch-Site header","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-set-site"}],"title":"3. Integration with Fetch and HTML"},{"refs":[{"id":"ref-for-abstract-opdef-set-site\u2460"}],"title":"4.1. Redirects"},{"refs":[{"id":"ref-for-abstract-opdef-set-site\u2461"}],"title":"4.3. Directly User-Initiated Requests"}],"url":"#abstract-opdef-set-site"},
+"abstract-opdef-set-user": {"dfnID":"abstract-opdef-set-user","dfnText":"set the Sec-Fetch-User header","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-set-user"}],"title":"3. Integration with Fetch and HTML"}],"url":"#abstract-opdef-set-user"},
+"ae56d57e": {"dfnID":"ae56d57e","dfnText":"URL list","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request-url-list"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-url-list\u2460"}],"title":"4.1. Redirects"}],"url":"https://fetch.spec.whatwg.org/#concept-request-url-list"},
+"b7f2e2a7": {"dfnID":"b7f2e2a7","dfnText":"boolean","external":true,"refSections":[{"refs":[{"id":"ref-for-name-booleans"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-booleans"},
+"c12ccfe9": {"dfnID":"c12ccfe9","dfnText":"token","external":true,"refSections":[{"refs":[{"id":"ref-for-name-tokens"},{"id":"ref-for-name-tokens\u2460"},{"id":"ref-for-name-tokens\u2461"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-name-tokens\u2462"},{"id":"ref-for-name-tokens\u2463"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-name-tokens\u2464"},{"id":"ref-for-name-tokens\u2465"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-name-tokens\u2466"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens"},
+"cb98f71f": {"dfnID":"cb98f71f","dfnText":"mode","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request-mode"},{"id":"ref-for-concept-request-mode\u2460"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"}],"url":"https://fetch.spec.whatwg.org/#concept-request-mode"},
+"dc1cd39b": {"dfnID":"dc1cd39b","dfnText":"URL","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request-url"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-url\u2460"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-url\u2461"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-url\u2462"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"},{"refs":[{"id":"ref-for-concept-request-url\u2463"}],"title":"3. Integration with Fetch and HTML"}],"url":"https://fetch.spec.whatwg.org/#concept-request-url"},
+"f0482ed2": {"dfnID":"f0482ed2","dfnText":"same site","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-site-same-site"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"}],"url":"https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site"},
+"f0811ff8": {"dfnID":"f0811ff8","dfnText":"img","external":true,"refSections":[{"refs":[{"id":"ref-for-the-img-element"}],"title":"1. Introduction"}],"url":"https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element"},
+"f5d4a41e": {"dfnID":"f5d4a41e","dfnText":"potentially trustworthy URL","external":true,"refSections":[{"refs":[{"id":"ref-for-potentially-trustworthy-url"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"},{"refs":[{"id":"ref-for-potentially-trustworthy-url\u2460"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"},{"refs":[{"id":"ref-for-potentially-trustworthy-url\u2461"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-potentially-trustworthy-url\u2462"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"},{"refs":[{"id":"ref-for-potentially-trustworthy-url\u2463"}],"title":"3. Integration with Fetch and HTML"}],"url":"https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url"},
+"f78d5b5c": {"dfnID":"f78d5b5c","dfnText":"origin","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request-origin"},{"id":"ref-for-concept-request-origin\u2460"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"}],"url":"https://fetch.spec.whatwg.org/#concept-request-origin"},
+"f937b7b6": {"dfnID":"f937b7b6","dfnText":"continue","external":true,"refSections":[{"refs":[{"id":"ref-for-iteration-continue"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"}],"url":"https://infra.spec.whatwg.org/#iteration-continue"},
+"fetch-metadata-headers": {"dfnID":"fetch-metadata-headers","dfnText":"fetch metadata headers","external":false,"refSections":[{"refs":[{"id":"ref-for-fetch-metadata-headers"}],"title":"1. Introduction"},{"refs":[{"id":"ref-for-fetch-metadata-headers\u2460"}],"title":"5.1. Vary"},{"refs":[{"id":"ref-for-fetch-metadata-headers\u2461"}],"title":"6. IANA Considerations"}],"url":"#fetch-metadata-headers"},
+"http-headerdef-sec-fetch-dest": {"dfnID":"http-headerdef-sec-fetch-dest","dfnText":"Sec-Fetch-Dest","external":false,"refSections":[{"refs":[{"id":"ref-for-http-headerdef-sec-fetch-dest"}],"title":"2.1. The Sec-Fetch-Dest HTTP Request Header"}],"url":"#http-headerdef-sec-fetch-dest"},
+"http-headerdef-sec-fetch-mode": {"dfnID":"http-headerdef-sec-fetch-mode","dfnText":"Sec-Fetch-Mode","external":false,"refSections":[{"refs":[{"id":"ref-for-http-headerdef-sec-fetch-mode"}],"title":"2.2. The Sec-Fetch-Mode HTTP Request Header"}],"url":"#http-headerdef-sec-fetch-mode"},
+"http-headerdef-sec-fetch-site": {"dfnID":"http-headerdef-sec-fetch-site","dfnText":"Sec-Fetch-Site","external":false,"refSections":[{"refs":[{"id":"ref-for-http-headerdef-sec-fetch-site"}],"title":"2.3. The Sec-Fetch-Site HTTP Request Header"},{"refs":[{"id":"ref-for-http-headerdef-sec-fetch-site\u2460"}],"title":"4.1. Redirects"}],"url":"#http-headerdef-sec-fetch-site"},
+"http-headerdef-sec-fetch-user": {"dfnID":"http-headerdef-sec-fetch-user","dfnText":"Sec-Fetch-User","external":false,"refSections":[{"refs":[{"id":"ref-for-http-headerdef-sec-fetch-user"}],"title":"2.4. The Sec-Fetch-User HTTP Request Header"}],"url":"#http-headerdef-sec-fetch-user"},
+};
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    genAllDfnPanels();
+
+    document.body.addEventListener("click", (e) => {
+        // If not handled already, just hide all dfn panels.
+        hideAllDfnPanels();
+    });
+});
+
+window.addEventListener("resize", () => {
+    // Pin any visible dfn panel
+    queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>positionDfnPanel(el));
+});
+
+function genAllDfnPanels() {
+    for(const panelData of Object.values(dfnPanelData)) {
+        const dfnID = panelData.dfnID;
+        const dfn = document.getElementById(dfnID);
+        if(!dfn) {
+            console.log(`Can't find dfn#${dfnID}.`, panelData);
+            continue;
+        }
+        dfn.panelData = panelData;
+        insertDfnPopupAction(dfn);
+    }
+}
+
+function genDfnPanel(dfn, { dfnID, url, dfnText, refSections, external }) {
+    const dfnPanel = mk.aside({
+        class: "dfn-panel on",
+        id: `infopanel-for-${dfnID}`,
+        "data-for": dfnID,
+        "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+        },
+        mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+            `Info about the '${dfnText}' ${external?"external":""} reference.`),
+        mk.a({href:url, class:"dfn-link"}, url),
+        refSections.length == 0 ? [] :
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({ href: `#${ref.id}` },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        genLinkingSyntaxes(dfn),
+    );
+
+    dfnPanel.addEventListener('click', (event) => {
+        if (event.target.nodeName == 'A') {
+            scrollToTargetAndHighlight(event);
+            pinDfnPanel(dfnPanel);
+        }
+        event.stopPropagation();
+        refocusOnTarget(event);
+    });
+    dfnPanel.addEventListener('keydown', (event) => {
+        if(event.keyCode == 27) { // Escape key
+            hideDfnPanel({dfnPanel});
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    });
+
+    dfnPanel.dfn = dfn;
+    dfn.dfnPanel = dfnPanel;
+    return dfnPanel;
+}
+
+
+
+function hideAllDfnPanels() {
+    // Delete the currently-active dfn panel.
+    queryAll(".dfn-panel").forEach(dfnPanel=>hideDfnPanel({dfnPanel}));
+}
+
+function showDfnPanel(dfn) {
+    hideAllDfnPanels(); // Only display one at a time.
+
+    dfn.setAttribute("aria-expanded", "true");
+
+    const dfnPanel = genDfnPanel(dfn, dfn.panelData);
+
+    // Give the dfn a unique tabindex, and then
+    // give all the tabbable panel bits successive indexes.
+    let tabIndex = 100;
+    dfn.tabIndex = tabIndex++;
+    const tabbable = dfnPanel.querySelectorAll(":is(a, button)");
+    for (const el of tabbable) {
+        el.tabIndex = tabIndex++;
+    }
+
+    append(document.body, dfnPanel);
+    positionDfnPanel(dfnPanel);
+}
+
+function positionDfnPanel(dfnPanel) {
+    const dfn = dfnPanel.dfn;
+    const dfnPos = getBounds(dfn);
+    dfnPanel.style.top = dfnPos.bottom + "px";
+    dfnPanel.style.left = dfnPos.left + "px";
+
+    const panelPos = dfnPanel.getBoundingClientRect();
+    const panelMargin = 8;
+    const maxRight = document.body.parentNode.clientWidth - panelMargin;
+    if (panelPos.right > maxRight) {
+        const overflowAmount = panelPos.right - maxRight;
+        const newLeft = Math.max(panelMargin, dfnPos.left - overflowAmount);
+        dfnPanel.style.left = newLeft + "px";
+    }
+}
+
+function pinDfnPanel(dfnPanel) {
+    // Switch it to "activated" state, which pins it.
+    dfnPanel.classList.add("activated");
+    dfnPanel.style.position = "fixed";
+    dfnPanel.style.left = null;
+    dfnPanel.style.top = null;
+}
+
+function hideDfnPanel({dfn, dfnPanel}) {
+    if(!dfnPanel) dfnPanel = dfn.dfnPanel;
+    if(!dfn) dfn = dfnPanel.dfn;
+    dfn.dfnPanel = undefined;
+    dfnPanel.dfn = undefined;
+    dfn.setAttribute("aria-expanded", "false");
+    dfn.tabIndex = undefined;
+    dfnPanel.remove()
+}
+
+function toggleDfnPanel(dfn) {
+    if(dfn.dfnPanel) {
+        hideDfnPanel(dfn);
+    } else {
+        showDfnPanel(dfn);
+    }
+}
+
+function insertDfnPopupAction(dfn) {
+    dfn.setAttribute('role', 'button');
+    dfn.setAttribute('aria-expanded', 'false')
+    dfn.tabIndex = 0;
+    dfn.classList.add('has-dfn-panel');
+    dfn.addEventListener('click', (event) => {
+        toggleDfnPanel(dfn);
+        event.stopPropagation();
+    });
+    dfn.addEventListener('keypress', (event) => {
+        const kc = event.keyCode;
+        // 32->Space, 13->Enter
+        if(kc == 32 || kc == 13) {
+            toggleDfnPanel(dfn);
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    });
+}
+
+function refocusOnTarget(event) {
+    const target = event.target;
+    setTimeout(() => {
+        // Refocus on the event.target element.
+        // This is needed after browser scrolls to the destination.
+        target.focus();
+    });
+}
+
+// TODO: shared util
+// Returns the root-level absolute position {left and top} of element.
+function getBounds(el, relativeTo=document.body) {
+    const relativeRect = relativeTo.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const top = elRect.top - relativeRect.top;
+    const left = elRect.left - relativeRect.left;
+    return {
+        top,
+        left,
+        bottom: top + elRect.height,
+        right: left + elRect.width,
+    }
+}
+
+function scrollToTargetAndHighlight(event) {
+    let hash = event.target.hash;
+    if (hash) {
+        hash = decodeURIComponent(hash.substring(1));
+        const dest = document.getElementById(hash);
+        if (dest) {
+            dest.classList.add('highlighted');
+            setTimeout(() => dest.classList.remove('highlighted'), 1000);
+        }
+    }
+}
+
+// Functions, divided by link type, that wrap an autolink's
+// contents with the appropriate outer syntax.
+// Alternately, a string naming another type they format
+// the same as.
+function needsFor(type) {
+    switch(type) {
+        case "descriptor":
+        case "value":
+        case "element-attr":
+        case "attr-value":
+        case "element-state":
+        case "method":
+        case "constructor":
+        case "argument":
+        case "attribute":
+        case "const":
+        case "dict-member":
+        case "event":
+        case "enum-value":
+        case "stringifier":
+        case "serializer":
+        case "iterator":
+        case "maplike":
+        case "setlike":
+        case "state":
+        case "mode":
+        case "context":
+        case "facet": return true;
+
+        default: return false;
+    }
+}
+function refusesFor(type) {
+    switch(type) {
+        case "property":
+        case "element":
+        case "interface":
+        case "namespace":
+        case "callback":
+        case "dictionary":
+        case "enum":
+        case "exception":
+        case "typedef":
+        case "http-header":
+        case "permission": return true;
+
+        default: return false;
+    }
+}
+function linkFormatterFromType(type) {
+    switch(type) {
+        case 'scheme':
+        case 'permission':
+        case 'dfn': return (text) => `[=${text}=]`;
+
+        case 'abstract-op': return (text) => `[\$${text}\$]`;
+
+        case 'function':
+        case 'at-rule':
+        case 'selector':
+        case 'value': return (text) => `''${text}''`;
+
+        case 'http-header': return (text) => `[:${text}:]`;
+
+        case 'interface':
+        case 'constructor':
+        case 'method':
+        case 'argument':
+        case 'attribute':
+        case 'callback':
+        case 'dictionary':
+        case 'dict-member':
+        case 'enum':
+        case 'enum-value':
+        case 'exception':
+        case 'const':
+        case 'typedef':
+        case 'stringifier':
+        case 'serializer':
+        case 'iterator':
+        case 'maplike':
+        case 'setlike':
+        case 'extended-attribute':
+        case 'event':
+        case 'idl': return (text) => `{{${text}}}`;
+
+        case 'element-state':
+        case 'element-attr':
+        case 'attr-value':
+        case 'element': return (element) => `<{${element}}>`;
+
+        case 'grammar': return (text) => `${text} (within a <pre class=prod>)`;
+
+        case 'type': return (text)=> `<<${text}>>`;
+
+        case 'descriptor':
+        case 'property': return (text) => `'${text}'`;
+
+        default: return;
+    };
+};
+
+function genLinkingSyntaxes(dfn) {
+    if(dfn.tagName != "DFN") return;
+
+    const type = dfn.getAttribute('data-dfn-type');
+    if(!type) {
+        console.log(`<dfn> doesn't have a data-dfn-type:`, dfn);
+        return [];
+    }
+
+    // Return a function that wraps link text based on the type
+    const linkFormatter = linkFormatterFromType(type);
+    if(!linkFormatter) {
+        console.log(`<dfn> has an unknown data-dfn-type:`, dfn);
+        return [];
+    }
+
+    let ltAlts;
+    if(dfn.hasAttribute('data-lt')) {
+        ltAlts = dfn.getAttribute('data-lt')
+            .split("|")
+            .map(x=>x.trim());
+    } else {
+        ltAlts = [dfn.textContent.trim()];
+    }
+    if(type == "type") {
+        // lt of "<foo>", but "foo" is the interior;
+        // <<foo/bar>> is how you write it with a for,
+        // not <foo/<bar>> or whatever.
+        for(var i = 0; i < ltAlts.length; i++) {
+            const lt = ltAlts[i];
+            const match = /<(.*)>/.exec(lt);
+            if(match) { ltAlts[i] = match[1]; }
+        }
+    }
+
+    let forAlts;
+    if(dfn.hasAttribute('data-dfn-for')) {
+        forAlts = dfn.getAttribute('data-dfn-for')
+            .split(",")
+            .map(x=>x.trim());
+    } else {
+        forAlts = [''];
+    }
+
+    let linkingSyntaxes = [];
+    if(!needsFor(type)) {
+        for(const lt of ltAlts) {
+            linkingSyntaxes.push(linkFormatter(lt));
+        }
+    }
+    if(!refusesFor(type)) {
+        for(const f of forAlts) {
+            linkingSyntaxes.push(linkFormatter(`${f}/${ltAlts[0]}`))
+        }
+    }
+    return [
+        mk.b({}, 'Possible linking syntaxes:'),
+        mk.ul({},
+            ...linkingSyntaxes.map(link => {
+                const copyLink = async () =>
+                    await navigator.clipboard.writeText(link);
+                return mk.li({},
+                    mk.div({ class: 'link-item' },
+                        mk.button({
+                            class: 'copy-icon', title: 'Copy',
+                            type: 'button',
+                            _onclick: copyLink,
+                            tabindex: 0,
+                        }, mk.span({ class: 'icon' }) ),
+                        mk.span({}, link)
+                    )
+                );
+            })
+        )
+    ];
+}
 }
 </script>
 <script>/* Boilerplate: script-position-annos */
 "use strict";
 {
-
 function repositionAnnoPanels(){
     const panels = [...document.querySelectorAll("[data-anno-for]")];
-    const main = document.querySelector("main");
-    let mainRect;
-    if(main) mainRect = main.getBoundingClientRect();
-    for(const panel of panels) {
-        const dfn = document.getElementById(panel.getAttribute("data-anno-for"));
-        if(!dfn) {
-            console.log("Can't find the annotation panel target:", panel);
-            continue;
-        }
-        const rect = dfn.getBoundingClientRect();
-        const top = window.scrollY + rect.top
-        panel.style.top = top + "px";
-        panel.top = top;
-        panel.height = rect.height;
-        panel.classList.remove("unpositioned");
-        const panelRect = panel.getBoundingClientRect()
-        if(main) {
-            panel.classList.toggle("overlapping-main", panelRect.left < mainRect.right)
-        }
-    }
+    hydratePanels(panels);
     let vSoFar = 0;
     for(const panel of panels.sort(cmpTops)) {
         if(panel.top < vSoFar) {
@@ -2018,6 +2154,39 @@ function repositionAnnoPanels(){
             panel.style.top = vSoFar + "px";
         }
         vSoFar = panel.top + panel.height + 15;
+    }
+}
+function hydratePanels(panels) {
+    const main = document.querySelector("main");
+    let mainRect;
+    if(main) mainRect = main.getBoundingClientRect();
+    // First display them all, if they're not already visible.
+    for(const panel of panels) {
+        panel.classList.remove("unpositioned");
+    }
+    // Measure them all
+    for(const panel of panels) {
+        const dfn = document.getElementById(panel.getAttribute("data-anno-for"));
+        if(!dfn) {
+            console.log("Can't find the annotation panel target:", panel);
+            continue;
+        }
+        panel.dfn = dfn;
+        panel.top = window.scrollY + dfn.getBoundingClientRect().top;
+        let panelRect = panel.getBoundingClientRect();
+        panel.height = panelRect.height;
+        if(main) {
+            panel.overlappingMain = panelRect.left < mainRect.right;
+        } else {
+            panel.overlappingMain = false;
+        }
+    }
+    // And finally position them
+    for(const panel of panels) {
+        const dfn = panel.dfn;
+        if(!dfn) continue;
+        panel.style.top = panel.top + "px";
+        panel.classList.toggle("overlapping-main", panel.overlappingMain);
     }
 }
 
@@ -2029,101 +2198,333 @@ window.addEventListener("load", repositionAnnoPanels);
 window.addEventListener("resize", repositionAnnoPanels);
 }
 </script>
+<script>/* Boilerplate: script-ref-hints */
+"use strict";
+{
+let refsData = {
+"#abstract-opdef-set-dest": {"displayText":"set-dest","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"set-dest","type":"abstract-op","url":"#abstract-opdef-set-dest"},
+"#abstract-opdef-set-mode": {"displayText":"set-mode","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"set-mode","type":"abstract-op","url":"#abstract-opdef-set-mode"},
+"#abstract-opdef-set-site": {"displayText":"set-site","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"set-site","type":"abstract-op","url":"#abstract-opdef-set-site"},
+"#abstract-opdef-set-user": {"displayText":"set-user","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"set-user","type":"abstract-op","url":"#abstract-opdef-set-user"},
+"#fetch-metadata-headers": {"displayText":"fetch metadata headers","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"fetch metadata headers","type":"dfn","url":"#fetch-metadata-headers"},
+"#http-headerdef-sec-fetch-dest": {"displayText":"sec-fetch-dest","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"sec-fetch-dest","type":"http-header","url":"#http-headerdef-sec-fetch-dest"},
+"#http-headerdef-sec-fetch-mode": {"displayText":"sec-fetch-mode","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"sec-fetch-mode","type":"http-header","url":"#http-headerdef-sec-fetch-mode"},
+"#http-headerdef-sec-fetch-site": {"displayText":"sec-fetch-site","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"sec-fetch-site","type":"http-header","url":"#http-headerdef-sec-fetch-site"},
+"#http-headerdef-sec-fetch-user": {"displayText":"sec-fetch-user","export":true,"for_":[],"level":"","normative":true,"shortname":"fetch-metadata","spec":"fetch-metadata","status":"local","text":"sec-fetch-user","type":"http-header","url":"#http-headerdef-sec-fetch-user"},
+"90843f80_https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf": {"displayText":"sf-boolean","export":true,"for_":[],"level":"","normative":true,"shortname":"rfc9651","spec":"rfc9651","status":"anchor-block","text":"sf-boolean","type":"grammar","url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf"},
+"https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header": {"displayText":"set a structured field value","export":true,"for_":["header list"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"set a structured field value","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-header-list-set-structured-header"},
+"https://fetch.spec.whatwg.org/#concept-request": {"displayText":"request","export":true,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"request","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request"},
+"https://fetch.spec.whatwg.org/#concept-request-current-url": {"displayText":"current URL","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"current url","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request-current-url"},
+"https://fetch.spec.whatwg.org/#concept-request-destination": {"displayText":"destination","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"destination","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request-destination"},
+"https://fetch.spec.whatwg.org/#concept-request-header-list": {"displayText":"header list","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"header list","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request-header-list"},
+"https://fetch.spec.whatwg.org/#concept-request-mode": {"displayText":"mode","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"mode","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request-mode"},
+"https://fetch.spec.whatwg.org/#concept-request-origin": {"displayText":"origin","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"origin","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request-origin"},
+"https://fetch.spec.whatwg.org/#concept-request-url": {"displayText":"URL","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"url","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request-url"},
+"https://fetch.spec.whatwg.org/#concept-request-url-list": {"displayText":"URL list","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"url list","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-request-url-list"},
+"https://fetch.spec.whatwg.org/#forbidden-response-header-name": {"displayText":"forbidden response-header name","export":true,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"forbidden response-header name","type":"dfn","url":"https://fetch.spec.whatwg.org/#forbidden-response-header-name"},
+"https://fetch.spec.whatwg.org/#navigation-request": {"displayText":"navigation request","export":true,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"navigation request","type":"dfn","url":"https://fetch.spec.whatwg.org/#navigation-request"},
+"https://fetch.spec.whatwg.org/#request-user-activation": {"displayText":"user-activation","export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"user-activation","type":"dfn","url":"https://fetch.spec.whatwg.org/#request-user-activation"},
+"https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site": {"displayText":"same site","export":true,"for_":["site"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"same site","type":"dfn","url":"https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site"},
+"https://html.spec.whatwg.org/multipage/browsers.html#same-origin": {"displayText":"same origin","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"same origin","type":"dfn","url":"https://html.spec.whatwg.org/multipage/browsers.html#same-origin"},
+"https://html.spec.whatwg.org/multipage/browsing-the-web.html#create-navigation-params-by-fetching": {"displayText":"create navigation params by fetching","export":true,"for_":[],"level":"","normative":true,"shortname":"html","spec":"html","status":"anchor-block","text":"create navigation params by fetching","type":"dfn","url":"https://html.spec.whatwg.org/multipage/browsing-the-web.html#create-navigation-params-by-fetching"},
+"https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element": {"displayText":"img","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"img","type":"element","url":"https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element"},
+"https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element": {"displayText":"picture","export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"picture","type":"element","url":"https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element"},
+"https://infra.spec.whatwg.org/#implementation-defined": {"displayText":"implementation-defined","export":true,"for_":[],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"implementation-defined","type":"dfn","url":"https://infra.spec.whatwg.org/#implementation-defined"},
+"https://infra.spec.whatwg.org/#iteration-break": {"displayText":"break","export":true,"for_":["iteration"],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"break","type":"dfn","url":"https://infra.spec.whatwg.org/#iteration-break"},
+"https://infra.spec.whatwg.org/#iteration-continue": {"displayText":"continue","export":true,"for_":["iteration"],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"continue","type":"dfn","url":"https://infra.spec.whatwg.org/#iteration-continue"},
+"https://url.spec.whatwg.org/#concept-url-origin": {"displayText":"origin","export":true,"for_":["url"],"level":"1","normative":true,"shortname":"url","spec":"url","status":"current","text":"origin","type":"dfn","url":"https://url.spec.whatwg.org/#concept-url-origin"},
+"https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf": {"displayText":"sf-token","export":true,"for_":[],"level":"","normative":true,"shortname":"rfc9651","spec":"rfc9651","status":"anchor-block","text":"sf-token","type":"grammar","url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-abnf"},
+"https://www.rfc-editor.org/rfc/rfc9651.html#name-booleans": {"displayText":"boolean","export":true,"for_":["structured field"],"level":"","normative":true,"shortname":"rfc9651","spec":"rfc9651","status":"anchor-block","text":"boolean","type":"dfn","url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-booleans"},
+"https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction": {"displayText":"structured field","export":true,"for_":[],"level":"","normative":true,"shortname":"rfc9651","spec":"rfc9651","status":"anchor-block","text":"structured field","type":"dfn","url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-introduction"},
+"https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens": {"displayText":"token","export":true,"for_":["structured field"],"level":"","normative":true,"shortname":"rfc9651","spec":"rfc9651","status":"anchor-block","text":"token","type":"dfn","url":"https://www.rfc-editor.org/rfc/rfc9651.html#name-tokens"},
+"https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url": {"displayText":"potentially trustworthy URL","export":true,"for_":[],"level":"1","normative":true,"shortname":"secure-contexts","spec":"secure-contexts","status":"snapshot","text":"potentially trustworthy url","type":"dfn","url":"https://www.w3.org/TR/secure-contexts/#potentially-trustworthy-url"},
+};
+
+function mkRefHint(link, ref) {
+    const linkText = link.textContent;
+    let dfnTextElements = '';
+    if (ref.displayText.toLowerCase() != linkText.toLowerCase()) {
+        // Give the original term if it's being displayed in a different way.
+        // But allow casing differences, they're insignificant.
+        dfnTextElements =
+            mk.li({},
+                mk.b({}, "Term: "),
+                mk.span({}, ref.displayText)
+            );
+    }
+    const forList = ref.for_;
+    let forListElements;
+    if(forList.length == 0) {
+        forListElements = [];
+    } else if(forList.length == 1) {
+        forListElements = mk.li({},
+            mk.b({}, "For: "),
+            mk.span({}, forList[0]),
+        );
+    } else {
+        forListElements = mk.li({},
+            mk.b({}, "For: "),
+            mk.ul({},
+                ...forList.map(forItem =>
+                    mk.li({},
+                        mk.span({}, forItem)
+                    ),
+                ),
+            ),
+        );
+    }
+    const url = ref.url;
+    const safeUrl = encodeURIComponent(url);
+    const hintPanel = mk.aside({
+        class: "ref-hint",
+        id: `ref-hint-for-${safeUrl}`,
+        "data-for": url,
+        "aria-labelled-by": `ref-hint-for-${safeUrl}`,
+    },
+        mk.ul({},
+            dfnTextElements,
+            mk.li({},
+                mk.b({}, "URL: "),
+                mk.a({ href: url, class: "ref" }, url),
+            ),
+            mk.li({},
+                mk.b({}, "Type: "),
+                mk.span({}, `${ref.type}`),
+            ),
+            mk.li({},
+                mk.b({}, "Spec: "),
+                mk.span({}, `${ref.spec ? ref.spec : ''}`),
+            ),
+            forListElements
+        ),
+    );
+    hintPanel.forLink = link;
+    setupRefHintEventListeners(link, hintPanel);
+    return hintPanel;
+}
+
+function hideAllRefHints() {
+    queryAll(".ref-hint").forEach(el=>hideRefHint(el));
+}
+
+function hideRefHint(refHint) {
+    const link = refHint.forLink;
+    link.setAttribute("aria-expanded", "false");
+    if(refHint.teardownEventListeners) {
+        refHint.teardownEventListeners();
+    }
+    refHint.remove();
+}
+
+function showRefHint(link) {
+    if(link.classList.contains("dfn-link")) return;
+    const url = link.getAttribute("href");
+    const refHintKey = link.getAttribute("data-refhint-key");
+    let key = url;
+    if(refHintKey) {
+        key = refHintKey + "_" + url;
+    }
+    const ref = refsData[key];
+    if(!ref) return;
+
+    hideAllRefHints(); // Only display one at this time.
+
+    const refHint = mkRefHint(link, ref);
+    append(document.body, refHint);
+    link.setAttribute("aria-expanded", "true");
+    positionRefHint(refHint);
+}
+
+function setupRefHintEventListeners(link, refHint) {
+    if (refHint.teardownEventListeners) return;
+    // Add event handlers to hide the refHint after the user moves away
+    // from both the link and refHint, if not hovering either within one second.
+    let timeout = null;
+    const startHidingRefHint = (event) => {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+            hideRefHint(refHint);
+        }, 1000);
+    }
+    const resetHidingRefHint = (event) => {
+        if (timeout) clearTimeout(timeout);
+        timeout = null;
+    };
+    link.addEventListener("mouseleave", startHidingRefHint);
+    link.addEventListener("mouseenter", resetHidingRefHint);
+    link.addEventListener("blur", startHidingRefHint);
+    link.addEventListener("focus", resetHidingRefHint);
+    refHint.addEventListener("mouseleave", startHidingRefHint);
+    refHint.addEventListener("mouseenter", resetHidingRefHint);
+    refHint.addEventListener("blur", startHidingRefHint);
+    refHint.addEventListener("focus", resetHidingRefHint);
+
+    refHint.teardownEventListeners = () => {
+        // remove event listeners
+        resetHidingRefHint();
+        link.removeEventListener("mouseleave", startHidingRefHint);
+        link.removeEventListener("mouseenter", resetHidingRefHint);
+        link.removeEventListener("blur", startHidingRefHint);
+        link.removeEventListener("focus", resetHidingRefHint);
+        refHint.removeEventListener("mouseleave", startHidingRefHint);
+        refHint.removeEventListener("mouseenter", resetHidingRefHint);
+        refHint.removeEventListener("blur", startHidingRefHint);
+        refHint.removeEventListener("focus", resetHidingRefHint);
+    };
+}
+
+function positionRefHint(refHint) {
+    const link = refHint.forLink;
+    const linkPos = getBounds(link);
+    refHint.style.top = linkPos.bottom + "px";
+    refHint.style.left = linkPos.left + "px";
+
+    const panelPos = refHint.getBoundingClientRect();
+    const panelMargin = 8;
+    const maxRight = document.body.parentNode.clientWidth - panelMargin;
+    if (panelPos.right > maxRight) {
+        const overflowAmount = panelPos.right - maxRight;
+        const newLeft = Math.max(panelMargin, linkPos.left - overflowAmount);
+        refHint.style.left = newLeft + "px";
+    }
+}
+
+// TODO: shared util
+// Returns the root-level absolute position {left and top} of element.
+function getBounds(el, relativeTo=document.body) {
+    const relativeRect = relativeTo.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const top = elRect.top - relativeRect.top;
+    const left = elRect.left - relativeRect.left;
+    return {
+        top,
+        left,
+        bottom: top + elRect.height,
+        right: left + elRect.width,
+    }
+}
+
+function showRefHintListener(e) {
+    // If the target isn't in a link (or is a link),
+    // just ignore it.
+    let link = e.target.closest("a");
+    if(!link) return;
+
+    // If the target is in a ref-hint panel
+    // (aka a link in the already-open one),
+    // also just ignore it.
+    if(link.closest(".ref-hint")) return;
+
+    // Otherwise, show the panel for the link.
+    showRefHint(link);
+}
+
+function hideAllHintsListener(e) {
+    // If the click is inside a ref-hint panel, ignore it.
+    if(e.target.closest(".ref-hint")) return;
+    // Otherwise, close all the current panels.
+    hideAllRefHints();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.addEventListener("mousedown", showRefHintListener);
+    document.body.addEventListener("focus", showRefHintListener);
+
+    document.body.addEventListener("click", hideAllHintsListener);
+});
+
+window.addEventListener("resize", () => {
+    // Hide any open ref hint.
+    hideAllRefHints();
+});
+}
+</script>
 <script>/* Boilerplate: script-var-click-highlighting */
+"use strict";
+{
 /*
 Color-choosing design:
 
-Colors are ordered by goodness.
-Each color has a usage count (initially zero).
-Each variable has a last-used color.
-
-* If the var has a last-used color, and that color's usage is 0,
-    return that color.
-* Otherwise, return the lowest-indexed color with the lowest usage.
-    Increment the color's usage and set it as the last-used color
-    for that var.
-* On unclicking, decrement usage of the color.
+* Colors are ordered by goodness.
+* On clicking a var, give it the earliest color
+    with the lowest usage in the algorithm.
+* On re-clicking, re-use the var's most recent color
+    if that's not currently being used elsewhere.
 */
-"use strict";
-{
-    document.addEventListener("click", e=>{
-        if(e.target.nodeName == "VAR") {
-            highlightSameAlgoVars(e.target);
-        }
-    });
-    const indexCounts = new Map();
-    const indexNames = new Map();
-    function highlightSameAlgoVars(v) {
-        // Find the algorithm container.
-        let algoContainer = null;
-        let searchEl = v;
-        while(algoContainer == null && searchEl != document.body) {
-            searchEl = searchEl.parentNode;
-            if(searchEl.hasAttribute("data-algorithm")) {
-                algoContainer = searchEl;
-            }
-        }
 
-        // Not highlighting document-global vars,
-        // too likely to be unrelated.
-        if(algoContainer == null) return;
+const COLOR_COUNT = 7;
 
-        const algoName = algoContainer.getAttribute("data-algorithm");
-        const varName = getVarName(v);
-        const addClass = !v.classList.contains("selected");
-        let highlightClass = null;
-        if(addClass) {
-            const index = chooseHighlightIndex(algoName, varName);
-            indexCounts.get(algoName)[index] += 1;
-            indexNames.set(algoName+"///"+varName, index);
-            highlightClass = nameFromIndex(index);
-        } else {
-            const index = previousHighlightIndex(algoName, varName);
-            indexCounts.get(algoName)[index] -= 1;
-            highlightClass = nameFromIndex(index);
-        }
+document.addEventListener("click", e=>{
+    if(e.target.nodeName == "VAR") {
+        highlightSameAlgoVars(e.target);
+    }
+});
 
-        // Find all same-name vars, and toggle their class appropriately.
+function highlightSameAlgoVars(v) {
+    // Find the algorithm container.
+    let algoContainer = findAlgoContainer(v);
+
+    // Not highlighting document-global vars,
+    // too likely to be unrelated.
+    if(algoContainer == null) return;
+
+    const varName = nameFromVar(v);
+    if(!v.hasAttribute("data-var-color")) {
+        const newColor = chooseHighlightColor(algoContainer, v);
         for(const el of algoContainer.querySelectorAll("var")) {
-            if(getVarName(el) == varName) {
-                el.classList.toggle("selected", addClass);
-                el.classList.toggle(highlightClass, addClass);
+            if(nameFromVar(el) == varName) {
+                el.setAttribute("data-var-color", newColor);
+                el.setAttribute("data-var-last-color", newColor);
+            }
+        }
+    } else {
+        for(const el of algoContainer.querySelectorAll("var")) {
+            if(nameFromVar(el) == varName) {
+                el.removeAttribute("data-var-color");
             }
         }
     }
-    function getVarName(el) {
-        return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+}
+function findAlgoContainer(el) {
+    while(el != document.body) {
+        if(el.hasAttribute("data-algorithm")) return el;
+        el = el.parentNode;
     }
-    function chooseHighlightIndex(algoName, varName) {
-        let indexes = null;
-        if(indexCounts.has(algoName)) {
-            indexes = indexCounts.get(algoName);
-        } else {
-            // 7 classes right now
-            indexes = [0,0,0,0,0,0,0];
-            indexCounts.set(algoName, indexes);
-        }
+    return null;
+}
+function nameFromVar(el) {
+    return el.textContent.replace(/(\s|\xa0)+/g, " ").trim();
+}
+function colorCountsFromContainer(container) {
+    const namesFromColor = Array.from({length:COLOR_COUNT}, x=>new Set());
+    for(let v of container.querySelectorAll("var[data-var-color]")) {
+        let color = +v.getAttribute("data-var-color");
+        namesFromColor[color].add(nameFromVar(v));
+    }
 
-        // If the element was recently unclicked,
-        // *and* that color is still unclaimed,
-        // give it back the same color.
-        const lastIndex = previousHighlightIndex(algoName, varName);
-        if(indexes[lastIndex] === 0) return lastIndex;
-
-        // Find the earliest index with the lowest count.
-        const minCount = Math.min.apply(null, indexes);
-        let index = null;
-        for(var i = 0; i < indexes.length; i++) {
-            if(indexes[i] == minCount) {
-                return i;
-            }
+    return namesFromColor.map(x=>x.size);
+}
+function leastUsedColor(colors) {
+    // Find the earliest color with the lowest count.
+    let minCount = Infinity;
+    let minColor = null;
+    for(var i = 0; i < colors.length; i++) {
+        if(colors[i] < minCount) {
+            minColor = i;
+            minCount = colors[i];
         }
     }
-    function previousHighlightIndex(algoName, varName) {
-        return indexNames.get(algoName+"///"+varName);
+    return minColor;
+}
+function chooseHighlightColor(container, v) {
+    const colorCounts = colorCountsFromContainer(container);
+    if(v.hasAttribute("data-var-last-color")) {
+        let color = +v.getAttribute("data-var-last-color");
+        if(colorCounts[color] == 0) return color;
     }
-    function nameFromIndex(index) {
-        return "selected" + index;
-    }
+    return leastUsedColor(colorCounts);
+}
 }
 </script>
