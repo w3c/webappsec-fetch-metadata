@@ -275,6 +275,40 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
 </div>
 
 
+The `Sec-Fetch-Agent` HTTP Request Header {#sec-fetch-agent-header}
+------------------------------------------------------------------
+
+The <dfn http-header export>`Sec-Fetch-Agent`</dfn> HTTP request header exposes whether or not a
+request was initiated by an automated agent operating within the user's browsing context. It is a 
+[=Structured Field=] whose value is a [=structured field/boolean=]. [[!RFC9651]] Its ABNF is:
+
+<pre>
+Sec-Fetch-Agent = <a grammar>sf-boolean</a>
+</pre>
+
+Note: The header is delivered only when its value is true. Unlike `Sec-Fetch-User`, this header 
+should be delivered for all request types when its value is `true`. The header indicates that 
+while the request originates from the user's authenticated browsing context, it is being triggered 
+by an automated agent.
+
+<div algorithm="set `Sec-Fetch-Agent`">
+To <dfn abstract-op lt="set-agent">set the `Sec-Fetch-Agent` header</dfn> for a [=request=] |r|:
+
+<ol class="algorithm">
+    1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
+
+    2.  If |r|'s [=request/agent-initiated=] is `false`, return.
+
+    3.  Let |header| be a [=Structured Field=] whose value is a [=structured field/boolean=].
+
+    4.  Set |header|'s value to `true`.
+
+    5.  [=header list/Set a structured field value=]
+        &#96;<a http-header>`Sec-Fetch-Agent`</a>&#96;/|header| in |r|'s [=request/header list=].
+</ol>
+</div>
+
+
 Integration with Fetch and HTML {#fetch-integration}
 ===========================================
 
@@ -297,6 +331,8 @@ To <dfn abstract-op export>append the Fetch metadata headers for a request</dfn>
     4.  <a abstract-op lt='set-site'>Set the `Sec-Fetch-Site` header</a> for |r|.
 
     5.  <a abstract-op lt='set-user'>Set the `Sec-Fetch-User` header</a> for |r|.
+
+    6.  <a abstract-op lt='set-agent'>Set the `Sec-Fetch-Agent` header</a> for |r|.
 </ol>
 </div>
 
