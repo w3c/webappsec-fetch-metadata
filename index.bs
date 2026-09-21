@@ -143,7 +143,7 @@ Sec-Fetch-Dest: iframe
 To <dfn abstract-op lt="set-dest">set the `Sec-Fetch-Dest` header</dfn> for a [=request=] |r|:
 
 <ol class="algorithm">
-    1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
+    1.  Assert: |r|'s [=request/current URL=] is a [=potentially trustworthy URL=].
 
     2.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
 
@@ -179,7 +179,7 @@ servers SHOULD ignore this header if it contains an invalid value.
 To <dfn abstract-op lt="set-mode">set the `Sec-Fetch-Mode` header</dfn> for a [=request=] |r|:
 
 <ol class="algorithm">
-    1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
+    1.  Assert: |r|'s [=request/current URL=] is a [=potentially trustworthy URL=].
 
     2.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
 
@@ -210,7 +210,7 @@ this header if it contains an invalid value.
 To <dfn abstract-op lt="set-site">set the `Sec-Fetch-Site` header</dfn> for a [=request=] |r|:
 
 <ol class="algorithm">
-    1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
+    1.  Assert: |r|'s [=request/current URL=] is a [=potentially trustworthy URL=].
 
     2.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
 
@@ -260,7 +260,7 @@ straightforward to define interoperably.
 To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=request=] |r|:
 
 <ol class="algorithm">
-    1.  Assert: |r|'s [=request/url=] is a [=potentially trustworthy URL=].
+    1.  Assert: |r|'s [=request/current URL=] is a [=potentially trustworthy URL=].
 
     2.  If |r| is not a [=navigation request=], or if |r|'s [=request/user-activation=] is
         `false`, return.
@@ -288,7 +288,7 @@ algorithm, using the following steps. Consult that specification for integration
 To <dfn abstract-op export>append the Fetch metadata headers for a request</dfn>, given [=request=] |r|:
 
 <ol class="algorithm">
-    1.  If |r|'s [=request/url=] is not an [=potentially trustworthy URL=], return.
+    1.  If |r|'s [=request/current URL=] is not an [=potentially trustworthy URL=], return.
 
     2.  <a abstract-op lt='set-dest'>Set the `Sec-Fetch-Dest` header</a> for |r|.
 
@@ -313,9 +313,9 @@ redirection in order to mitigate confusion.
 
 The algorithm to <a abstract-op lt='set-site'>set the `Sec-Fetch-Site` header</a> walks the [=request=]'s entire
 [=request/url list=], and will send `cross-site` if any URL in the list is cross-site to the
-request's [=request/current url=], `same-site` only if all URLs in the list are same-site with the
-request's [=request/current url=], and `same-origin` only if all URLs in the list are same-origin
-with the request's [=request/current url=].
+request's [=request/current URL=], `same-site` only if all URLs in the list are same-site with the
+request's [=request/current URL=], and `same-origin` only if all URLs in the list are same-origin
+with the request's [=request/current URL=].
 
 For example, if `https://example.com/` requests `https://example.com/redirect`, the initial
 request's `Sec-Fetch-Site` value would be `same-origin`. If that response redirected to
