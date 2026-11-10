@@ -311,11 +311,11 @@ The user agent will send a <a http-header>`Sec-Fetch-Site`</a> header along with
 redirect chain. The header's value will shift in the presence of cross-origin or cross-site
 redirection in order to mitigate confusion.
 
-The algorithm to <a abstract-op lt='set-site'>set the `Sec-Fetch-Site` header</a> walks the [=request=]'s entire
-[=request/url list=], and will send `cross-site` if any URL in the list is cross-site to the
-request's [=request/current URL=], `same-site` only if all URLs in the list are same-site with the
-request's [=request/current URL=], and `same-origin` only if all URLs in the list are same-origin
-with the request's [=request/current URL=].
+Except for directly user-initiated navigation requests that use `none`, the algorithm to
+<a abstract-op lt='set-site'>set the `Sec-Fetch-Site` header</a> compares each URL's [=url/origin=]
+in the [=request=]'s [=request/url list=] with the [=request/origin=]. It sets the value to
+`cross-site` if any of these origins are cross-site to the request's origin, `same-site` if all
+are same-site but at least one is cross-origin, and `same-origin` if all are same-origin.
 
 For example, if `https://example.com/` requests `https://example.com/redirect`, the initial
 request's `Sec-Fetch-Site` value would be `same-origin`. If that response redirected to
