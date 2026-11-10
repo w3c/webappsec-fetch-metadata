@@ -265,7 +265,7 @@ To <dfn abstract-op lt="set-user">set the `Sec-Fetch-User` header</dfn> for a [=
     2.  If |r| is not a [=navigation request=], or if |r|'s [=request/user-activation=] is
         `false`, return.
 
-    3.  Let |header| be a [=Structured Field=] whose value is a [=structured field/token=].
+    3.  Let |header| be a [=Structured Field=] whose value is a [=structured field/boolean=].
 
     4.  Set |header|'s value to `true`.
 
